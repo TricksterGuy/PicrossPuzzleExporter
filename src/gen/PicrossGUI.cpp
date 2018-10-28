@@ -1,8 +1,8 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Nov  5 2013)
+// C++ code generated with wxFormBuilder (version Jan 23 2018)
 // http://www.wxformbuilder.org/
 //
-// PLEASE DO "NOT" EDIT THIS FILE!
+// PLEASE DO *NOT* EDIT THIS FILE!
 ///////////////////////////////////////////////////////////////////////////
 
 #include "PicrossDataCanvas.hpp"
@@ -50,7 +50,7 @@ PicrossGUI::PicrossGUI( wxWindow* parent, wxWindowID id, const wxString& title, 
 	
 	bSizer8->Add( showOnlyLayer, 0, wxALL, 5 );
 	
-	wxString bitsPerCellChoices[] = { wxT("1 Tap (2 colors)"), wxT("2 Taps (4 colors)"), wxT("3 Taps (8 colors)") };
+	wxString bitsPerCellChoices[] = { wxT("1 Bit (2 colors)"), wxT("2 Bits (4 colors)"), wxT("3 Bits (8 colors)") };
 	int bitsPerCellNChoices = sizeof( bitsPerCellChoices ) / sizeof( wxString );
 	bitsPerCell = new wxChoice( m_panel4, wxID_ANY, wxDefaultPosition, wxDefaultSize, bitsPerCellNChoices, bitsPerCellChoices, 0 );
 	bitsPerCell->SetSelection( 0 );
