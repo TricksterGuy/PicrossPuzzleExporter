@@ -80,8 +80,10 @@ void PicrossFrame::OnQRCode(wxCommandEvent& event)
 void PicrossFrame::OnChangeType(wxCommandEvent& event)
 {
     int type = event.GetSelection();
+    puzzleDataCanvas->OnChangeBpc(1);
     puzzleDataCanvas->OnChangeType(type);
     puzzleDataCanvas->OnChangeLayer(0);
+    bitsPerCell->SetSelection(0);
 
     if (type == 0)
     {
