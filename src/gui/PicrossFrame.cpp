@@ -72,6 +72,7 @@ void PicrossFrame::OnQRCode(wxCommandEvent& event)
         std::string encoded = outstream.str();
         QRcode* qr = QRcode_encodeData(encoded.size(), (const unsigned char*)encoded.data(), 0, QR_ECLEVEL_H);
         QRCodeDialog* dialog = new QRCodeDialog(qr);
+        dialog->SetSize(320, 320);
         dialog->ShowModal();
         delete dialog;
     }

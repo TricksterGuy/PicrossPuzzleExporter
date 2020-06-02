@@ -35,8 +35,6 @@ class QRCodePanel : public wxScrolledWindow
         void OnDraw(wxDC& dc);
     private:
         QRcode* qr;
-        wxBitmap bitmap;
-        void FormBitmap();
 
 };
 

@@ -36,7 +36,6 @@ bool PicrossApp::OnInit()
     init_palette();
 
     wxInitAllImageHandlers();
-    wxDialog::EnableLayoutAdaptation(true);
 
     frame = new PicrossFrame(NULL);
     SetTopWindow(frame);

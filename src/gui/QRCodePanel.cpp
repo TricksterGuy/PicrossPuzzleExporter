@@ -20,11 +20,12 @@
  ******************************************************************************************************/
 
 #include "QRCodePanel.hpp"
+#include <wx/dcmemory.h>
 
 QRCodePanel::QRCodePanel(QRcode* code, wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style) :
     wxScrolledWindow(parent, id, pos, size, style), qr(code)
 {
-    FormBitmap();
+    SetSize(qr->width, qr->width);
 }
 
 QRCodePanel::~QRCodePanel()
@@ -32,25 +33,18 @@ QRCodePanel::~QRCodePanel()
     QRcode_free(qr);
 }
 
-void QRCodePanel::FormBitmap()
+void QRCodePanel::OnDraw(wxDC& dc)
 {
-    wxImage image(qr->width, qr->width);
+    dc.SetBrush(wxBrush(wxColour(0, 0, 0)));
+    dc.DrawRectangle(0, 0, qr->width, qr->width);
+    dc.SetPen(wxPen(wxColour(255, 255, 255)));
+
     for (int y = 0; y < qr->width; y++)
     {
         for (int x = 0; x < qr->width; x++)
         {
-            if (qr->data[x + y * qr->width] & 1)
-                image.SetRGB(x, y, 0, 0, 0);
-            else
-                image.SetRGB(x, y, 255, 255, 255);
+            if ((qr->data[x + y * qr->width] & 1) == 0)
+                dc.DrawPoint(x, y);
         }
     }
-    bitmap = wxBitmap(image);
-    SetSize(qr->width, qr->width);
-}
-
-
-void QRCodePanel::OnDraw(wxDC& dc)
-{
-    dc.DrawBitmap(bitmap, 0, 0);
 }
