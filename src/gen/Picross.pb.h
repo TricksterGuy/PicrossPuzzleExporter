@@ -71,15 +71,16 @@ template<> ::SolutionLayer* Arena::CreateMaybeMessage<::SolutionLayer>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 
 enum Type : int {
-  TYPE_BW = 0,
-  TYPE_GRAY = 1,
-  TYPE_RGB = 2,
-  TYPE_RBY = 3,
+  TYPE_INVALID = 0,
+  TYPE_BW = 1,
+  TYPE_GRAY = 2,
+  TYPE_RGB = 3,
+  TYPE_RBY = 4,
   Type_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
   Type_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
 };
 bool Type_IsValid(int value);
-constexpr Type Type_MIN = TYPE_BW;
+constexpr Type Type_MIN = TYPE_INVALID;
 constexpr Type Type_MAX = TYPE_RBY;
 constexpr int Type_ARRAYSIZE = Type_MAX + 1;
 

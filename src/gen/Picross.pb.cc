@@ -122,9 +122,9 @@ const char descriptor_table_protodef_Picross_2eproto[] PROTOBUF_SECTION_VARIABLE
   "olution\"\202\001\n\rPicrossPuzzle\022\r\n\005width\030\001 \001(\005"
   "\022\016\n\006height\030\002 \001(\005\022\023\n\004type\030\003 \001(\0162\005.Type\022\013\n"
   "\003bpc\030\004 \001(\005\022\020\n\004data\030\005 \003(\005B\002\020\001\022\036\n\006layers\030\006"
-  " \003(\0132\016.SolutionLayer*>\n\004Type\022\013\n\007TYPE_BW\020"
-  "\000\022\r\n\tTYPE_GRAY\020\001\022\014\n\010TYPE_RGB\020\002\022\014\n\010TYPE_R"
-  "BY\020\003b\006proto3"
+  " \003(\0132\016.SolutionLayer*P\n\004Type\022\020\n\014TYPE_INV"
+  "ALID\020\000\022\013\n\007TYPE_BW\020\001\022\r\n\tTYPE_GRAY\020\002\022\014\n\010TY"
+  "PE_RGB\020\003\022\014\n\010TYPE_RBY\020\004b\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_Picross_2eproto_deps[1] = {
 };
@@ -135,7 +135,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_Pic
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_Picross_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_Picross_2eproto = {
-  false, false, descriptor_table_protodef_Picross_2eproto, "Picross.proto", 332,
+  false, false, descriptor_table_protodef_Picross_2eproto, "Picross.proto", 350,
   &descriptor_table_Picross_2eproto_once, descriptor_table_Picross_2eproto_sccs, descriptor_table_Picross_2eproto_deps, 3, 0,
   schemas, file_default_instances, TableStruct_Picross_2eproto::offsets,
   file_level_metadata_Picross_2eproto, 3, file_level_enum_descriptors_Picross_2eproto, file_level_service_descriptors_Picross_2eproto,
@@ -153,6 +153,7 @@ bool Type_IsValid(int value) {
     case 1:
     case 2:
     case 3:
+    case 4:
       return true;
     default:
       return false;

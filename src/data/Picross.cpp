@@ -159,11 +159,10 @@ void Picross::Draw(wxDC& dc)
 
 void Picross::Export(const wxString& file) const
 {
-    std::ofstream out(file.ToStdString());
+    std::ofstream out(file.ToStdString(), std::ios::binary);
     if (!out.good()) return;
 
     PicrossPuzzle puzzle = Export();
-
     puzzle.SerializeToOstream(&out);
 }
 
