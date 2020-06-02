@@ -94,9 +94,10 @@ void PicrossDataCanvas::OnDraw(wxDC& dc)
 
 void PicrossDataCanvas::OnChangeImage(wxString& image_path)
 {
-    wxBitmap bitmap;
-    bitmap.LoadFile(image_path);
-    image = bitmap.ConvertToImage();
+    //wxBitmap bitmap;
+    //bitmap.LoadFile(image_path);
+    //image = bitmap.ConvertToImage();
+    image.LoadFile(image_path);
     picross.reset(CreatePicross(image, type, bpc));
     picross->SetLayer(layer);
     picross->SetShowLayer(showLayer);

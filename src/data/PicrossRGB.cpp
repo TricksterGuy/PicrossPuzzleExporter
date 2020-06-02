@@ -77,7 +77,7 @@ void PicrossRGB::Draw(wxDC& dc)
         {
             if (showLayer)
             {
-                if (IsSet(layer, x, y));
+                if (IsSet(layer, x, y))
                 {
                     unsigned int c = 255 * NumSet(layer, x, y) / max;
                     dc.SetBrush(wxBrush(wxColour(c, c, c)));
