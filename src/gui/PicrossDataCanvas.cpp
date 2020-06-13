@@ -1,6 +1,6 @@
 /******************************************************************************************************
  * Picross
- * Copyright (C) 2009-2014 Brandon Whitehead (tricksterguy87[AT]gmail[DOT]com)
+ * Copyright (C) 2009-2020 Brandon Whitehead (tricksterguy87[AT]gmail[DOT]com)
  *
  * This software is provided 'as-is', without any express or implied warranty.
  * In no event will the authors be held liable for any damages arising from the use of this software.
@@ -71,15 +71,9 @@ void PicrossDataCanvas::OnClick(wxMouseEvent& event)
         return;
     }
 
-    wxSize size = GetClientSize();
-
-    int x = event.GetX() - 100;
-    int y = event.GetY() - 100;
-
-    if (x < 0 || y < 0) return;
-
-    int tx = x / ((size.GetWidth() - 100) / picross->GetWidth());
-    int ty = y / ((size.GetHeight() - 100) / picross->GetHeight());
+    auto size = GetClientSize();
+    int tx, ty;
+    picross->TranslateToCoords(event.GetX(), event.GetY(), size.GetWidth(), size.GetHeight(), tx, ty);
 
     picross->Toggle(layer, tx, ty);
     picross->Build();
@@ -101,6 +95,7 @@ void PicrossDataCanvas::OnChangeImage(wxString& image_path)
     picross.reset(CreatePicross(image, type, bpc));
     picross->SetLayer(layer);
     picross->SetShowLayer(showLayer);
+    picross->SetShowGrid(showGrid);
     Refresh();
 }
 
@@ -112,6 +107,7 @@ void PicrossDataCanvas::OnChangeType(int new_type)
         picross.reset(CreatePicross(image, type, bpc));
         picross->SetLayer(layer);
         picross->SetShowLayer(showLayer);
+        picross->SetShowGrid(showGrid);
     }
     Refresh();
 }
@@ -123,6 +119,7 @@ void PicrossDataCanvas::OnChangeLayer(int new_layer)
     {
         picross->SetLayer(layer);
         picross->SetShowLayer(showLayer);
+        picross->SetShowGrid(showGrid);
     }
     Refresh();
 }
@@ -135,15 +132,16 @@ void PicrossDataCanvas::OnChangeBpc(int new_bpc)
         picross.reset(CreatePicross(image, type, bpc));
         picross->SetLayer(layer);
         picross->SetShowLayer(showLayer);
+        picross->SetShowGrid(showGrid);
     }
     Refresh();
 }
 
-void PicrossDataCanvas::OnExport(wxString& path)
+void PicrossDataCanvas::OnExport(wxString& path, const ExportParams& params)
 {
     if (picross)
     {
-        picross->Export(path);
+        picross->Export(path, params);
     }
 }
 
@@ -175,5 +173,12 @@ void PicrossDataCanvas::OnShowLayer(bool newShowLayer)
 {
     showLayer = newShowLayer;
     picross->SetShowLayer(showLayer);
+    Refresh();
+}
+
+void PicrossDataCanvas::OnShowGrid(bool newShowGrid)
+{
+    showGrid = newShowGrid;
+    picross->SetShowGrid(showGrid);
     Refresh();
 }

@@ -1,6 +1,6 @@
 /******************************************************************************************************
  * Picross
- * Copyright (C) 2009-2014 Brandon Whitehead (tricksterguy87[AT]gmail[DOT]com)
+ * Copyright (C) 2009-2020 Brandon Whitehead (tricksterguy87[AT]gmail[DOT]com)
  *
  * This software is provided 'as-is', without any express or implied warranty.
  * In no event will the authors be held liable for any damages arising from the use of this software.
@@ -21,19 +21,11 @@
 
 #include "PicrossFrame.hpp"
 #include "PicrossDataCanvas.hpp"
-#include "QRCodeDialog.hpp"
+#include "QRCodeDialog.h"
 #include <wx/filedlg.h>
 #include <qrencode.h>
 #include <encode.h>
 #include <sstream>
-
-PicrossFrame::PicrossFrame(wxFrame* window) : PicrossGUI(window)
-{
-}
-
-PicrossFrame::~PicrossFrame()
-{
-}
 
 void PicrossFrame::OnLoadImage(wxCommandEvent& event)
 {
@@ -47,38 +39,54 @@ void PicrossFrame::OnValidate(wxCommandEvent& event)
     puzzleDataCanvas->OnValidate();
 }
 
+ExportParams PicrossFrame::GetExportParams() const
+{
+    ExportParams params;
+    params.name = name->GetValue().ToStdString();
+    params.author = author->GetValue().ToStdString();
+    params.image = solutionImage->GetFileName().GetFullName().ToStdString();
+    params.frames = solutionFrames->GetValue();
+    params.time = puzzleTime->GetValue();
+    params.background_type = backgroundType->GetSelection();
+    params.bg_image = backgroundImage->GetFileName().GetFullName().ToStdString();
+    params.top_color = topColor->GetColour().GetRGBA();
+    params.bottom_color = bottomColor->GetColour().GetRGBA();
+    return params;
+
+}
+
 void PicrossFrame::OnExportImage(wxCommandEvent& event)
 {
     wxString path = wxSaveFileSelector("Picross Puzzle", "picross", "", this);
     if (path.IsEmpty()) return;
-    puzzleDataCanvas->OnExport(path);
+    puzzleDataCanvas->OnExport(path, GetExportParams());
 }
 
 void PicrossFrame::OnQRCode(wxCommandEvent& event)
 {
     Picross* picross = puzzleDataCanvas->GetPuzzle();
-    if (picross)
-    {
-        PicrossPuzzle puzzledata = picross->Export();
-        std::string data;
-        puzzledata.SerializeToString(&data);
+    if (!picross) return;
 
-        std::stringstream instream;
-        std::stringstream outstream;
-        instream.write(data.data(), data.size());
-        base64::encoder encoder(data.size());
-		encoder.encode(instream, outstream);
+    PicrossPuzzle puzzledata = picross->Export(GetExportParams());
+    std::string data;
+    puzzledata.SerializeToString(&data);
 
-        std::string encoded = outstream.str();
-        QRcode* qr = QRcode_encodeData(encoded.size(), (const unsigned char*)encoded.data(), 0, QR_ECLEVEL_H);
-        QRCodeDialog* dialog = new QRCodeDialog(qr);
-        dialog->SetSize(320, 320);
-        dialog->ShowModal();
-        delete dialog;
-    }
+    std::stringstream instream;
+    std::stringstream outstream;
+    instream.write(data.data(), data.size());
+    base64::encoder encoder(data.size());
+    encoder.encode(instream, outstream);
+
+    std::string encoded = outstream.str();
+    QRcode* qr = QRcode_encodeData(encoded.size(), (const unsigned char*)encoded.data(), 0, QR_ECLEVEL_H);
+    QRCodeDialog* dialog = new QRCodeDialog(qr);
+    dialog->SetSize(320, 320);
+    dialog->ShowModal();
+    delete dialog;
+    QRcode_free(qr);
 }
 
-void PicrossFrame::OnChangeType(wxCommandEvent& event)
+void PicrossFrame::OnChangePuzzleType(wxCommandEvent& event)
 {
     int type = event.GetSelection();
     puzzleDataCanvas->OnChangeBpc(1);
@@ -88,26 +96,38 @@ void PicrossFrame::OnChangeType(wxCommandEvent& event)
 
     if (type == 0)
     {
+        layerLabel->Hide();
         layersChoice->Hide();
+        showCurrentLayerLabel->Hide();
         showOnlyLayer->Hide();
+        bitsPerCellLabel->Hide();
         bitsPerCell->Hide();
     }
     else if (type == 1)
     {
+        layerLabel->Hide();
         layersChoice->Hide();
+        showCurrentLayerLabel->Hide();
         showOnlyLayer->Hide();
+        bitsPerCellLabel->Show();
         bitsPerCell->Show();
     }
     else if (type == 2)
     {
+        layerLabel->Show();
         layersChoice->Show();
+        showCurrentLayerLabel->Show();
         showOnlyLayer->Show();
+        bitsPerCellLabel->Show();
         bitsPerCell->Show();
     }
     else if (type == 3)
     {
+        layerLabel->Show();
         layersChoice->Show();
+        showCurrentLayerLabel->Show();
         showOnlyLayer->Show();
+        bitsPerCellLabel->Hide();
         bitsPerCell->Hide();
     }
 
@@ -134,6 +154,30 @@ void PicrossFrame::OnChangeType(wxCommandEvent& event)
     contents->Layout();
 }
 
+void PicrossFrame::OnChangeBackgroundType(wxCommandEvent& event)
+{
+    int type = event.GetSelection();
+    if (type != 3)
+    {
+        backgroundImageLabel->Show();
+        backgroundImage->Show();
+        topColorLabel->Hide();
+        topColor->Hide();
+        bottomColorLabel->Hide();
+        bottomColor->Hide();
+    }
+    else
+    {
+        backgroundImageLabel->Hide();
+        backgroundImage->Hide();
+        topColorLabel->Show();
+        topColor->Show();
+        bottomColorLabel->Show();
+        bottomColor->Show();
+    }
+    contents->Layout();
+}
+
 void PicrossFrame::OnLayerChange(wxCommandEvent& event)
 {
     puzzleDataCanvas->OnChangeLayer(event.GetSelection());
@@ -147,4 +191,9 @@ void PicrossFrame::OnChangeBpc(wxCommandEvent& event)
 void PicrossFrame::OnShowLayer(wxCommandEvent& event)
 {
     puzzleDataCanvas->OnShowLayer(event.IsChecked());
+}
+
+void PicrossFrame::OnToggleGrid(wxCommandEvent& event)
+{
+    puzzleDataCanvas->OnShowGrid(event.IsChecked());
 }

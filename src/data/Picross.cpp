@@ -1,6 +1,6 @@
 /******************************************************************************************************
  * Picross
- * Copyright (C) 2009-2014 Brandon Whitehead (tricksterguy87[AT]gmail[DOT]com)
+ * Copyright (C) 2009-2020 Brandon Whitehead (tricksterguy87[AT]gmail[DOT]com)
  *
  * This software is provided 'as-is', without any express or implied warranty.
  * In no event will the authors be held liable for any damages arising from the use of this software.
@@ -157,16 +157,27 @@ void Picross::Draw(wxDC& dc)
     }
 }
 
-void Picross::Export(const wxString& file) const
+void Picross::TranslateToCoords(int x, int y, int w, int h, int& tx, int& ty) const
+{
+    x -= 100;
+    y -= 100;
+
+    if (x < 0 || y < 0) return;
+
+    tx = x / ((w - 132) / width);
+    ty = y / ((h - 132) / height);
+}
+
+void Picross::Export(const wxString& file, const ExportParams& params) const
 {
     std::ofstream out(file.ToStdString(), std::ios::binary);
     if (!out.good()) return;
 
-    PicrossPuzzle puzzle = Export();
+    PicrossPuzzle puzzle = Export(params);
     puzzle.SerializeToOstream(&out);
 }
 
-PicrossPuzzle Picross::Export() const
+PicrossPuzzle Picross::Export(const ExportParams& params) const
 {
     PicrossPuzzle out;
 
@@ -174,6 +185,22 @@ PicrossPuzzle Picross::Export() const
     out.set_height(height);
     out.set_type(GetType());
     out.set_bpc(bpc);
+    auto* meta = out.mutable_meta();
+    meta->set_name(params.name);
+    meta->set_author(params.author);
+    meta->set_time(params.time);
+    auto* background = meta->mutable_background();
+    background->set_type(static_cast<BackgroundInfo::Type>(params.background_type + 1));
+    if (params.background_type != 3)
+        background->set_filename(params.bg_image);
+    else
+    {
+        background->set_color1(params.top_color);
+        background->set_color2(params.bottom_color);
+    }
+    auto* solution_meta = meta->mutable_solution();
+    solution_meta->set_image(params.image);
+    solution_meta->set_frames(params.frames);
 
     for (int k = 0; k < max_layers; k++)
     {

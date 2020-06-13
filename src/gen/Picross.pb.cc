@@ -14,8 +14,11 @@
 #include <google/protobuf/wire_format.h>
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
+extern PROTOBUF_INTERNAL_EXPORT_Picross_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_BackgroundInfo_Picross_2eproto;
+extern PROTOBUF_INTERNAL_EXPORT_Picross_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<2> scc_info_PicrossPuzzleMeta_Picross_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_Picross_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_Solution_Picross_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_Picross_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_SolutionLayer_Picross_2eproto;
+extern PROTOBUF_INTERNAL_EXPORT_Picross_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_SolutionMeta_Picross_2eproto;
 class SolutionDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<Solution> _instance;
@@ -24,10 +27,36 @@ class SolutionLayerDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<SolutionLayer> _instance;
 } _SolutionLayer_default_instance_;
+class BackgroundInfoDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<BackgroundInfo> _instance;
+} _BackgroundInfo_default_instance_;
+class SolutionMetaDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<SolutionMeta> _instance;
+} _SolutionMeta_default_instance_;
+class PicrossPuzzleMetaDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<PicrossPuzzleMeta> _instance;
+} _PicrossPuzzleMeta_default_instance_;
 class PicrossPuzzleDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<PicrossPuzzle> _instance;
 } _PicrossPuzzle_default_instance_;
+static void InitDefaultsscc_info_BackgroundInfo_Picross_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::_BackgroundInfo_default_instance_;
+    new (ptr) ::BackgroundInfo();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::BackgroundInfo::InitAsDefaultInstance();
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_BackgroundInfo_Picross_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_BackgroundInfo_Picross_2eproto}, {}};
+
 static void InitDefaultsscc_info_PicrossPuzzle_Picross_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
@@ -39,9 +68,26 @@ static void InitDefaultsscc_info_PicrossPuzzle_Picross_2eproto() {
   ::PicrossPuzzle::InitAsDefaultInstance();
 }
 
-::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_PicrossPuzzle_Picross_2eproto =
-    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 1, 0, InitDefaultsscc_info_PicrossPuzzle_Picross_2eproto}, {
-      &scc_info_SolutionLayer_Picross_2eproto.base,}};
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<2> scc_info_PicrossPuzzle_Picross_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 2, 0, InitDefaultsscc_info_PicrossPuzzle_Picross_2eproto}, {
+      &scc_info_SolutionLayer_Picross_2eproto.base,
+      &scc_info_PicrossPuzzleMeta_Picross_2eproto.base,}};
+
+static void InitDefaultsscc_info_PicrossPuzzleMeta_Picross_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::_PicrossPuzzleMeta_default_instance_;
+    new (ptr) ::PicrossPuzzleMeta();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::PicrossPuzzleMeta::InitAsDefaultInstance();
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<2> scc_info_PicrossPuzzleMeta_Picross_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 2, 0, InitDefaultsscc_info_PicrossPuzzleMeta_Picross_2eproto}, {
+      &scc_info_BackgroundInfo_Picross_2eproto.base,
+      &scc_info_SolutionMeta_Picross_2eproto.base,}};
 
 static void InitDefaultsscc_info_Solution_Picross_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -72,8 +118,22 @@ static void InitDefaultsscc_info_SolutionLayer_Picross_2eproto() {
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 1, 0, InitDefaultsscc_info_SolutionLayer_Picross_2eproto}, {
       &scc_info_Solution_Picross_2eproto.base,}};
 
-static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_Picross_2eproto[3];
-static const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* file_level_enum_descriptors_Picross_2eproto[1];
+static void InitDefaultsscc_info_SolutionMeta_Picross_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::_SolutionMeta_default_instance_;
+    new (ptr) ::SolutionMeta();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::SolutionMeta::InitAsDefaultInstance();
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_SolutionMeta_Picross_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_SolutionMeta_Picross_2eproto}, {}};
+
+static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_Picross_2eproto[6];
+static const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* file_level_enum_descriptors_Picross_2eproto[2];
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_Picross_2eproto = nullptr;
 
 const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_Picross_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
@@ -92,6 +152,32 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_Picross_2eproto::offsets[] PRO
   PROTOBUF_FIELD_OFFSET(::SolutionLayer, rows_),
   PROTOBUF_FIELD_OFFSET(::SolutionLayer, cols_),
   ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::BackgroundInfo, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::BackgroundInfo, filename_),
+  PROTOBUF_FIELD_OFFSET(::BackgroundInfo, type_),
+  PROTOBUF_FIELD_OFFSET(::BackgroundInfo, color1_),
+  PROTOBUF_FIELD_OFFSET(::BackgroundInfo, color2_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::SolutionMeta, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::SolutionMeta, image_),
+  PROTOBUF_FIELD_OFFSET(::SolutionMeta, frames_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::PicrossPuzzleMeta, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::PicrossPuzzleMeta, name_),
+  PROTOBUF_FIELD_OFFSET(::PicrossPuzzleMeta, author_),
+  PROTOBUF_FIELD_OFFSET(::PicrossPuzzleMeta, time_),
+  PROTOBUF_FIELD_OFFSET(::PicrossPuzzleMeta, background_),
+  PROTOBUF_FIELD_OFFSET(::PicrossPuzzleMeta, solution_),
+  ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::PicrossPuzzle, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
@@ -102,16 +188,23 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_Picross_2eproto::offsets[] PRO
   PROTOBUF_FIELD_OFFSET(::PicrossPuzzle, bpc_),
   PROTOBUF_FIELD_OFFSET(::PicrossPuzzle, data_),
   PROTOBUF_FIELD_OFFSET(::PicrossPuzzle, layers_),
+  PROTOBUF_FIELD_OFFSET(::PicrossPuzzle, meta_),
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::Solution)},
   { 7, -1, sizeof(::SolutionLayer)},
-  { 14, -1, sizeof(::PicrossPuzzle)},
+  { 14, -1, sizeof(::BackgroundInfo)},
+  { 23, -1, sizeof(::SolutionMeta)},
+  { 30, -1, sizeof(::PicrossPuzzleMeta)},
+  { 40, -1, sizeof(::PicrossPuzzle)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_Solution_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_SolutionLayer_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_BackgroundInfo_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_SolutionMeta_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_PicrossPuzzleMeta_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_PicrossPuzzle_default_instance_),
 };
 
@@ -119,35 +212,49 @@ const char descriptor_table_protodef_Picross_2eproto[] PROTOBUF_SECTION_VARIABLE
   "\n\rPicross.proto\"+\n\010Solution\022\020\n\004data\030\001 \003("
   "\005B\002\020\001\022\r\n\005total\030\002 \001(\005\"A\n\rSolutionLayer\022\027\n"
   "\004rows\030\001 \003(\0132\t.Solution\022\027\n\004cols\030\002 \003(\0132\t.S"
-  "olution\"\202\001\n\rPicrossPuzzle\022\r\n\005width\030\001 \001(\005"
-  "\022\016\n\006height\030\002 \001(\005\022\023\n\004type\030\003 \001(\0162\005.Type\022\013\n"
-  "\003bpc\030\004 \001(\005\022\020\n\004data\030\005 \003(\005B\002\020\001\022\036\n\006layers\030\006"
-  " \003(\0132\016.SolutionLayer*P\n\004Type\022\020\n\014TYPE_INV"
-  "ALID\020\000\022\013\n\007TYPE_BW\020\001\022\r\n\tTYPE_GRAY\020\002\022\014\n\010TY"
-  "PE_RGB\020\003\022\014\n\010TYPE_RBY\020\004b\006proto3"
+  "olution\"\314\001\n\016BackgroundInfo\022\020\n\010filename\030\001"
+  " \001(\t\022\"\n\004type\030\002 \001(\0162\024.BackgroundInfo.Type"
+  "\022\016\n\006color1\030\003 \001(\r\022\016\n\006color2\030\004 \001(\r\"d\n\004Type"
+  "\022\020\n\014TYPE_INVALID\020\000\022\023\n\017TYPE_STATIONARY\020\001\022"
+  "\022\n\016TYPE_STRETCHED\020\002\022\016\n\nTYPE_TILED\020\003\022\021\n\rT"
+  "YPE_GRADIENT\020\004\"-\n\014SolutionMeta\022\r\n\005image\030"
+  "\001 \001(\t\022\016\n\006frames\030\002 \001(\005\"\205\001\n\021PicrossPuzzleM"
+  "eta\022\014\n\004name\030\001 \001(\t\022\016\n\006author\030\002 \001(\t\022\014\n\004tim"
+  "e\030\003 \001(\005\022#\n\nbackground\030\004 \001(\0132\017.Background"
+  "Info\022\037\n\010solution\030\005 \001(\0132\r.SolutionMeta\"\204\002"
+  "\n\rPicrossPuzzle\022\r\n\005width\030\001 \001(\005\022\016\n\006height"
+  "\030\002 \001(\005\022!\n\004type\030\003 \001(\0162\023.PicrossPuzzle.Typ"
+  "e\022\013\n\003bpc\030\004 \001(\005\022\020\n\004data\030\005 \003(\005B\002\020\001\022\036\n\006laye"
+  "rs\030\006 \003(\0132\016.SolutionLayer\022 \n\004meta\030\007 \001(\0132\022"
+  ".PicrossPuzzleMeta\"P\n\004Type\022\020\n\014TYPE_INVAL"
+  "ID\020\000\022\013\n\007TYPE_BW\020\001\022\r\n\tTYPE_GRAY\020\002\022\014\n\010TYPE"
+  "_RGB\020\003\022\014\n\010TYPE_RBY\020\004b\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_Picross_2eproto_deps[1] = {
 };
-static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_Picross_2eproto_sccs[3] = {
+static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_Picross_2eproto_sccs[6] = {
+  &scc_info_BackgroundInfo_Picross_2eproto.base,
   &scc_info_PicrossPuzzle_Picross_2eproto.base,
+  &scc_info_PicrossPuzzleMeta_Picross_2eproto.base,
   &scc_info_Solution_Picross_2eproto.base,
   &scc_info_SolutionLayer_Picross_2eproto.base,
+  &scc_info_SolutionMeta_Picross_2eproto.base,
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_Picross_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_Picross_2eproto = {
-  false, false, descriptor_table_protodef_Picross_2eproto, "Picross.proto", 350,
-  &descriptor_table_Picross_2eproto_once, descriptor_table_Picross_2eproto_sccs, descriptor_table_Picross_2eproto_deps, 3, 0,
+  false, false, descriptor_table_protodef_Picross_2eproto, "Picross.proto", 788,
+  &descriptor_table_Picross_2eproto_once, descriptor_table_Picross_2eproto_sccs, descriptor_table_Picross_2eproto_deps, 6, 0,
   schemas, file_default_instances, TableStruct_Picross_2eproto::offsets,
-  file_level_metadata_Picross_2eproto, 3, file_level_enum_descriptors_Picross_2eproto, file_level_service_descriptors_Picross_2eproto,
+  file_level_metadata_Picross_2eproto, 6, file_level_enum_descriptors_Picross_2eproto, file_level_service_descriptors_Picross_2eproto,
 };
 
 // Force running AddDescriptors() at dynamic initialization time.
 static bool dynamic_init_dummy_Picross_2eproto = (static_cast<void>(::PROTOBUF_NAMESPACE_ID::internal::AddDescriptors(&descriptor_table_Picross_2eproto)), true);
-const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* Type_descriptor() {
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* BackgroundInfo_Type_descriptor() {
   ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_Picross_2eproto);
   return file_level_enum_descriptors_Picross_2eproto[0];
 }
-bool Type_IsValid(int value) {
+bool BackgroundInfo_Type_IsValid(int value) {
   switch (value) {
     case 0:
     case 1:
@@ -160,6 +267,43 @@ bool Type_IsValid(int value) {
   }
 }
 
+#if (__cplusplus < 201703) && (!defined(_MSC_VER) || _MSC_VER >= 1900)
+constexpr BackgroundInfo_Type BackgroundInfo::TYPE_INVALID;
+constexpr BackgroundInfo_Type BackgroundInfo::TYPE_STATIONARY;
+constexpr BackgroundInfo_Type BackgroundInfo::TYPE_STRETCHED;
+constexpr BackgroundInfo_Type BackgroundInfo::TYPE_TILED;
+constexpr BackgroundInfo_Type BackgroundInfo::TYPE_GRADIENT;
+constexpr BackgroundInfo_Type BackgroundInfo::Type_MIN;
+constexpr BackgroundInfo_Type BackgroundInfo::Type_MAX;
+constexpr int BackgroundInfo::Type_ARRAYSIZE;
+#endif  // (__cplusplus < 201703) && (!defined(_MSC_VER) || _MSC_VER >= 1900)
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* PicrossPuzzle_Type_descriptor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_Picross_2eproto);
+  return file_level_enum_descriptors_Picross_2eproto[1];
+}
+bool PicrossPuzzle_Type_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+      return true;
+    default:
+      return false;
+  }
+}
+
+#if (__cplusplus < 201703) && (!defined(_MSC_VER) || _MSC_VER >= 1900)
+constexpr PicrossPuzzle_Type PicrossPuzzle::TYPE_INVALID;
+constexpr PicrossPuzzle_Type PicrossPuzzle::TYPE_BW;
+constexpr PicrossPuzzle_Type PicrossPuzzle::TYPE_GRAY;
+constexpr PicrossPuzzle_Type PicrossPuzzle::TYPE_RGB;
+constexpr PicrossPuzzle_Type PicrossPuzzle::TYPE_RBY;
+constexpr PicrossPuzzle_Type PicrossPuzzle::Type_MIN;
+constexpr PicrossPuzzle_Type PicrossPuzzle::Type_MAX;
+constexpr int PicrossPuzzle::Type_ARRAYSIZE;
+#endif  // (__cplusplus < 201703) && (!defined(_MSC_VER) || _MSC_VER >= 1900)
 
 // ===================================================================
 
@@ -634,12 +778,914 @@ void SolutionLayer::InternalSwap(SolutionLayer* other) {
 
 // ===================================================================
 
-void PicrossPuzzle::InitAsDefaultInstance() {
+void BackgroundInfo::InitAsDefaultInstance() {
 }
-class PicrossPuzzle::_Internal {
+class BackgroundInfo::_Internal {
  public:
 };
 
+BackgroundInfo::BackgroundInfo(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+  SharedCtor();
+  RegisterArenaDtor(arena);
+  // @@protoc_insertion_point(arena_constructor:BackgroundInfo)
+}
+BackgroundInfo::BackgroundInfo(const BackgroundInfo& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  filename_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (!from._internal_filename().empty()) {
+    filename_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_filename(),
+      GetArena());
+  }
+  ::memcpy(&type_, &from.type_,
+    static_cast<size_t>(reinterpret_cast<char*>(&color2_) -
+    reinterpret_cast<char*>(&type_)) + sizeof(color2_));
+  // @@protoc_insertion_point(copy_constructor:BackgroundInfo)
+}
+
+void BackgroundInfo::SharedCtor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_BackgroundInfo_Picross_2eproto.base);
+  filename_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  ::memset(&type_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&color2_) -
+      reinterpret_cast<char*>(&type_)) + sizeof(color2_));
+}
+
+BackgroundInfo::~BackgroundInfo() {
+  // @@protoc_insertion_point(destructor:BackgroundInfo)
+  SharedDtor();
+  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+void BackgroundInfo::SharedDtor() {
+  GOOGLE_DCHECK(GetArena() == nullptr);
+  filename_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+void BackgroundInfo::ArenaDtor(void* object) {
+  BackgroundInfo* _this = reinterpret_cast< BackgroundInfo* >(object);
+  (void)_this;
+}
+void BackgroundInfo::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+}
+void BackgroundInfo::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const BackgroundInfo& BackgroundInfo::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_BackgroundInfo_Picross_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void BackgroundInfo::Clear() {
+// @@protoc_insertion_point(message_clear_start:BackgroundInfo)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  filename_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  ::memset(&type_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&color2_) -
+      reinterpret_cast<char*>(&type_)) + sizeof(color2_));
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* BackgroundInfo::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  ::PROTOBUF_NAMESPACE_ID::Arena* arena = GetArena(); (void)arena;
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    CHK_(ptr);
+    switch (tag >> 3) {
+      // string filename = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
+          auto str = _internal_mutable_filename();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "BackgroundInfo.filename"));
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // .BackgroundInfo.Type type = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
+          ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+          _internal_set_type(static_cast<::BackgroundInfo_Type>(val));
+        } else goto handle_unusual;
+        continue;
+      // uint32 color1 = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
+          color1_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // uint32 color2 = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 32)) {
+          color2_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag,
+            _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+            ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* BackgroundInfo::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:BackgroundInfo)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // string filename = 1;
+  if (this->filename().size() > 0) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_filename().data(), static_cast<int>(this->_internal_filename().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "BackgroundInfo.filename");
+    target = stream->WriteStringMaybeAliased(
+        1, this->_internal_filename(), target);
+  }
+
+  // .BackgroundInfo.Type type = 2;
+  if (this->type() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
+      2, this->_internal_type(), target);
+  }
+
+  // uint32 color1 = 3;
+  if (this->color1() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(3, this->_internal_color1(), target);
+  }
+
+  // uint32 color2 = 4;
+  if (this->color2() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(4, this->_internal_color2(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:BackgroundInfo)
+  return target;
+}
+
+size_t BackgroundInfo::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:BackgroundInfo)
+  size_t total_size = 0;
+
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string filename = 1;
+  if (this->filename().size() > 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_filename());
+  }
+
+  // .BackgroundInfo.Type type = 2;
+  if (this->type() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_type());
+  }
+
+  // uint32 color1 = 3;
+  if (this->color1() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
+        this->_internal_color1());
+  }
+
+  // uint32 color2 = 4;
+  if (this->color2() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
+        this->_internal_color2());
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void BackgroundInfo::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:BackgroundInfo)
+  GOOGLE_DCHECK_NE(&from, this);
+  const BackgroundInfo* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<BackgroundInfo>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:BackgroundInfo)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:BackgroundInfo)
+    MergeFrom(*source);
+  }
+}
+
+void BackgroundInfo::MergeFrom(const BackgroundInfo& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:BackgroundInfo)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.filename().size() > 0) {
+    _internal_set_filename(from._internal_filename());
+  }
+  if (from.type() != 0) {
+    _internal_set_type(from._internal_type());
+  }
+  if (from.color1() != 0) {
+    _internal_set_color1(from._internal_color1());
+  }
+  if (from.color2() != 0) {
+    _internal_set_color2(from._internal_color2());
+  }
+}
+
+void BackgroundInfo::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:BackgroundInfo)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void BackgroundInfo::CopyFrom(const BackgroundInfo& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:BackgroundInfo)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool BackgroundInfo::IsInitialized() const {
+  return true;
+}
+
+void BackgroundInfo::InternalSwap(BackgroundInfo* other) {
+  using std::swap;
+  _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
+  filename_.Swap(&other->filename_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(BackgroundInfo, color2_)
+      + sizeof(BackgroundInfo::color2_)
+      - PROTOBUF_FIELD_OFFSET(BackgroundInfo, type_)>(
+          reinterpret_cast<char*>(&type_),
+          reinterpret_cast<char*>(&other->type_));
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata BackgroundInfo::GetMetadata() const {
+  return GetMetadataStatic();
+}
+
+
+// ===================================================================
+
+void SolutionMeta::InitAsDefaultInstance() {
+}
+class SolutionMeta::_Internal {
+ public:
+};
+
+SolutionMeta::SolutionMeta(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+  SharedCtor();
+  RegisterArenaDtor(arena);
+  // @@protoc_insertion_point(arena_constructor:SolutionMeta)
+}
+SolutionMeta::SolutionMeta(const SolutionMeta& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  image_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (!from._internal_image().empty()) {
+    image_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_image(),
+      GetArena());
+  }
+  frames_ = from.frames_;
+  // @@protoc_insertion_point(copy_constructor:SolutionMeta)
+}
+
+void SolutionMeta::SharedCtor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_SolutionMeta_Picross_2eproto.base);
+  image_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  frames_ = 0;
+}
+
+SolutionMeta::~SolutionMeta() {
+  // @@protoc_insertion_point(destructor:SolutionMeta)
+  SharedDtor();
+  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+void SolutionMeta::SharedDtor() {
+  GOOGLE_DCHECK(GetArena() == nullptr);
+  image_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+void SolutionMeta::ArenaDtor(void* object) {
+  SolutionMeta* _this = reinterpret_cast< SolutionMeta* >(object);
+  (void)_this;
+}
+void SolutionMeta::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+}
+void SolutionMeta::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const SolutionMeta& SolutionMeta::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_SolutionMeta_Picross_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void SolutionMeta::Clear() {
+// @@protoc_insertion_point(message_clear_start:SolutionMeta)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  image_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  frames_ = 0;
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* SolutionMeta::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  ::PROTOBUF_NAMESPACE_ID::Arena* arena = GetArena(); (void)arena;
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    CHK_(ptr);
+    switch (tag >> 3) {
+      // string image = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
+          auto str = _internal_mutable_image();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "SolutionMeta.image"));
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // int32 frames = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
+          frames_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag,
+            _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+            ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* SolutionMeta::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:SolutionMeta)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // string image = 1;
+  if (this->image().size() > 0) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_image().data(), static_cast<int>(this->_internal_image().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "SolutionMeta.image");
+    target = stream->WriteStringMaybeAliased(
+        1, this->_internal_image(), target);
+  }
+
+  // int32 frames = 2;
+  if (this->frames() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(2, this->_internal_frames(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:SolutionMeta)
+  return target;
+}
+
+size_t SolutionMeta::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:SolutionMeta)
+  size_t total_size = 0;
+
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string image = 1;
+  if (this->image().size() > 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_image());
+  }
+
+  // int32 frames = 2;
+  if (this->frames() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->_internal_frames());
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void SolutionMeta::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:SolutionMeta)
+  GOOGLE_DCHECK_NE(&from, this);
+  const SolutionMeta* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<SolutionMeta>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:SolutionMeta)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:SolutionMeta)
+    MergeFrom(*source);
+  }
+}
+
+void SolutionMeta::MergeFrom(const SolutionMeta& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:SolutionMeta)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.image().size() > 0) {
+    _internal_set_image(from._internal_image());
+  }
+  if (from.frames() != 0) {
+    _internal_set_frames(from._internal_frames());
+  }
+}
+
+void SolutionMeta::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:SolutionMeta)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void SolutionMeta::CopyFrom(const SolutionMeta& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:SolutionMeta)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool SolutionMeta::IsInitialized() const {
+  return true;
+}
+
+void SolutionMeta::InternalSwap(SolutionMeta* other) {
+  using std::swap;
+  _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
+  image_.Swap(&other->image_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  swap(frames_, other->frames_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata SolutionMeta::GetMetadata() const {
+  return GetMetadataStatic();
+}
+
+
+// ===================================================================
+
+void PicrossPuzzleMeta::InitAsDefaultInstance() {
+  ::_PicrossPuzzleMeta_default_instance_._instance.get_mutable()->background_ = const_cast< ::BackgroundInfo*>(
+      ::BackgroundInfo::internal_default_instance());
+  ::_PicrossPuzzleMeta_default_instance_._instance.get_mutable()->solution_ = const_cast< ::SolutionMeta*>(
+      ::SolutionMeta::internal_default_instance());
+}
+class PicrossPuzzleMeta::_Internal {
+ public:
+  static const ::BackgroundInfo& background(const PicrossPuzzleMeta* msg);
+  static const ::SolutionMeta& solution(const PicrossPuzzleMeta* msg);
+};
+
+const ::BackgroundInfo&
+PicrossPuzzleMeta::_Internal::background(const PicrossPuzzleMeta* msg) {
+  return *msg->background_;
+}
+const ::SolutionMeta&
+PicrossPuzzleMeta::_Internal::solution(const PicrossPuzzleMeta* msg) {
+  return *msg->solution_;
+}
+PicrossPuzzleMeta::PicrossPuzzleMeta(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+  SharedCtor();
+  RegisterArenaDtor(arena);
+  // @@protoc_insertion_point(arena_constructor:PicrossPuzzleMeta)
+}
+PicrossPuzzleMeta::PicrossPuzzleMeta(const PicrossPuzzleMeta& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (!from._internal_name().empty()) {
+    name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_name(),
+      GetArena());
+  }
+  author_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (!from._internal_author().empty()) {
+    author_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_author(),
+      GetArena());
+  }
+  if (from._internal_has_background()) {
+    background_ = new ::BackgroundInfo(*from.background_);
+  } else {
+    background_ = nullptr;
+  }
+  if (from._internal_has_solution()) {
+    solution_ = new ::SolutionMeta(*from.solution_);
+  } else {
+    solution_ = nullptr;
+  }
+  time_ = from.time_;
+  // @@protoc_insertion_point(copy_constructor:PicrossPuzzleMeta)
+}
+
+void PicrossPuzzleMeta::SharedCtor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_PicrossPuzzleMeta_Picross_2eproto.base);
+  name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  author_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  ::memset(&background_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&time_) -
+      reinterpret_cast<char*>(&background_)) + sizeof(time_));
+}
+
+PicrossPuzzleMeta::~PicrossPuzzleMeta() {
+  // @@protoc_insertion_point(destructor:PicrossPuzzleMeta)
+  SharedDtor();
+  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+void PicrossPuzzleMeta::SharedDtor() {
+  GOOGLE_DCHECK(GetArena() == nullptr);
+  name_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  author_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (this != internal_default_instance()) delete background_;
+  if (this != internal_default_instance()) delete solution_;
+}
+
+void PicrossPuzzleMeta::ArenaDtor(void* object) {
+  PicrossPuzzleMeta* _this = reinterpret_cast< PicrossPuzzleMeta* >(object);
+  (void)_this;
+}
+void PicrossPuzzleMeta::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+}
+void PicrossPuzzleMeta::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const PicrossPuzzleMeta& PicrossPuzzleMeta::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_PicrossPuzzleMeta_Picross_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void PicrossPuzzleMeta::Clear() {
+// @@protoc_insertion_point(message_clear_start:PicrossPuzzleMeta)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  name_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  author_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  if (GetArena() == nullptr && background_ != nullptr) {
+    delete background_;
+  }
+  background_ = nullptr;
+  if (GetArena() == nullptr && solution_ != nullptr) {
+    delete solution_;
+  }
+  solution_ = nullptr;
+  time_ = 0;
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* PicrossPuzzleMeta::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  ::PROTOBUF_NAMESPACE_ID::Arena* arena = GetArena(); (void)arena;
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    CHK_(ptr);
+    switch (tag >> 3) {
+      // string name = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
+          auto str = _internal_mutable_name();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "PicrossPuzzleMeta.name"));
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // string author = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
+          auto str = _internal_mutable_author();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "PicrossPuzzleMeta.author"));
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // int32 time = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
+          time_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // .BackgroundInfo background = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
+          ptr = ctx->ParseMessage(_internal_mutable_background(), ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // .SolutionMeta solution = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 42)) {
+          ptr = ctx->ParseMessage(_internal_mutable_solution(), ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag,
+            _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+            ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* PicrossPuzzleMeta::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:PicrossPuzzleMeta)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // string name = 1;
+  if (this->name().size() > 0) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_name().data(), static_cast<int>(this->_internal_name().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "PicrossPuzzleMeta.name");
+    target = stream->WriteStringMaybeAliased(
+        1, this->_internal_name(), target);
+  }
+
+  // string author = 2;
+  if (this->author().size() > 0) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_author().data(), static_cast<int>(this->_internal_author().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "PicrossPuzzleMeta.author");
+    target = stream->WriteStringMaybeAliased(
+        2, this->_internal_author(), target);
+  }
+
+  // int32 time = 3;
+  if (this->time() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(3, this->_internal_time(), target);
+  }
+
+  // .BackgroundInfo background = 4;
+  if (this->has_background()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        4, _Internal::background(this), target, stream);
+  }
+
+  // .SolutionMeta solution = 5;
+  if (this->has_solution()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        5, _Internal::solution(this), target, stream);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:PicrossPuzzleMeta)
+  return target;
+}
+
+size_t PicrossPuzzleMeta::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:PicrossPuzzleMeta)
+  size_t total_size = 0;
+
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string name = 1;
+  if (this->name().size() > 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_name());
+  }
+
+  // string author = 2;
+  if (this->author().size() > 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_author());
+  }
+
+  // .BackgroundInfo background = 4;
+  if (this->has_background()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *background_);
+  }
+
+  // .SolutionMeta solution = 5;
+  if (this->has_solution()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *solution_);
+  }
+
+  // int32 time = 3;
+  if (this->time() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->_internal_time());
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void PicrossPuzzleMeta::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:PicrossPuzzleMeta)
+  GOOGLE_DCHECK_NE(&from, this);
+  const PicrossPuzzleMeta* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<PicrossPuzzleMeta>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:PicrossPuzzleMeta)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:PicrossPuzzleMeta)
+    MergeFrom(*source);
+  }
+}
+
+void PicrossPuzzleMeta::MergeFrom(const PicrossPuzzleMeta& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:PicrossPuzzleMeta)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.name().size() > 0) {
+    _internal_set_name(from._internal_name());
+  }
+  if (from.author().size() > 0) {
+    _internal_set_author(from._internal_author());
+  }
+  if (from.has_background()) {
+    _internal_mutable_background()->::BackgroundInfo::MergeFrom(from._internal_background());
+  }
+  if (from.has_solution()) {
+    _internal_mutable_solution()->::SolutionMeta::MergeFrom(from._internal_solution());
+  }
+  if (from.time() != 0) {
+    _internal_set_time(from._internal_time());
+  }
+}
+
+void PicrossPuzzleMeta::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:PicrossPuzzleMeta)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void PicrossPuzzleMeta::CopyFrom(const PicrossPuzzleMeta& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:PicrossPuzzleMeta)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool PicrossPuzzleMeta::IsInitialized() const {
+  return true;
+}
+
+void PicrossPuzzleMeta::InternalSwap(PicrossPuzzleMeta* other) {
+  using std::swap;
+  _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
+  name_.Swap(&other->name_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  author_.Swap(&other->author_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(PicrossPuzzleMeta, time_)
+      + sizeof(PicrossPuzzleMeta::time_)
+      - PROTOBUF_FIELD_OFFSET(PicrossPuzzleMeta, background_)>(
+          reinterpret_cast<char*>(&background_),
+          reinterpret_cast<char*>(&other->background_));
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata PicrossPuzzleMeta::GetMetadata() const {
+  return GetMetadataStatic();
+}
+
+
+// ===================================================================
+
+void PicrossPuzzle::InitAsDefaultInstance() {
+  ::_PicrossPuzzle_default_instance_._instance.get_mutable()->meta_ = const_cast< ::PicrossPuzzleMeta*>(
+      ::PicrossPuzzleMeta::internal_default_instance());
+}
+class PicrossPuzzle::_Internal {
+ public:
+  static const ::PicrossPuzzleMeta& meta(const PicrossPuzzle* msg);
+};
+
+const ::PicrossPuzzleMeta&
+PicrossPuzzle::_Internal::meta(const PicrossPuzzle* msg) {
+  return *msg->meta_;
+}
 PicrossPuzzle::PicrossPuzzle(::PROTOBUF_NAMESPACE_ID::Arena* arena)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena),
   data_(arena),
@@ -653,6 +1699,11 @@ PicrossPuzzle::PicrossPuzzle(const PicrossPuzzle& from)
       data_(from.data_),
       layers_(from.layers_) {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  if (from._internal_has_meta()) {
+    meta_ = new ::PicrossPuzzleMeta(*from.meta_);
+  } else {
+    meta_ = nullptr;
+  }
   ::memcpy(&width_, &from.width_,
     static_cast<size_t>(reinterpret_cast<char*>(&bpc_) -
     reinterpret_cast<char*>(&width_)) + sizeof(bpc_));
@@ -661,9 +1712,9 @@ PicrossPuzzle::PicrossPuzzle(const PicrossPuzzle& from)
 
 void PicrossPuzzle::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_PicrossPuzzle_Picross_2eproto.base);
-  ::memset(&width_, 0, static_cast<size_t>(
+  ::memset(&meta_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&bpc_) -
-      reinterpret_cast<char*>(&width_)) + sizeof(bpc_));
+      reinterpret_cast<char*>(&meta_)) + sizeof(bpc_));
 }
 
 PicrossPuzzle::~PicrossPuzzle() {
@@ -674,6 +1725,7 @@ PicrossPuzzle::~PicrossPuzzle() {
 
 void PicrossPuzzle::SharedDtor() {
   GOOGLE_DCHECK(GetArena() == nullptr);
+  if (this != internal_default_instance()) delete meta_;
 }
 
 void PicrossPuzzle::ArenaDtor(void* object) {
@@ -699,6 +1751,10 @@ void PicrossPuzzle::Clear() {
 
   data_.Clear();
   layers_.Clear();
+  if (GetArena() == nullptr && meta_ != nullptr) {
+    delete meta_;
+  }
+  meta_ = nullptr;
   ::memset(&width_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&bpc_) -
       reinterpret_cast<char*>(&width_)) + sizeof(bpc_));
@@ -727,12 +1783,12 @@ const char* PicrossPuzzle::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // .Type type = 3;
+      // .PicrossPuzzle.Type type = 3;
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
           ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
-          _internal_set_type(static_cast<::Type>(val));
+          _internal_set_type(static_cast<::PicrossPuzzle_Type>(val));
         } else goto handle_unusual;
         continue;
       // int32 bpc = 4;
@@ -762,6 +1818,13 @@ const char* PicrossPuzzle::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_
             CHK_(ptr);
             if (!ctx->DataAvailable(ptr)) break;
           } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<50>(ptr));
+        } else goto handle_unusual;
+        continue;
+      // .PicrossPuzzleMeta meta = 7;
+      case 7:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 58)) {
+          ptr = ctx->ParseMessage(_internal_mutable_meta(), ptr);
+          CHK_(ptr);
         } else goto handle_unusual;
         continue;
       default: {
@@ -804,7 +1867,7 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(2, this->_internal_height(), target);
   }
 
-  // .Type type = 3;
+  // .PicrossPuzzle.Type type = 3;
   if (this->type() != 0) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
@@ -832,6 +1895,14 @@ failure:
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       InternalWriteMessage(6, this->_internal_layers(i), target, stream);
+  }
+
+  // .PicrossPuzzleMeta meta = 7;
+  if (this->has_meta()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        7, _Internal::meta(this), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -872,6 +1943,13 @@ size_t PicrossPuzzle::ByteSizeLong() const {
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
   }
 
+  // .PicrossPuzzleMeta meta = 7;
+  if (this->has_meta()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *meta_);
+  }
+
   // int32 width = 1;
   if (this->width() != 0) {
     total_size += 1 +
@@ -886,7 +1964,7 @@ size_t PicrossPuzzle::ByteSizeLong() const {
         this->_internal_height());
   }
 
-  // .Type type = 3;
+  // .PicrossPuzzle.Type type = 3;
   if (this->type() != 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_type());
@@ -932,6 +2010,9 @@ void PicrossPuzzle::MergeFrom(const PicrossPuzzle& from) {
 
   data_.MergeFrom(from.data_);
   layers_.MergeFrom(from.layers_);
+  if (from.has_meta()) {
+    _internal_mutable_meta()->::PicrossPuzzleMeta::MergeFrom(from._internal_meta());
+  }
   if (from.width() != 0) {
     _internal_set_width(from._internal_width());
   }
@@ -972,9 +2053,9 @@ void PicrossPuzzle::InternalSwap(PicrossPuzzle* other) {
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
       PROTOBUF_FIELD_OFFSET(PicrossPuzzle, bpc_)
       + sizeof(PicrossPuzzle::bpc_)
-      - PROTOBUF_FIELD_OFFSET(PicrossPuzzle, width_)>(
-          reinterpret_cast<char*>(&width_),
-          reinterpret_cast<char*>(&other->width_));
+      - PROTOBUF_FIELD_OFFSET(PicrossPuzzle, meta_)>(
+          reinterpret_cast<char*>(&meta_),
+          reinterpret_cast<char*>(&other->meta_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata PicrossPuzzle::GetMetadata() const {
@@ -989,6 +2070,15 @@ template<> PROTOBUF_NOINLINE ::Solution* Arena::CreateMaybeMessage< ::Solution >
 }
 template<> PROTOBUF_NOINLINE ::SolutionLayer* Arena::CreateMaybeMessage< ::SolutionLayer >(Arena* arena) {
   return Arena::CreateMessageInternal< ::SolutionLayer >(arena);
+}
+template<> PROTOBUF_NOINLINE ::BackgroundInfo* Arena::CreateMaybeMessage< ::BackgroundInfo >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::BackgroundInfo >(arena);
+}
+template<> PROTOBUF_NOINLINE ::SolutionMeta* Arena::CreateMaybeMessage< ::SolutionMeta >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::SolutionMeta >(arena);
+}
+template<> PROTOBUF_NOINLINE ::PicrossPuzzleMeta* Arena::CreateMaybeMessage< ::PicrossPuzzleMeta >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::PicrossPuzzleMeta >(arena);
 }
 template<> PROTOBUF_NOINLINE ::PicrossPuzzle* Arena::CreateMaybeMessage< ::PicrossPuzzle >(Arena* arena) {
   return Arena::CreateMessageInternal< ::PicrossPuzzle >(arena);

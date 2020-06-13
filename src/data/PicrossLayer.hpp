@@ -1,6 +1,6 @@
 /******************************************************************************************************
  * Picross
- * Copyright (C) 2009-2014 Brandon Whitehead (tricksterguy87[AT]gmail[DOT]com)
+ * Copyright (C) 2009-2020 Brandon Whitehead (tricksterguy87[AT]gmail[DOT]com)
  *
  * This software is provided 'as-is', without any express or implied warranty.
  * In no event will the authors be held liable for any damages arising from the use of this software.
@@ -28,7 +28,6 @@ class PicrossLayer
 {
     public:
         PicrossLayer(int width_, int height_) : width(width_), height(height_), data(width_ * height_) {}
-        ~PicrossLayer() {}
         const std::vector<unsigned short>& GetData() const {return data;}
         void Set(int x, int y, unsigned short cell_data) {data[y * width + x] = cell_data;}
         unsigned short Get(int x, int y) const {return data[y * width + x];}

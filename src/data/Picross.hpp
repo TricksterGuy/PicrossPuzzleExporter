@@ -1,6 +1,6 @@
 /******************************************************************************************************
  * Picross
- * Copyright (C) 2009-2014 Brandon Whitehead (tricksterguy87[AT]gmail[DOT]com)
+ * Copyright (C) 2009-2020 Brandon Whitehead (tricksterguy87[AT]gmail[DOT]com)
  *
  * This software is provided 'as-is', without any express or implied warranty.
  * In no event will the authors be held liable for any damages arising from the use of this software.
@@ -31,13 +31,27 @@
 struct Problem;
 
 typedef std::vector<std::vector<int>> solutions;
+
+struct ExportParams
+{
+    std::string name;
+    std::string author;
+    std::string image;
+    int frames;
+    int time;
+    int background_type;
+    std::string bg_image;
+    uint32_t top_color;
+    uint32_t bottom_color;
+};
+
 class Picross
 {
     public:
-        Picross(int width_, int height_, int bpc_, int num_layers) : data(width_, height_), layer(0), showLayer(false),
+        Picross(int width_, int height_, int bpc_, int num_layers) : data(width_, height_), layer(0), showLayer(false), showGrid(true),
                                                                      width(width_), height(height_), bpc(bpc_), max_layers(num_layers) {}
         virtual ~Picross() {}
-        virtual Type GetType() const = 0;
+        virtual PicrossPuzzle::Type GetType() const = 0;
         virtual void Draw(wxDC& dc);
         virtual void Toggle(int layer, int tx, int ty) {data.Toggle(layer, tx, ty);}
         void Build();
@@ -49,14 +63,18 @@ class Picross
         const PicrossLayer& GetData() const {return data;}
         void SetLayer(int layer) {this->layer = layer;}
         void SetShowLayer(bool showLayer) {this->showLayer = showLayer;}
+        void SetShowGrid(bool grid) {showGrid = grid;}
+
+        void TranslateToCoords(int x, int y, int w, int h, int& tx, int& ty) const;
 
         bool Validate() const;
-        void Export(const wxString& file) const;
-        PicrossPuzzle Export() const;
+        void Export(const wxString& file, const ExportParams& params) const;
+        PicrossPuzzle Export(const ExportParams& params) const;
     protected:
         PicrossLayer data;
         int layer;
         bool showLayer;
+        bool showGrid;
         int width, height;
         int bpc;
         int max_layers;

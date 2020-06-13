@@ -7,7 +7,7 @@
 
 #include "QRCodePanel.hpp"
 
-#include "QRCodeDialog.hpp"
+#include "QRCodeDialog.h"
 
 ///////////////////////////////////////////////////////////////////////////
 

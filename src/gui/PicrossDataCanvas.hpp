@@ -1,6 +1,6 @@
 /******************************************************************************************************
  * Picross
- * Copyright (C) 2009-2014 Brandon Whitehead (tricksterguy87[AT]gmail[DOT]com)
+ * Copyright (C) 2009-2020 Brandon Whitehead (tricksterguy87[AT]gmail[DOT]com)
  *
  * This software is provided 'as-is', without any express or implied warranty.
  * In no event will the authors be held liable for any damages arising from the use of this software.
@@ -37,13 +37,15 @@ class PicrossDataCanvas : public wxScrolledWindow
         void OnChangeLayer(int new_layer);
         void OnChangeBpc(int new_bpc);
         void OnClick(wxMouseEvent& event);
-        void OnExport(wxString& path);
+        void OnExport(wxString& path, const ExportParams& params);
         void OnValidate();
         void OnShowLayer(bool show_layer);
+        void OnShowGrid(bool show_grid);
         Picross* GetPuzzle() {return picross.get();}
     private:
         std::unique_ptr<Picross> picross;
         wxImage image;
         int size, type, layer, bpc;
         bool showLayer;
+        bool showGrid;
 };

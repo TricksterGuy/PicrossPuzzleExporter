@@ -48,55 +48,95 @@ struct TableStruct_Picross_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxillaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[3]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[6]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
   static const ::PROTOBUF_NAMESPACE_ID::uint32 offsets[];
 };
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_Picross_2eproto;
+class BackgroundInfo;
+class BackgroundInfoDefaultTypeInternal;
+extern BackgroundInfoDefaultTypeInternal _BackgroundInfo_default_instance_;
 class PicrossPuzzle;
 class PicrossPuzzleDefaultTypeInternal;
 extern PicrossPuzzleDefaultTypeInternal _PicrossPuzzle_default_instance_;
+class PicrossPuzzleMeta;
+class PicrossPuzzleMetaDefaultTypeInternal;
+extern PicrossPuzzleMetaDefaultTypeInternal _PicrossPuzzleMeta_default_instance_;
 class Solution;
 class SolutionDefaultTypeInternal;
 extern SolutionDefaultTypeInternal _Solution_default_instance_;
 class SolutionLayer;
 class SolutionLayerDefaultTypeInternal;
 extern SolutionLayerDefaultTypeInternal _SolutionLayer_default_instance_;
+class SolutionMeta;
+class SolutionMetaDefaultTypeInternal;
+extern SolutionMetaDefaultTypeInternal _SolutionMeta_default_instance_;
 PROTOBUF_NAMESPACE_OPEN
+template<> ::BackgroundInfo* Arena::CreateMaybeMessage<::BackgroundInfo>(Arena*);
 template<> ::PicrossPuzzle* Arena::CreateMaybeMessage<::PicrossPuzzle>(Arena*);
+template<> ::PicrossPuzzleMeta* Arena::CreateMaybeMessage<::PicrossPuzzleMeta>(Arena*);
 template<> ::Solution* Arena::CreateMaybeMessage<::Solution>(Arena*);
 template<> ::SolutionLayer* Arena::CreateMaybeMessage<::SolutionLayer>(Arena*);
+template<> ::SolutionMeta* Arena::CreateMaybeMessage<::SolutionMeta>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 
-enum Type : int {
-  TYPE_INVALID = 0,
-  TYPE_BW = 1,
-  TYPE_GRAY = 2,
-  TYPE_RGB = 3,
-  TYPE_RBY = 4,
-  Type_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
-  Type_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
+enum BackgroundInfo_Type : int {
+  BackgroundInfo_Type_TYPE_INVALID = 0,
+  BackgroundInfo_Type_TYPE_STATIONARY = 1,
+  BackgroundInfo_Type_TYPE_STRETCHED = 2,
+  BackgroundInfo_Type_TYPE_TILED = 3,
+  BackgroundInfo_Type_TYPE_GRADIENT = 4,
+  BackgroundInfo_Type_BackgroundInfo_Type_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
+  BackgroundInfo_Type_BackgroundInfo_Type_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
 };
-bool Type_IsValid(int value);
-constexpr Type Type_MIN = TYPE_INVALID;
-constexpr Type Type_MAX = TYPE_RBY;
-constexpr int Type_ARRAYSIZE = Type_MAX + 1;
+bool BackgroundInfo_Type_IsValid(int value);
+constexpr BackgroundInfo_Type BackgroundInfo_Type_Type_MIN = BackgroundInfo_Type_TYPE_INVALID;
+constexpr BackgroundInfo_Type BackgroundInfo_Type_Type_MAX = BackgroundInfo_Type_TYPE_GRADIENT;
+constexpr int BackgroundInfo_Type_Type_ARRAYSIZE = BackgroundInfo_Type_Type_MAX + 1;
 
-const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* Type_descriptor();
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* BackgroundInfo_Type_descriptor();
 template<typename T>
-inline const std::string& Type_Name(T enum_t_value) {
-  static_assert(::std::is_same<T, Type>::value ||
+inline const std::string& BackgroundInfo_Type_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, BackgroundInfo_Type>::value ||
     ::std::is_integral<T>::value,
-    "Incorrect type passed to function Type_Name.");
+    "Incorrect type passed to function BackgroundInfo_Type_Name.");
   return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
-    Type_descriptor(), enum_t_value);
+    BackgroundInfo_Type_descriptor(), enum_t_value);
 }
-inline bool Type_Parse(
-    const std::string& name, Type* value) {
-  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<Type>(
-    Type_descriptor(), name, value);
+inline bool BackgroundInfo_Type_Parse(
+    const std::string& name, BackgroundInfo_Type* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<BackgroundInfo_Type>(
+    BackgroundInfo_Type_descriptor(), name, value);
+}
+enum PicrossPuzzle_Type : int {
+  PicrossPuzzle_Type_TYPE_INVALID = 0,
+  PicrossPuzzle_Type_TYPE_BW = 1,
+  PicrossPuzzle_Type_TYPE_GRAY = 2,
+  PicrossPuzzle_Type_TYPE_RGB = 3,
+  PicrossPuzzle_Type_TYPE_RBY = 4,
+  PicrossPuzzle_Type_PicrossPuzzle_Type_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
+  PicrossPuzzle_Type_PicrossPuzzle_Type_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
+};
+bool PicrossPuzzle_Type_IsValid(int value);
+constexpr PicrossPuzzle_Type PicrossPuzzle_Type_Type_MIN = PicrossPuzzle_Type_TYPE_INVALID;
+constexpr PicrossPuzzle_Type PicrossPuzzle_Type_Type_MAX = PicrossPuzzle_Type_TYPE_RBY;
+constexpr int PicrossPuzzle_Type_Type_ARRAYSIZE = PicrossPuzzle_Type_Type_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* PicrossPuzzle_Type_descriptor();
+template<typename T>
+inline const std::string& PicrossPuzzle_Type_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, PicrossPuzzle_Type>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function PicrossPuzzle_Type_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    PicrossPuzzle_Type_descriptor(), enum_t_value);
+}
+inline bool PicrossPuzzle_Type_Parse(
+    const std::string& name, PicrossPuzzle_Type* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<PicrossPuzzle_Type>(
+    PicrossPuzzle_Type_descriptor(), name, value);
 }
 // ===================================================================
 
@@ -428,6 +468,623 @@ class SolutionLayer PROTOBUF_FINAL :
 };
 // -------------------------------------------------------------------
 
+class BackgroundInfo PROTOBUF_FINAL :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:BackgroundInfo) */ {
+ public:
+  inline BackgroundInfo() : BackgroundInfo(nullptr) {};
+  virtual ~BackgroundInfo();
+
+  BackgroundInfo(const BackgroundInfo& from);
+  BackgroundInfo(BackgroundInfo&& from) noexcept
+    : BackgroundInfo() {
+    *this = ::std::move(from);
+  }
+
+  inline BackgroundInfo& operator=(const BackgroundInfo& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline BackgroundInfo& operator=(BackgroundInfo&& from) noexcept {
+    if (GetArena() == from.GetArena()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const BackgroundInfo& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const BackgroundInfo* internal_default_instance() {
+    return reinterpret_cast<const BackgroundInfo*>(
+               &_BackgroundInfo_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    2;
+
+  friend void swap(BackgroundInfo& a, BackgroundInfo& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(BackgroundInfo* other) {
+    if (other == this) return;
+    if (GetArena() == other->GetArena()) {
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(BackgroundInfo* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline BackgroundInfo* New() const final {
+    return CreateMaybeMessage<BackgroundInfo>(nullptr);
+  }
+
+  BackgroundInfo* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<BackgroundInfo>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const BackgroundInfo& from);
+  void MergeFrom(const BackgroundInfo& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(BackgroundInfo* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "BackgroundInfo";
+  }
+  protected:
+  explicit BackgroundInfo(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_Picross_2eproto);
+    return ::descriptor_table_Picross_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  typedef BackgroundInfo_Type Type;
+  static constexpr Type TYPE_INVALID =
+    BackgroundInfo_Type_TYPE_INVALID;
+  static constexpr Type TYPE_STATIONARY =
+    BackgroundInfo_Type_TYPE_STATIONARY;
+  static constexpr Type TYPE_STRETCHED =
+    BackgroundInfo_Type_TYPE_STRETCHED;
+  static constexpr Type TYPE_TILED =
+    BackgroundInfo_Type_TYPE_TILED;
+  static constexpr Type TYPE_GRADIENT =
+    BackgroundInfo_Type_TYPE_GRADIENT;
+  static inline bool Type_IsValid(int value) {
+    return BackgroundInfo_Type_IsValid(value);
+  }
+  static constexpr Type Type_MIN =
+    BackgroundInfo_Type_Type_MIN;
+  static constexpr Type Type_MAX =
+    BackgroundInfo_Type_Type_MAX;
+  static constexpr int Type_ARRAYSIZE =
+    BackgroundInfo_Type_Type_ARRAYSIZE;
+  static inline const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor*
+  Type_descriptor() {
+    return BackgroundInfo_Type_descriptor();
+  }
+  template<typename T>
+  static inline const std::string& Type_Name(T enum_t_value) {
+    static_assert(::std::is_same<T, Type>::value ||
+      ::std::is_integral<T>::value,
+      "Incorrect type passed to function Type_Name.");
+    return BackgroundInfo_Type_Name(enum_t_value);
+  }
+  static inline bool Type_Parse(const std::string& name,
+      Type* value) {
+    return BackgroundInfo_Type_Parse(name, value);
+  }
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kFilenameFieldNumber = 1,
+    kTypeFieldNumber = 2,
+    kColor1FieldNumber = 3,
+    kColor2FieldNumber = 4,
+  };
+  // string filename = 1;
+  void clear_filename();
+  const std::string& filename() const;
+  void set_filename(const std::string& value);
+  void set_filename(std::string&& value);
+  void set_filename(const char* value);
+  void set_filename(const char* value, size_t size);
+  std::string* mutable_filename();
+  std::string* release_filename();
+  void set_allocated_filename(std::string* filename);
+  GOOGLE_PROTOBUF_RUNTIME_DEPRECATED("The unsafe_arena_ accessors for"
+  "    string fields are deprecated and will be removed in a"
+  "    future release.")
+  std::string* unsafe_arena_release_filename();
+  GOOGLE_PROTOBUF_RUNTIME_DEPRECATED("The unsafe_arena_ accessors for"
+  "    string fields are deprecated and will be removed in a"
+  "    future release.")
+  void unsafe_arena_set_allocated_filename(
+      std::string* filename);
+  private:
+  const std::string& _internal_filename() const;
+  void _internal_set_filename(const std::string& value);
+  std::string* _internal_mutable_filename();
+  public:
+
+  // .BackgroundInfo.Type type = 2;
+  void clear_type();
+  ::BackgroundInfo_Type type() const;
+  void set_type(::BackgroundInfo_Type value);
+  private:
+  ::BackgroundInfo_Type _internal_type() const;
+  void _internal_set_type(::BackgroundInfo_Type value);
+  public:
+
+  // uint32 color1 = 3;
+  void clear_color1();
+  ::PROTOBUF_NAMESPACE_ID::uint32 color1() const;
+  void set_color1(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_color1() const;
+  void _internal_set_color1(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  public:
+
+  // uint32 color2 = 4;
+  void clear_color2();
+  ::PROTOBUF_NAMESPACE_ID::uint32 color2() const;
+  void set_color2(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_color2() const;
+  void _internal_set_color2(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:BackgroundInfo)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr filename_;
+  int type_;
+  ::PROTOBUF_NAMESPACE_ID::uint32 color1_;
+  ::PROTOBUF_NAMESPACE_ID::uint32 color2_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_Picross_2eproto;
+};
+// -------------------------------------------------------------------
+
+class SolutionMeta PROTOBUF_FINAL :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:SolutionMeta) */ {
+ public:
+  inline SolutionMeta() : SolutionMeta(nullptr) {};
+  virtual ~SolutionMeta();
+
+  SolutionMeta(const SolutionMeta& from);
+  SolutionMeta(SolutionMeta&& from) noexcept
+    : SolutionMeta() {
+    *this = ::std::move(from);
+  }
+
+  inline SolutionMeta& operator=(const SolutionMeta& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline SolutionMeta& operator=(SolutionMeta&& from) noexcept {
+    if (GetArena() == from.GetArena()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const SolutionMeta& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const SolutionMeta* internal_default_instance() {
+    return reinterpret_cast<const SolutionMeta*>(
+               &_SolutionMeta_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    3;
+
+  friend void swap(SolutionMeta& a, SolutionMeta& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(SolutionMeta* other) {
+    if (other == this) return;
+    if (GetArena() == other->GetArena()) {
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(SolutionMeta* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline SolutionMeta* New() const final {
+    return CreateMaybeMessage<SolutionMeta>(nullptr);
+  }
+
+  SolutionMeta* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<SolutionMeta>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const SolutionMeta& from);
+  void MergeFrom(const SolutionMeta& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(SolutionMeta* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "SolutionMeta";
+  }
+  protected:
+  explicit SolutionMeta(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_Picross_2eproto);
+    return ::descriptor_table_Picross_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kImageFieldNumber = 1,
+    kFramesFieldNumber = 2,
+  };
+  // string image = 1;
+  void clear_image();
+  const std::string& image() const;
+  void set_image(const std::string& value);
+  void set_image(std::string&& value);
+  void set_image(const char* value);
+  void set_image(const char* value, size_t size);
+  std::string* mutable_image();
+  std::string* release_image();
+  void set_allocated_image(std::string* image);
+  GOOGLE_PROTOBUF_RUNTIME_DEPRECATED("The unsafe_arena_ accessors for"
+  "    string fields are deprecated and will be removed in a"
+  "    future release.")
+  std::string* unsafe_arena_release_image();
+  GOOGLE_PROTOBUF_RUNTIME_DEPRECATED("The unsafe_arena_ accessors for"
+  "    string fields are deprecated and will be removed in a"
+  "    future release.")
+  void unsafe_arena_set_allocated_image(
+      std::string* image);
+  private:
+  const std::string& _internal_image() const;
+  void _internal_set_image(const std::string& value);
+  std::string* _internal_mutable_image();
+  public:
+
+  // int32 frames = 2;
+  void clear_frames();
+  ::PROTOBUF_NAMESPACE_ID::int32 frames() const;
+  void set_frames(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_frames() const;
+  void _internal_set_frames(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:SolutionMeta)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr image_;
+  ::PROTOBUF_NAMESPACE_ID::int32 frames_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_Picross_2eproto;
+};
+// -------------------------------------------------------------------
+
+class PicrossPuzzleMeta PROTOBUF_FINAL :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:PicrossPuzzleMeta) */ {
+ public:
+  inline PicrossPuzzleMeta() : PicrossPuzzleMeta(nullptr) {};
+  virtual ~PicrossPuzzleMeta();
+
+  PicrossPuzzleMeta(const PicrossPuzzleMeta& from);
+  PicrossPuzzleMeta(PicrossPuzzleMeta&& from) noexcept
+    : PicrossPuzzleMeta() {
+    *this = ::std::move(from);
+  }
+
+  inline PicrossPuzzleMeta& operator=(const PicrossPuzzleMeta& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline PicrossPuzzleMeta& operator=(PicrossPuzzleMeta&& from) noexcept {
+    if (GetArena() == from.GetArena()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const PicrossPuzzleMeta& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const PicrossPuzzleMeta* internal_default_instance() {
+    return reinterpret_cast<const PicrossPuzzleMeta*>(
+               &_PicrossPuzzleMeta_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    4;
+
+  friend void swap(PicrossPuzzleMeta& a, PicrossPuzzleMeta& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(PicrossPuzzleMeta* other) {
+    if (other == this) return;
+    if (GetArena() == other->GetArena()) {
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(PicrossPuzzleMeta* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline PicrossPuzzleMeta* New() const final {
+    return CreateMaybeMessage<PicrossPuzzleMeta>(nullptr);
+  }
+
+  PicrossPuzzleMeta* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<PicrossPuzzleMeta>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const PicrossPuzzleMeta& from);
+  void MergeFrom(const PicrossPuzzleMeta& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(PicrossPuzzleMeta* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "PicrossPuzzleMeta";
+  }
+  protected:
+  explicit PicrossPuzzleMeta(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_Picross_2eproto);
+    return ::descriptor_table_Picross_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kNameFieldNumber = 1,
+    kAuthorFieldNumber = 2,
+    kBackgroundFieldNumber = 4,
+    kSolutionFieldNumber = 5,
+    kTimeFieldNumber = 3,
+  };
+  // string name = 1;
+  void clear_name();
+  const std::string& name() const;
+  void set_name(const std::string& value);
+  void set_name(std::string&& value);
+  void set_name(const char* value);
+  void set_name(const char* value, size_t size);
+  std::string* mutable_name();
+  std::string* release_name();
+  void set_allocated_name(std::string* name);
+  GOOGLE_PROTOBUF_RUNTIME_DEPRECATED("The unsafe_arena_ accessors for"
+  "    string fields are deprecated and will be removed in a"
+  "    future release.")
+  std::string* unsafe_arena_release_name();
+  GOOGLE_PROTOBUF_RUNTIME_DEPRECATED("The unsafe_arena_ accessors for"
+  "    string fields are deprecated and will be removed in a"
+  "    future release.")
+  void unsafe_arena_set_allocated_name(
+      std::string* name);
+  private:
+  const std::string& _internal_name() const;
+  void _internal_set_name(const std::string& value);
+  std::string* _internal_mutable_name();
+  public:
+
+  // string author = 2;
+  void clear_author();
+  const std::string& author() const;
+  void set_author(const std::string& value);
+  void set_author(std::string&& value);
+  void set_author(const char* value);
+  void set_author(const char* value, size_t size);
+  std::string* mutable_author();
+  std::string* release_author();
+  void set_allocated_author(std::string* author);
+  GOOGLE_PROTOBUF_RUNTIME_DEPRECATED("The unsafe_arena_ accessors for"
+  "    string fields are deprecated and will be removed in a"
+  "    future release.")
+  std::string* unsafe_arena_release_author();
+  GOOGLE_PROTOBUF_RUNTIME_DEPRECATED("The unsafe_arena_ accessors for"
+  "    string fields are deprecated and will be removed in a"
+  "    future release.")
+  void unsafe_arena_set_allocated_author(
+      std::string* author);
+  private:
+  const std::string& _internal_author() const;
+  void _internal_set_author(const std::string& value);
+  std::string* _internal_mutable_author();
+  public:
+
+  // .BackgroundInfo background = 4;
+  bool has_background() const;
+  private:
+  bool _internal_has_background() const;
+  public:
+  void clear_background();
+  const ::BackgroundInfo& background() const;
+  ::BackgroundInfo* release_background();
+  ::BackgroundInfo* mutable_background();
+  void set_allocated_background(::BackgroundInfo* background);
+  private:
+  const ::BackgroundInfo& _internal_background() const;
+  ::BackgroundInfo* _internal_mutable_background();
+  public:
+  void unsafe_arena_set_allocated_background(
+      ::BackgroundInfo* background);
+  ::BackgroundInfo* unsafe_arena_release_background();
+
+  // .SolutionMeta solution = 5;
+  bool has_solution() const;
+  private:
+  bool _internal_has_solution() const;
+  public:
+  void clear_solution();
+  const ::SolutionMeta& solution() const;
+  ::SolutionMeta* release_solution();
+  ::SolutionMeta* mutable_solution();
+  void set_allocated_solution(::SolutionMeta* solution);
+  private:
+  const ::SolutionMeta& _internal_solution() const;
+  ::SolutionMeta* _internal_mutable_solution();
+  public:
+  void unsafe_arena_set_allocated_solution(
+      ::SolutionMeta* solution);
+  ::SolutionMeta* unsafe_arena_release_solution();
+
+  // int32 time = 3;
+  void clear_time();
+  ::PROTOBUF_NAMESPACE_ID::int32 time() const;
+  void set_time(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_time() const;
+  void _internal_set_time(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:PicrossPuzzleMeta)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr author_;
+  ::BackgroundInfo* background_;
+  ::SolutionMeta* solution_;
+  ::PROTOBUF_NAMESPACE_ID::int32 time_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_Picross_2eproto;
+};
+// -------------------------------------------------------------------
+
 class PicrossPuzzle PROTOBUF_FINAL :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:PicrossPuzzle) */ {
  public:
@@ -470,7 +1127,7 @@ class PicrossPuzzle PROTOBUF_FINAL :
                &_PicrossPuzzle_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    2;
+    5;
 
   friend void swap(PicrossPuzzle& a, PicrossPuzzle& b) {
     a.Swap(&b);
@@ -538,11 +1195,48 @@ class PicrossPuzzle PROTOBUF_FINAL :
 
   // nested types ----------------------------------------------------
 
+  typedef PicrossPuzzle_Type Type;
+  static constexpr Type TYPE_INVALID =
+    PicrossPuzzle_Type_TYPE_INVALID;
+  static constexpr Type TYPE_BW =
+    PicrossPuzzle_Type_TYPE_BW;
+  static constexpr Type TYPE_GRAY =
+    PicrossPuzzle_Type_TYPE_GRAY;
+  static constexpr Type TYPE_RGB =
+    PicrossPuzzle_Type_TYPE_RGB;
+  static constexpr Type TYPE_RBY =
+    PicrossPuzzle_Type_TYPE_RBY;
+  static inline bool Type_IsValid(int value) {
+    return PicrossPuzzle_Type_IsValid(value);
+  }
+  static constexpr Type Type_MIN =
+    PicrossPuzzle_Type_Type_MIN;
+  static constexpr Type Type_MAX =
+    PicrossPuzzle_Type_Type_MAX;
+  static constexpr int Type_ARRAYSIZE =
+    PicrossPuzzle_Type_Type_ARRAYSIZE;
+  static inline const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor*
+  Type_descriptor() {
+    return PicrossPuzzle_Type_descriptor();
+  }
+  template<typename T>
+  static inline const std::string& Type_Name(T enum_t_value) {
+    static_assert(::std::is_same<T, Type>::value ||
+      ::std::is_integral<T>::value,
+      "Incorrect type passed to function Type_Name.");
+    return PicrossPuzzle_Type_Name(enum_t_value);
+  }
+  static inline bool Type_Parse(const std::string& name,
+      Type* value) {
+    return PicrossPuzzle_Type_Parse(name, value);
+  }
+
   // accessors -------------------------------------------------------
 
   enum : int {
     kDataFieldNumber = 5,
     kLayersFieldNumber = 6,
+    kMetaFieldNumber = 7,
     kWidthFieldNumber = 1,
     kHeightFieldNumber = 2,
     kTypeFieldNumber = 3,
@@ -588,6 +1282,24 @@ class PicrossPuzzle PROTOBUF_FINAL :
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::SolutionLayer >&
       layers() const;
 
+  // .PicrossPuzzleMeta meta = 7;
+  bool has_meta() const;
+  private:
+  bool _internal_has_meta() const;
+  public:
+  void clear_meta();
+  const ::PicrossPuzzleMeta& meta() const;
+  ::PicrossPuzzleMeta* release_meta();
+  ::PicrossPuzzleMeta* mutable_meta();
+  void set_allocated_meta(::PicrossPuzzleMeta* meta);
+  private:
+  const ::PicrossPuzzleMeta& _internal_meta() const;
+  ::PicrossPuzzleMeta* _internal_mutable_meta();
+  public:
+  void unsafe_arena_set_allocated_meta(
+      ::PicrossPuzzleMeta* meta);
+  ::PicrossPuzzleMeta* unsafe_arena_release_meta();
+
   // int32 width = 1;
   void clear_width();
   ::PROTOBUF_NAMESPACE_ID::int32 width() const;
@@ -606,13 +1318,13 @@ class PicrossPuzzle PROTOBUF_FINAL :
   void _internal_set_height(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // .Type type = 3;
+  // .PicrossPuzzle.Type type = 3;
   void clear_type();
-  ::Type type() const;
-  void set_type(::Type value);
+  ::PicrossPuzzle_Type type() const;
+  void set_type(::PicrossPuzzle_Type value);
   private:
-  ::Type _internal_type() const;
-  void _internal_set_type(::Type value);
+  ::PicrossPuzzle_Type _internal_type() const;
+  void _internal_set_type(::PicrossPuzzle_Type value);
   public:
 
   // int32 bpc = 4;
@@ -634,6 +1346,7 @@ class PicrossPuzzle PROTOBUF_FINAL :
   ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 > data_;
   mutable std::atomic<int> _data_cached_byte_size_;
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::SolutionLayer > layers_;
+  ::PicrossPuzzleMeta* meta_;
   ::PROTOBUF_NAMESPACE_ID::int32 width_;
   ::PROTOBUF_NAMESPACE_ID::int32 height_;
   int type_;
@@ -803,6 +1516,604 @@ SolutionLayer::cols() const {
 
 // -------------------------------------------------------------------
 
+// BackgroundInfo
+
+// string filename = 1;
+inline void BackgroundInfo::clear_filename() {
+  filename_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline const std::string& BackgroundInfo::filename() const {
+  // @@protoc_insertion_point(field_get:BackgroundInfo.filename)
+  return _internal_filename();
+}
+inline void BackgroundInfo::set_filename(const std::string& value) {
+  _internal_set_filename(value);
+  // @@protoc_insertion_point(field_set:BackgroundInfo.filename)
+}
+inline std::string* BackgroundInfo::mutable_filename() {
+  // @@protoc_insertion_point(field_mutable:BackgroundInfo.filename)
+  return _internal_mutable_filename();
+}
+inline const std::string& BackgroundInfo::_internal_filename() const {
+  return filename_.Get();
+}
+inline void BackgroundInfo::_internal_set_filename(const std::string& value) {
+  
+  filename_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value, GetArena());
+}
+inline void BackgroundInfo::set_filename(std::string&& value) {
+  
+  filename_.Set(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
+  // @@protoc_insertion_point(field_set_rvalue:BackgroundInfo.filename)
+}
+inline void BackgroundInfo::set_filename(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  filename_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
+              GetArena());
+  // @@protoc_insertion_point(field_set_char:BackgroundInfo.filename)
+}
+inline void BackgroundInfo::set_filename(const char* value,
+    size_t size) {
+  
+  filename_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
+      reinterpret_cast<const char*>(value), size), GetArena());
+  // @@protoc_insertion_point(field_set_pointer:BackgroundInfo.filename)
+}
+inline std::string* BackgroundInfo::_internal_mutable_filename() {
+  
+  return filename_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline std::string* BackgroundInfo::release_filename() {
+  // @@protoc_insertion_point(field_release:BackgroundInfo.filename)
+  return filename_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline void BackgroundInfo::set_allocated_filename(std::string* filename) {
+  if (filename != nullptr) {
+    
+  } else {
+    
+  }
+  filename_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), filename,
+      GetArena());
+  // @@protoc_insertion_point(field_set_allocated:BackgroundInfo.filename)
+}
+inline std::string* BackgroundInfo::unsafe_arena_release_filename() {
+  // @@protoc_insertion_point(field_unsafe_arena_release:BackgroundInfo.filename)
+  GOOGLE_DCHECK(GetArena() != nullptr);
+  
+  return filename_.UnsafeArenaRelease(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      GetArena());
+}
+inline void BackgroundInfo::unsafe_arena_set_allocated_filename(
+    std::string* filename) {
+  GOOGLE_DCHECK(GetArena() != nullptr);
+  if (filename != nullptr) {
+    
+  } else {
+    
+  }
+  filename_.UnsafeArenaSetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      filename, GetArena());
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:BackgroundInfo.filename)
+}
+
+// .BackgroundInfo.Type type = 2;
+inline void BackgroundInfo::clear_type() {
+  type_ = 0;
+}
+inline ::BackgroundInfo_Type BackgroundInfo::_internal_type() const {
+  return static_cast< ::BackgroundInfo_Type >(type_);
+}
+inline ::BackgroundInfo_Type BackgroundInfo::type() const {
+  // @@protoc_insertion_point(field_get:BackgroundInfo.type)
+  return _internal_type();
+}
+inline void BackgroundInfo::_internal_set_type(::BackgroundInfo_Type value) {
+  
+  type_ = value;
+}
+inline void BackgroundInfo::set_type(::BackgroundInfo_Type value) {
+  _internal_set_type(value);
+  // @@protoc_insertion_point(field_set:BackgroundInfo.type)
+}
+
+// uint32 color1 = 3;
+inline void BackgroundInfo::clear_color1() {
+  color1_ = 0u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 BackgroundInfo::_internal_color1() const {
+  return color1_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 BackgroundInfo::color1() const {
+  // @@protoc_insertion_point(field_get:BackgroundInfo.color1)
+  return _internal_color1();
+}
+inline void BackgroundInfo::_internal_set_color1(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  
+  color1_ = value;
+}
+inline void BackgroundInfo::set_color1(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  _internal_set_color1(value);
+  // @@protoc_insertion_point(field_set:BackgroundInfo.color1)
+}
+
+// uint32 color2 = 4;
+inline void BackgroundInfo::clear_color2() {
+  color2_ = 0u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 BackgroundInfo::_internal_color2() const {
+  return color2_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 BackgroundInfo::color2() const {
+  // @@protoc_insertion_point(field_get:BackgroundInfo.color2)
+  return _internal_color2();
+}
+inline void BackgroundInfo::_internal_set_color2(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  
+  color2_ = value;
+}
+inline void BackgroundInfo::set_color2(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  _internal_set_color2(value);
+  // @@protoc_insertion_point(field_set:BackgroundInfo.color2)
+}
+
+// -------------------------------------------------------------------
+
+// SolutionMeta
+
+// string image = 1;
+inline void SolutionMeta::clear_image() {
+  image_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline const std::string& SolutionMeta::image() const {
+  // @@protoc_insertion_point(field_get:SolutionMeta.image)
+  return _internal_image();
+}
+inline void SolutionMeta::set_image(const std::string& value) {
+  _internal_set_image(value);
+  // @@protoc_insertion_point(field_set:SolutionMeta.image)
+}
+inline std::string* SolutionMeta::mutable_image() {
+  // @@protoc_insertion_point(field_mutable:SolutionMeta.image)
+  return _internal_mutable_image();
+}
+inline const std::string& SolutionMeta::_internal_image() const {
+  return image_.Get();
+}
+inline void SolutionMeta::_internal_set_image(const std::string& value) {
+  
+  image_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value, GetArena());
+}
+inline void SolutionMeta::set_image(std::string&& value) {
+  
+  image_.Set(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
+  // @@protoc_insertion_point(field_set_rvalue:SolutionMeta.image)
+}
+inline void SolutionMeta::set_image(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  image_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
+              GetArena());
+  // @@protoc_insertion_point(field_set_char:SolutionMeta.image)
+}
+inline void SolutionMeta::set_image(const char* value,
+    size_t size) {
+  
+  image_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
+      reinterpret_cast<const char*>(value), size), GetArena());
+  // @@protoc_insertion_point(field_set_pointer:SolutionMeta.image)
+}
+inline std::string* SolutionMeta::_internal_mutable_image() {
+  
+  return image_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline std::string* SolutionMeta::release_image() {
+  // @@protoc_insertion_point(field_release:SolutionMeta.image)
+  return image_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline void SolutionMeta::set_allocated_image(std::string* image) {
+  if (image != nullptr) {
+    
+  } else {
+    
+  }
+  image_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), image,
+      GetArena());
+  // @@protoc_insertion_point(field_set_allocated:SolutionMeta.image)
+}
+inline std::string* SolutionMeta::unsafe_arena_release_image() {
+  // @@protoc_insertion_point(field_unsafe_arena_release:SolutionMeta.image)
+  GOOGLE_DCHECK(GetArena() != nullptr);
+  
+  return image_.UnsafeArenaRelease(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      GetArena());
+}
+inline void SolutionMeta::unsafe_arena_set_allocated_image(
+    std::string* image) {
+  GOOGLE_DCHECK(GetArena() != nullptr);
+  if (image != nullptr) {
+    
+  } else {
+    
+  }
+  image_.UnsafeArenaSetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      image, GetArena());
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:SolutionMeta.image)
+}
+
+// int32 frames = 2;
+inline void SolutionMeta::clear_frames() {
+  frames_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 SolutionMeta::_internal_frames() const {
+  return frames_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 SolutionMeta::frames() const {
+  // @@protoc_insertion_point(field_get:SolutionMeta.frames)
+  return _internal_frames();
+}
+inline void SolutionMeta::_internal_set_frames(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  frames_ = value;
+}
+inline void SolutionMeta::set_frames(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_frames(value);
+  // @@protoc_insertion_point(field_set:SolutionMeta.frames)
+}
+
+// -------------------------------------------------------------------
+
+// PicrossPuzzleMeta
+
+// string name = 1;
+inline void PicrossPuzzleMeta::clear_name() {
+  name_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline const std::string& PicrossPuzzleMeta::name() const {
+  // @@protoc_insertion_point(field_get:PicrossPuzzleMeta.name)
+  return _internal_name();
+}
+inline void PicrossPuzzleMeta::set_name(const std::string& value) {
+  _internal_set_name(value);
+  // @@protoc_insertion_point(field_set:PicrossPuzzleMeta.name)
+}
+inline std::string* PicrossPuzzleMeta::mutable_name() {
+  // @@protoc_insertion_point(field_mutable:PicrossPuzzleMeta.name)
+  return _internal_mutable_name();
+}
+inline const std::string& PicrossPuzzleMeta::_internal_name() const {
+  return name_.Get();
+}
+inline void PicrossPuzzleMeta::_internal_set_name(const std::string& value) {
+  
+  name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value, GetArena());
+}
+inline void PicrossPuzzleMeta::set_name(std::string&& value) {
+  
+  name_.Set(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
+  // @@protoc_insertion_point(field_set_rvalue:PicrossPuzzleMeta.name)
+}
+inline void PicrossPuzzleMeta::set_name(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
+              GetArena());
+  // @@protoc_insertion_point(field_set_char:PicrossPuzzleMeta.name)
+}
+inline void PicrossPuzzleMeta::set_name(const char* value,
+    size_t size) {
+  
+  name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
+      reinterpret_cast<const char*>(value), size), GetArena());
+  // @@protoc_insertion_point(field_set_pointer:PicrossPuzzleMeta.name)
+}
+inline std::string* PicrossPuzzleMeta::_internal_mutable_name() {
+  
+  return name_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline std::string* PicrossPuzzleMeta::release_name() {
+  // @@protoc_insertion_point(field_release:PicrossPuzzleMeta.name)
+  return name_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline void PicrossPuzzleMeta::set_allocated_name(std::string* name) {
+  if (name != nullptr) {
+    
+  } else {
+    
+  }
+  name_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), name,
+      GetArena());
+  // @@protoc_insertion_point(field_set_allocated:PicrossPuzzleMeta.name)
+}
+inline std::string* PicrossPuzzleMeta::unsafe_arena_release_name() {
+  // @@protoc_insertion_point(field_unsafe_arena_release:PicrossPuzzleMeta.name)
+  GOOGLE_DCHECK(GetArena() != nullptr);
+  
+  return name_.UnsafeArenaRelease(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      GetArena());
+}
+inline void PicrossPuzzleMeta::unsafe_arena_set_allocated_name(
+    std::string* name) {
+  GOOGLE_DCHECK(GetArena() != nullptr);
+  if (name != nullptr) {
+    
+  } else {
+    
+  }
+  name_.UnsafeArenaSetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      name, GetArena());
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:PicrossPuzzleMeta.name)
+}
+
+// string author = 2;
+inline void PicrossPuzzleMeta::clear_author() {
+  author_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline const std::string& PicrossPuzzleMeta::author() const {
+  // @@protoc_insertion_point(field_get:PicrossPuzzleMeta.author)
+  return _internal_author();
+}
+inline void PicrossPuzzleMeta::set_author(const std::string& value) {
+  _internal_set_author(value);
+  // @@protoc_insertion_point(field_set:PicrossPuzzleMeta.author)
+}
+inline std::string* PicrossPuzzleMeta::mutable_author() {
+  // @@protoc_insertion_point(field_mutable:PicrossPuzzleMeta.author)
+  return _internal_mutable_author();
+}
+inline const std::string& PicrossPuzzleMeta::_internal_author() const {
+  return author_.Get();
+}
+inline void PicrossPuzzleMeta::_internal_set_author(const std::string& value) {
+  
+  author_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value, GetArena());
+}
+inline void PicrossPuzzleMeta::set_author(std::string&& value) {
+  
+  author_.Set(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
+  // @@protoc_insertion_point(field_set_rvalue:PicrossPuzzleMeta.author)
+}
+inline void PicrossPuzzleMeta::set_author(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  author_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
+              GetArena());
+  // @@protoc_insertion_point(field_set_char:PicrossPuzzleMeta.author)
+}
+inline void PicrossPuzzleMeta::set_author(const char* value,
+    size_t size) {
+  
+  author_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
+      reinterpret_cast<const char*>(value), size), GetArena());
+  // @@protoc_insertion_point(field_set_pointer:PicrossPuzzleMeta.author)
+}
+inline std::string* PicrossPuzzleMeta::_internal_mutable_author() {
+  
+  return author_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline std::string* PicrossPuzzleMeta::release_author() {
+  // @@protoc_insertion_point(field_release:PicrossPuzzleMeta.author)
+  return author_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline void PicrossPuzzleMeta::set_allocated_author(std::string* author) {
+  if (author != nullptr) {
+    
+  } else {
+    
+  }
+  author_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), author,
+      GetArena());
+  // @@protoc_insertion_point(field_set_allocated:PicrossPuzzleMeta.author)
+}
+inline std::string* PicrossPuzzleMeta::unsafe_arena_release_author() {
+  // @@protoc_insertion_point(field_unsafe_arena_release:PicrossPuzzleMeta.author)
+  GOOGLE_DCHECK(GetArena() != nullptr);
+  
+  return author_.UnsafeArenaRelease(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      GetArena());
+}
+inline void PicrossPuzzleMeta::unsafe_arena_set_allocated_author(
+    std::string* author) {
+  GOOGLE_DCHECK(GetArena() != nullptr);
+  if (author != nullptr) {
+    
+  } else {
+    
+  }
+  author_.UnsafeArenaSetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      author, GetArena());
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:PicrossPuzzleMeta.author)
+}
+
+// int32 time = 3;
+inline void PicrossPuzzleMeta::clear_time() {
+  time_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 PicrossPuzzleMeta::_internal_time() const {
+  return time_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 PicrossPuzzleMeta::time() const {
+  // @@protoc_insertion_point(field_get:PicrossPuzzleMeta.time)
+  return _internal_time();
+}
+inline void PicrossPuzzleMeta::_internal_set_time(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  time_ = value;
+}
+inline void PicrossPuzzleMeta::set_time(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_time(value);
+  // @@protoc_insertion_point(field_set:PicrossPuzzleMeta.time)
+}
+
+// .BackgroundInfo background = 4;
+inline bool PicrossPuzzleMeta::_internal_has_background() const {
+  return this != internal_default_instance() && background_ != nullptr;
+}
+inline bool PicrossPuzzleMeta::has_background() const {
+  return _internal_has_background();
+}
+inline void PicrossPuzzleMeta::clear_background() {
+  if (GetArena() == nullptr && background_ != nullptr) {
+    delete background_;
+  }
+  background_ = nullptr;
+}
+inline const ::BackgroundInfo& PicrossPuzzleMeta::_internal_background() const {
+  const ::BackgroundInfo* p = background_;
+  return p != nullptr ? *p : *reinterpret_cast<const ::BackgroundInfo*>(
+      &::_BackgroundInfo_default_instance_);
+}
+inline const ::BackgroundInfo& PicrossPuzzleMeta::background() const {
+  // @@protoc_insertion_point(field_get:PicrossPuzzleMeta.background)
+  return _internal_background();
+}
+inline void PicrossPuzzleMeta::unsafe_arena_set_allocated_background(
+    ::BackgroundInfo* background) {
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(background_);
+  }
+  background_ = background;
+  if (background) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:PicrossPuzzleMeta.background)
+}
+inline ::BackgroundInfo* PicrossPuzzleMeta::release_background() {
+  auto temp = unsafe_arena_release_background();
+  if (GetArena() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+  return temp;
+}
+inline ::BackgroundInfo* PicrossPuzzleMeta::unsafe_arena_release_background() {
+  // @@protoc_insertion_point(field_release:PicrossPuzzleMeta.background)
+  
+  ::BackgroundInfo* temp = background_;
+  background_ = nullptr;
+  return temp;
+}
+inline ::BackgroundInfo* PicrossPuzzleMeta::_internal_mutable_background() {
+  
+  if (background_ == nullptr) {
+    auto* p = CreateMaybeMessage<::BackgroundInfo>(GetArena());
+    background_ = p;
+  }
+  return background_;
+}
+inline ::BackgroundInfo* PicrossPuzzleMeta::mutable_background() {
+  // @@protoc_insertion_point(field_mutable:PicrossPuzzleMeta.background)
+  return _internal_mutable_background();
+}
+inline void PicrossPuzzleMeta::set_allocated_background(::BackgroundInfo* background) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArena();
+  if (message_arena == nullptr) {
+    delete background_;
+  }
+  if (background) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+      ::PROTOBUF_NAMESPACE_ID::Arena::GetArena(background);
+    if (message_arena != submessage_arena) {
+      background = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, background, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  background_ = background;
+  // @@protoc_insertion_point(field_set_allocated:PicrossPuzzleMeta.background)
+}
+
+// .SolutionMeta solution = 5;
+inline bool PicrossPuzzleMeta::_internal_has_solution() const {
+  return this != internal_default_instance() && solution_ != nullptr;
+}
+inline bool PicrossPuzzleMeta::has_solution() const {
+  return _internal_has_solution();
+}
+inline void PicrossPuzzleMeta::clear_solution() {
+  if (GetArena() == nullptr && solution_ != nullptr) {
+    delete solution_;
+  }
+  solution_ = nullptr;
+}
+inline const ::SolutionMeta& PicrossPuzzleMeta::_internal_solution() const {
+  const ::SolutionMeta* p = solution_;
+  return p != nullptr ? *p : *reinterpret_cast<const ::SolutionMeta*>(
+      &::_SolutionMeta_default_instance_);
+}
+inline const ::SolutionMeta& PicrossPuzzleMeta::solution() const {
+  // @@protoc_insertion_point(field_get:PicrossPuzzleMeta.solution)
+  return _internal_solution();
+}
+inline void PicrossPuzzleMeta::unsafe_arena_set_allocated_solution(
+    ::SolutionMeta* solution) {
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(solution_);
+  }
+  solution_ = solution;
+  if (solution) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:PicrossPuzzleMeta.solution)
+}
+inline ::SolutionMeta* PicrossPuzzleMeta::release_solution() {
+  auto temp = unsafe_arena_release_solution();
+  if (GetArena() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+  return temp;
+}
+inline ::SolutionMeta* PicrossPuzzleMeta::unsafe_arena_release_solution() {
+  // @@protoc_insertion_point(field_release:PicrossPuzzleMeta.solution)
+  
+  ::SolutionMeta* temp = solution_;
+  solution_ = nullptr;
+  return temp;
+}
+inline ::SolutionMeta* PicrossPuzzleMeta::_internal_mutable_solution() {
+  
+  if (solution_ == nullptr) {
+    auto* p = CreateMaybeMessage<::SolutionMeta>(GetArena());
+    solution_ = p;
+  }
+  return solution_;
+}
+inline ::SolutionMeta* PicrossPuzzleMeta::mutable_solution() {
+  // @@protoc_insertion_point(field_mutable:PicrossPuzzleMeta.solution)
+  return _internal_mutable_solution();
+}
+inline void PicrossPuzzleMeta::set_allocated_solution(::SolutionMeta* solution) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArena();
+  if (message_arena == nullptr) {
+    delete solution_;
+  }
+  if (solution) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+      ::PROTOBUF_NAMESPACE_ID::Arena::GetArena(solution);
+    if (message_arena != submessage_arena) {
+      solution = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, solution, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  solution_ = solution;
+  // @@protoc_insertion_point(field_set_allocated:PicrossPuzzleMeta.solution)
+}
+
+// -------------------------------------------------------------------
+
 // PicrossPuzzle
 
 // int32 width = 1;
@@ -845,22 +2156,22 @@ inline void PicrossPuzzle::set_height(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:PicrossPuzzle.height)
 }
 
-// .Type type = 3;
+// .PicrossPuzzle.Type type = 3;
 inline void PicrossPuzzle::clear_type() {
   type_ = 0;
 }
-inline ::Type PicrossPuzzle::_internal_type() const {
-  return static_cast< ::Type >(type_);
+inline ::PicrossPuzzle_Type PicrossPuzzle::_internal_type() const {
+  return static_cast< ::PicrossPuzzle_Type >(type_);
 }
-inline ::Type PicrossPuzzle::type() const {
+inline ::PicrossPuzzle_Type PicrossPuzzle::type() const {
   // @@protoc_insertion_point(field_get:PicrossPuzzle.type)
   return _internal_type();
 }
-inline void PicrossPuzzle::_internal_set_type(::Type value) {
+inline void PicrossPuzzle::_internal_set_type(::PicrossPuzzle_Type value) {
   
   type_ = value;
 }
-inline void PicrossPuzzle::set_type(::Type value) {
+inline void PicrossPuzzle::set_type(::PicrossPuzzle_Type value) {
   _internal_set_type(value);
   // @@protoc_insertion_point(field_set:PicrossPuzzle.type)
 }
@@ -971,9 +2282,96 @@ PicrossPuzzle::layers() const {
   return layers_;
 }
 
+// .PicrossPuzzleMeta meta = 7;
+inline bool PicrossPuzzle::_internal_has_meta() const {
+  return this != internal_default_instance() && meta_ != nullptr;
+}
+inline bool PicrossPuzzle::has_meta() const {
+  return _internal_has_meta();
+}
+inline void PicrossPuzzle::clear_meta() {
+  if (GetArena() == nullptr && meta_ != nullptr) {
+    delete meta_;
+  }
+  meta_ = nullptr;
+}
+inline const ::PicrossPuzzleMeta& PicrossPuzzle::_internal_meta() const {
+  const ::PicrossPuzzleMeta* p = meta_;
+  return p != nullptr ? *p : *reinterpret_cast<const ::PicrossPuzzleMeta*>(
+      &::_PicrossPuzzleMeta_default_instance_);
+}
+inline const ::PicrossPuzzleMeta& PicrossPuzzle::meta() const {
+  // @@protoc_insertion_point(field_get:PicrossPuzzle.meta)
+  return _internal_meta();
+}
+inline void PicrossPuzzle::unsafe_arena_set_allocated_meta(
+    ::PicrossPuzzleMeta* meta) {
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(meta_);
+  }
+  meta_ = meta;
+  if (meta) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:PicrossPuzzle.meta)
+}
+inline ::PicrossPuzzleMeta* PicrossPuzzle::release_meta() {
+  auto temp = unsafe_arena_release_meta();
+  if (GetArena() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+  return temp;
+}
+inline ::PicrossPuzzleMeta* PicrossPuzzle::unsafe_arena_release_meta() {
+  // @@protoc_insertion_point(field_release:PicrossPuzzle.meta)
+  
+  ::PicrossPuzzleMeta* temp = meta_;
+  meta_ = nullptr;
+  return temp;
+}
+inline ::PicrossPuzzleMeta* PicrossPuzzle::_internal_mutable_meta() {
+  
+  if (meta_ == nullptr) {
+    auto* p = CreateMaybeMessage<::PicrossPuzzleMeta>(GetArena());
+    meta_ = p;
+  }
+  return meta_;
+}
+inline ::PicrossPuzzleMeta* PicrossPuzzle::mutable_meta() {
+  // @@protoc_insertion_point(field_mutable:PicrossPuzzle.meta)
+  return _internal_mutable_meta();
+}
+inline void PicrossPuzzle::set_allocated_meta(::PicrossPuzzleMeta* meta) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArena();
+  if (message_arena == nullptr) {
+    delete meta_;
+  }
+  if (meta) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+      ::PROTOBUF_NAMESPACE_ID::Arena::GetArena(meta);
+    if (message_arena != submessage_arena) {
+      meta = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, meta, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  meta_ = meta;
+  // @@protoc_insertion_point(field_set_allocated:PicrossPuzzle.meta)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------
@@ -984,10 +2382,15 @@ PicrossPuzzle::layers() const {
 
 PROTOBUF_NAMESPACE_OPEN
 
-template <> struct is_proto_enum< ::Type> : ::std::true_type {};
+template <> struct is_proto_enum< ::BackgroundInfo_Type> : ::std::true_type {};
 template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::Type>() {
-  return ::Type_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor< ::BackgroundInfo_Type>() {
+  return ::BackgroundInfo_Type_descriptor();
+}
+template <> struct is_proto_enum< ::PicrossPuzzle_Type> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::PicrossPuzzle_Type>() {
+  return ::PicrossPuzzle_Type_descriptor();
 }
 
 PROTOBUF_NAMESPACE_CLOSE

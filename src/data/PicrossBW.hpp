@@ -1,6 +1,6 @@
 /******************************************************************************************************
  * Picross
- * Copyright (C) 2009-2014 Brandon Whitehead (tricksterguy87[AT]gmail[DOT]com)
+ * Copyright (C) 2009-2020 Brandon Whitehead (tricksterguy87[AT]gmail[DOT]com)
  *
  * This software is provided 'as-is', without any express or implied warranty.
  * In no event will the authors be held liable for any damages arising from the use of this software.
@@ -30,7 +30,7 @@ class PicrossBW : public Picross
     public:
         PicrossBW(wxImage image, int width, int height);
         ~PicrossBW() {}
-        Type GetType() const {return TYPE_BW;}
+        PicrossPuzzle::Type GetType() const {return PicrossPuzzle::TYPE_BW;}
         void Draw(wxDC& dc);
 };
 

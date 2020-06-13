@@ -1,6 +1,6 @@
 /******************************************************************************************************
  * Picross
- * Copyright (C) 2009-2014 Brandon Whitehead (tricksterguy87[AT]gmail[DOT]com)
+ * Copyright (C) 2009-2020 Brandon Whitehead (tricksterguy87[AT]gmail[DOT]com)
  *
  * This software is provided 'as-is', without any express or implied warranty.
  * In no event will the authors be held liable for any damages arising from the use of this software.
@@ -50,15 +50,22 @@ void PicrossBW::Draw(wxDC& dc)
     wxRect rect;
     dc.GetClippingBox(rect);
     wxSize size = rect.GetSize();
-    int cw = size.GetWidth() / width ;
-    int ch = size.GetHeight() / height;
+    int cw = (size.GetWidth() - 32) / width ;
+    int ch = (size.GetHeight() - 32) / height;
+
+    dc.SetPen(*wxTRANSPARENT_PEN);
     dc.SetBrush(*wxBLACK_BRUSH);
+    if (showGrid) dc.SetPen(*wxBLACK_PEN);
+
     for (int y = 0; y < height; y++)
     {
         for (int x = 0; x < width; x++)
         {
             if (data.Get(x, y) == BLACK)
-                dc.DrawRectangle(x * cw + rect.GetX(), y * ch + rect.GetY(), cw, ch);
+                dc.SetBrush(*wxBLACK_BRUSH);
+            else
+                dc.SetBrush(*wxWHITE_BRUSH);
+            dc.DrawRectangle(x * cw + rect.GetX(), y * ch + rect.GetY(), cw, ch);
         }
     }
 }

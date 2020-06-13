@@ -1,14 +1,5 @@
 syntax = "proto3";
 
-enum Type
-{
-    TYPE_INVALID = 0;
-	TYPE_BW = 1;
-	TYPE_GRAY = 2;
-	TYPE_RGB = 3;
-	TYPE_RBY = 4;
-}
-
 message Solution
 {
 	repeated int32 data = 1 [packed=true];
@@ -21,12 +12,52 @@ message SolutionLayer
 	repeated Solution cols = 2;
 }
 
+message BackgroundInfo
+{
+	enum Type
+	{
+		TYPE_INVALID = 0;
+		TYPE_STATIONARY = 1;
+		TYPE_STRETCHED = 2;
+		TYPE_TILED = 3;
+		TYPE_GRADIENT = 4;
+	}
+	string filename = 1;
+	Type type = 2;
+	uint32 color1 = 3;
+	uint32 color2 = 4;
+}
+
+message SolutionMeta
+{
+	string image = 1;
+	int32 frames = 2;
+}
+
+message PicrossPuzzleMeta
+{
+	string name = 1;
+	string author = 2;
+	int32 time = 3;
+	BackgroundInfo background = 4;
+	SolutionMeta solution = 5;
+}
+
 message PicrossPuzzle
 {
+	enum Type
+	{
+		TYPE_INVALID = 0;
+		TYPE_BW = 1;
+		TYPE_GRAY = 2;
+		TYPE_RGB = 3;
+		TYPE_RBY = 4;
+	}
 	int32 width = 1;
 	int32 height = 2;
 	Type type = 3;
 	int32 bpc = 4;
 	repeated int32 data = 5 [packed=true];
 	repeated SolutionLayer layers = 6;
+	PicrossPuzzleMeta meta = 7;
 }

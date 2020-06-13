@@ -1,6 +1,6 @@
 /******************************************************************************************************
  * Picross
- * Copyright (C) 2009-2014 Brandon Whitehead (tricksterguy87[AT]gmail[DOT]com)
+ * Copyright (C) 2009-2020 Brandon Whitehead (tricksterguy87[AT]gmail[DOT]com)
  *
  * This software is provided 'as-is', without any express or implied warranty.
  * In no event will the authors be held liable for any damages arising from the use of this software.
@@ -24,7 +24,7 @@
 
 #include <wx/docview.h>
 
-//#include "Picross.hpp"
+#include "Picross.hpp"
 #include "PicrossGUI.h"
 
 /**
@@ -33,17 +33,21 @@
 class PicrossFrame : public PicrossGUI
 {
     public:
-        PicrossFrame(wxFrame* window);
-        ~PicrossFrame();
-		void OnChangeType(wxCommandEvent& event);
+        PicrossFrame(wxFrame* window) : PicrossGUI(window) {}
+        ~PicrossFrame() {}
+		void OnChangePuzzleType(wxCommandEvent& event);
+		void OnChangeBackgroundType(wxCommandEvent& event);
 		void OnLayerChange(wxCommandEvent& event);
 		void OnChangeBpc(wxCommandEvent& event);
 		void OnLoadImage(wxCommandEvent& event);
 		void OnValidate(wxCommandEvent& event);
 		void OnExportImage(wxCommandEvent& event);
 		void OnShowLayer(wxCommandEvent& event);
+		void OnToggleGrid(wxCommandEvent& event);
 		void OnQRCode(wxCommandEvent& event);
 		void OnResize(wxSizeEvent& event) {Refresh(); event.Skip();}
+    private:
+        ExportParams GetExportParams() const;
 };
 
 #endif

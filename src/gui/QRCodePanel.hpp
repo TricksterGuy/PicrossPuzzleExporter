@@ -1,6 +1,6 @@
 /******************************************************************************************************
  * Picross
- * Copyright (C) 2009-2014 Brandon Whitehead (tricksterguy87[AT]gmail[DOT]com)
+ * Copyright (C) 2009-2020 Brandon Whitehead (tricksterguy87[AT]gmail[DOT]com)
  *
  * This software is provided 'as-is', without any express or implied warranty.
  * In no event will the authors be held liable for any damages arising from the use of this software.
@@ -31,8 +31,8 @@ class QRCodePanel : public wxScrolledWindow
 {
     public:
         QRCodePanel(QRcode* code, wxWindow *parent = NULL, wxWindowID id=-1, const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxDefaultSize, long style=wxHSCROLL|wxVSCROLL);
-        ~QRCodePanel();
-        void OnDraw(wxDC& dc);
+        ~QRCodePanel() {}
+        void OnDraw(wxDC& dc) override;
     private:
         QRcode* qr;
 
