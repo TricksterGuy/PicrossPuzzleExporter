@@ -27,8 +27,6 @@ set(SRC_ppe
 	src/util/color.cpp
 	src/util/cpercep.cpp
 	src/util/dither.cpp
-	src/util/histogram.cpp
-	src/util/mediancut.cpp
 	src/util/reductionhelper.cpp
 )
 

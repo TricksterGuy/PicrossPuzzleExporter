@@ -8,7 +8,6 @@
 
 #include "cpercep.hpp"
 #include "dither.hpp"
-#include "mediancut.hpp"
 
 Image16Bpp::Image16Bpp(wxImage image, const std::string& _name) : width(image.GetWidth()), height(image.GetHeight()), name(_name), pixels(width * height)
 {
