@@ -27,16 +27,21 @@ class PicrossDataCanvas;
 #include <wx/choice.h>
 #include <wx/checkbox.h>
 #include <wx/clrpicker.h>
-#include <wx/tglbtn.h>
+#include <wx/panel.h>
 #include <wx/bitmap.h>
 #include <wx/image.h>
 #include <wx/icon.h>
-#include <wx/button.h>
-#include <wx/panel.h>
+#include <wx/menu.h>
+#include <wx/statusbr.h>
 #include <wx/frame.h>
 
 ///////////////////////////////////////////////////////////////////////////
 
+#define wxID_LOAD 1000
+#define ID_PROTOBUF 1001
+#define wxID_QUIT 1002
+#define ID_SHOW_GRID 1003
+#define ID_VALIDATE 1004
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Class PicrossGUI
@@ -73,11 +78,12 @@ class PicrossGUI : public wxFrame
 		wxColourPickerCtrl* topColor;
 		wxStaticText* bottomColorLabel;
 		wxColourPickerCtrl* bottomColor;
-		wxToggleButton* m_toggleBtn1;
-		wxButton* m_button1;
-		wxButton* m_button3;
-		wxButton* m_button2;
-		wxButton* m_button4;
+		wxMenuBar* m_menubar1;
+		wxMenu* fileMenu;
+		wxMenu* exportMenu;
+		wxMenu* viewMenu;
+		wxMenu* validateMenu;
+		wxStatusBar* m_statusBar1;
 
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnResize( wxSizeEvent& event ) { event.Skip(); }
@@ -86,11 +92,10 @@ class PicrossGUI : public wxFrame
 		virtual void OnShowLayer( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnChangeBpc( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnChangeBackgroundType( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnToggleGrid( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnLoadImage( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnExportProtobuf( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnToggleGrid( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnValidate( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnExportImage( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnQRCode( wxCommandEvent& event ) { event.Skip(); }
 
 
 	public:

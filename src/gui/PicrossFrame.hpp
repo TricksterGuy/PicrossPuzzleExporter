@@ -35,16 +35,16 @@ class PicrossFrame : public PicrossGUI
     public:
         PicrossFrame(wxFrame* window) : PicrossGUI(window) {}
         ~PicrossFrame() {}
-		void OnChangePuzzleType(wxCommandEvent& event);
-		void OnChangeBackgroundType(wxCommandEvent& event);
-		void OnLayerChange(wxCommandEvent& event);
-		void OnChangeBpc(wxCommandEvent& event);
-		void OnLoadImage(wxCommandEvent& event);
-		void OnValidate(wxCommandEvent& event);
-		void OnExportImage(wxCommandEvent& event);
-		void OnShowLayer(wxCommandEvent& event);
-		void OnToggleGrid(wxCommandEvent& event);
-		void OnQRCode(wxCommandEvent& event);
+		void OnChangePuzzleType(wxCommandEvent& event) override;
+		void OnChangeBackgroundType(wxCommandEvent& event) override;
+		void OnLayerChange(wxCommandEvent& event) override;
+		void OnChangeBpc(wxCommandEvent& event) override;
+		void OnLoadImage(wxCommandEvent& event) override;
+		void OnValidate(wxCommandEvent& event) override;
+		void OnExportProtobuf(wxCommandEvent& event) override;
+		void OnShowLayer(wxCommandEvent& event) override;
+		void OnToggleGrid(wxCommandEvent& event) override;
+		//void OnExportQRCode(wxCommandEvent& event) override;
 		void OnResize(wxSizeEvent& event) {Refresh(); event.Skip();}
     private:
         ExportParams GetExportParams() const;

@@ -159,6 +159,9 @@ void Picross::Draw(wxDC& dc)
 
 void Picross::TranslateToCoords(int x, int y, int w, int h, int& tx, int& ty) const
 {
+    tx = -1;
+    ty = -1;
+
     x -= 100;
     y -= 100;
 
@@ -166,6 +169,12 @@ void Picross::TranslateToCoords(int x, int y, int w, int h, int& tx, int& ty) co
 
     tx = x / ((w - 132) / width);
     ty = y / ((h - 132) / height);
+
+    if (tx > width || ty > height)
+    {
+        tx = -1;
+        ty = -1;
+    }
 }
 
 void Picross::Export(const wxString& file, const ExportParams& params) const

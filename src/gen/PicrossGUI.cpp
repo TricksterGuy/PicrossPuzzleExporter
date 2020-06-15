@@ -19,14 +19,11 @@ PicrossGUI::PicrossGUI( wxWindow* parent, wxWindowID id, const wxString& title, 
 	bSizer1 = new wxBoxSizer( wxVERTICAL );
 
 	m_panel4 = new wxPanel( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
-	wxBoxSizer* bSizer3;
-	bSizer3 = new wxBoxSizer( wxVERTICAL );
-
 	contents = new wxBoxSizer( wxHORIZONTAL );
 
 	puzzleDataCanvas = new PicrossDataCanvas( m_panel4, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxHSCROLL|wxVSCROLL );
 	puzzleDataCanvas->SetScrollRate( 5, 5 );
-	contents->Add( puzzleDataCanvas, 1, wxEXPAND | wxALL, 5 );
+	contents->Add( puzzleDataCanvas, 1, wxEXPAND | wxALL, 0 );
 
 	wxBoxSizer* bSizer8;
 	bSizer8 = new wxBoxSizer( wxVERTICAL );
@@ -207,41 +204,51 @@ PicrossGUI::PicrossGUI( wxWindow* parent, wxWindowID id, const wxString& title, 
 	contents->Add( bSizer8, 0, wxEXPAND, 5 );
 
 
-	bSizer3->Add( contents, 1, wxEXPAND, 5 );
-
-	wxBoxSizer* bSizer6;
-	bSizer6 = new wxBoxSizer( wxHORIZONTAL );
-
-	m_toggleBtn1 = new wxToggleButton( m_panel4, wxID_ANY, wxT("Show Grid"), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer6->Add( m_toggleBtn1, 0, wxALL, 5 );
-
-
-	bSizer6->Add( 0, 0, 1, wxEXPAND, 5 );
-
-	m_button1 = new wxButton( m_panel4, wxID_ANY, wxT("Load"), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer6->Add( m_button1, 0, wxALL, 5 );
-
-	m_button3 = new wxButton( m_panel4, wxID_ANY, wxT("Validate"), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer6->Add( m_button3, 0, wxALL, 5 );
-
-	m_button2 = new wxButton( m_panel4, wxID_ANY, wxT("Export"), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer6->Add( m_button2, 0, wxALL, 5 );
-
-	m_button4 = new wxButton( m_panel4, wxID_ANY, wxT("QR Code"), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer6->Add( m_button4, 0, wxALL, 5 );
-
-
-	bSizer3->Add( bSizer6, 0, wxEXPAND|wxALIGN_RIGHT, 0 );
-
-
-	m_panel4->SetSizer( bSizer3 );
+	m_panel4->SetSizer( contents );
 	m_panel4->Layout();
-	bSizer3->Fit( m_panel4 );
+	contents->Fit( m_panel4 );
 	bSizer1->Add( m_panel4, 1, wxEXPAND, 5 );
 
 
 	this->SetSizer( bSizer1 );
 	this->Layout();
+	m_menubar1 = new wxMenuBar( 0 );
+	fileMenu = new wxMenu();
+	wxMenuItem* loadMenuItem;
+	loadMenuItem = new wxMenuItem( fileMenu, wxID_LOAD, wxString( wxT("Load") ) + wxT('\t') + wxT("Ctrl+O"), wxT("Load an image and convert into a puzzle."), wxITEM_NORMAL );
+	fileMenu->Append( loadMenuItem );
+
+	exportMenu = new wxMenu();
+	wxMenuItem* exportMenuItem = new wxMenuItem( fileMenu, wxID_ANY, wxT("Export"), wxEmptyString, wxITEM_NORMAL, exportMenu );
+	wxMenuItem* protobufMenuItem;
+	protobufMenuItem = new wxMenuItem( exportMenu, ID_PROTOBUF, wxString( wxT("Protobuf") ) , wxEmptyString, wxITEM_NORMAL );
+	exportMenu->Append( protobufMenuItem );
+
+	fileMenu->Append( exportMenuItem );
+
+	wxMenuItem* quitMenuItem;
+	quitMenuItem = new wxMenuItem( fileMenu, wxID_QUIT, wxString( wxT("Quit") ) , wxEmptyString, wxITEM_NORMAL );
+	fileMenu->Append( quitMenuItem );
+
+	m_menubar1->Append( fileMenu, wxT("File") );
+
+	viewMenu = new wxMenu();
+	wxMenuItem* showGridMenuItem;
+	showGridMenuItem = new wxMenuItem( viewMenu, ID_SHOW_GRID, wxString( wxT("Show Grid") ) , wxEmptyString, wxITEM_CHECK );
+	viewMenu->Append( showGridMenuItem );
+
+	m_menubar1->Append( viewMenu, wxT("View") );
+
+	validateMenu = new wxMenu();
+	wxMenuItem* validateMenuItem;
+	validateMenuItem = new wxMenuItem( validateMenu, ID_VALIDATE, wxString( wxT("Validate") ) , wxEmptyString, wxITEM_CHECK );
+	validateMenu->Append( validateMenuItem );
+
+	m_menubar1->Append( validateMenu, wxT("Validate") );
+
+	this->SetMenuBar( m_menubar1 );
+
+	m_statusBar1 = this->CreateStatusBar( 1, wxSTB_SIZEGRIP, wxID_ANY );
 
 	this->Centre( wxBOTH );
 
@@ -252,11 +259,10 @@ PicrossGUI::PicrossGUI( wxWindow* parent, wxWindowID id, const wxString& title, 
 	showOnlyLayer->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( PicrossGUI::OnShowLayer ), NULL, this );
 	bitsPerCell->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( PicrossGUI::OnChangeBpc ), NULL, this );
 	backgroundType->Connect( wxEVT_COMMAND_RADIOBOX_SELECTED, wxCommandEventHandler( PicrossGUI::OnChangeBackgroundType ), NULL, this );
-	m_toggleBtn1->Connect( wxEVT_COMMAND_TOGGLEBUTTON_CLICKED, wxCommandEventHandler( PicrossGUI::OnToggleGrid ), NULL, this );
-	m_button1->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PicrossGUI::OnLoadImage ), NULL, this );
-	m_button3->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PicrossGUI::OnValidate ), NULL, this );
-	m_button2->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PicrossGUI::OnExportImage ), NULL, this );
-	m_button4->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PicrossGUI::OnQRCode ), NULL, this );
+	fileMenu->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( PicrossGUI::OnLoadImage ), this, loadMenuItem->GetId());
+	exportMenu->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( PicrossGUI::OnExportProtobuf ), this, protobufMenuItem->GetId());
+	viewMenu->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( PicrossGUI::OnToggleGrid ), this, showGridMenuItem->GetId());
+	validateMenu->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( PicrossGUI::OnValidate ), this, validateMenuItem->GetId());
 }
 
 PicrossGUI::~PicrossGUI()
@@ -268,10 +274,5 @@ PicrossGUI::~PicrossGUI()
 	showOnlyLayer->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( PicrossGUI::OnShowLayer ), NULL, this );
 	bitsPerCell->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( PicrossGUI::OnChangeBpc ), NULL, this );
 	backgroundType->Disconnect( wxEVT_COMMAND_RADIOBOX_SELECTED, wxCommandEventHandler( PicrossGUI::OnChangeBackgroundType ), NULL, this );
-	m_toggleBtn1->Disconnect( wxEVT_COMMAND_TOGGLEBUTTON_CLICKED, wxCommandEventHandler( PicrossGUI::OnToggleGrid ), NULL, this );
-	m_button1->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PicrossGUI::OnLoadImage ), NULL, this );
-	m_button3->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PicrossGUI::OnValidate ), NULL, this );
-	m_button2->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PicrossGUI::OnExportImage ), NULL, this );
-	m_button4->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PicrossGUI::OnQRCode ), NULL, this );
 
 }

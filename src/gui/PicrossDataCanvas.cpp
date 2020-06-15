@@ -75,6 +75,9 @@ void PicrossDataCanvas::OnClick(wxMouseEvent& event)
     int tx, ty;
     picross->TranslateToCoords(event.GetX(), event.GetY(), size.GetWidth(), size.GetHeight(), tx, ty);
 
+    if (tx == -1 || ty == -1)
+        return;
+
     picross->Toggle(layer, tx, ty);
     picross->Build();
     Refresh();
@@ -88,9 +91,6 @@ void PicrossDataCanvas::OnDraw(wxDC& dc)
 
 void PicrossDataCanvas::OnChangeImage(wxString& image_path)
 {
-    //wxBitmap bitmap;
-    //bitmap.LoadFile(image_path);
-    //image = bitmap.ConvertToImage();
     image.LoadFile(image_path);
     picross.reset(CreatePicross(image, type, bpc));
     picross->SetLayer(layer);

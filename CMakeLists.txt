@@ -19,8 +19,8 @@ set(SRC_ppe
 	src/gui/PicrossApp.cpp
 	src/gui/PicrossDataCanvas.cpp
 	src/gui/PicrossFrame.cpp
-	src/gui/QRCodePanel.cpp
-	src/gui/QRCodeDialog.cpp
+	#src/gui/QRCodePanel.cpp
+	#src/gui/QRCodeDialog.cpp
 
 	src/util/cdecode.c
 	src/util/cencode.c
@@ -34,7 +34,7 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 set(wxWidgets_USE_LIBS core base)
 find_package(wxWidgets REQUIRED)
 pkg_search_module(PROTOBUF REQUIRED protobuf)
-pkg_search_module(QRENCODE REQUIRED libqrencode)
+#pkg_search_module(QRENCODE REQUIRED libqrencode)
 
 IF(DEBUG_MODE)
     set(CMAKE_CXX_FLAGS "-g -Wall -std=c++0x -DwxUSE_GRAPHICS_CONTEXT=1")
@@ -50,7 +50,7 @@ include_directories(${ppe_SOURCE_DIR}/src/gen)
 include_directories(${ppe_SOURCE_DIR}/src/gui)
 include_directories(${ppe_SOURCE_DIR}/src/util)
 include_directories(${PROTOBUF_INCLUDEDIR})
-include_directories(${QRENCODE_INCLUDEDIR})
+#include_directories(${QRENCODE_INCLUDEDIR})
 
 add_executable(
 	ppe
@@ -62,7 +62,7 @@ target_link_libraries(
 	${wxWidgets_LIBRARIES}
 	${GTK2_LIBRARIES}
 	${PROTOBUF_LIBRARIES}
-	${QRENCODE_LIBRARIES}
+	#${QRENCODE_LIBRARIES}
 )
 
 install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/ppe DESTINATION bin)

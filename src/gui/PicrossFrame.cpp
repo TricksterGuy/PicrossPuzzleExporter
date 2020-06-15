@@ -21,9 +21,9 @@
 
 #include "PicrossFrame.hpp"
 #include "PicrossDataCanvas.hpp"
-#include "QRCodeDialog.h"
+//#include "QRCodeDialog.h"
 #include <wx/filedlg.h>
-#include <qrencode.h>
+//#include <qrencode.h>
 #include <encode.h>
 #include <sstream>
 
@@ -36,6 +36,9 @@ void PicrossFrame::OnLoadImage(wxCommandEvent& event)
 
 void PicrossFrame::OnValidate(wxCommandEvent& event)
 {
+    Picross* picross = puzzleDataCanvas->GetPuzzle();
+    if (!picross) return;
+
     puzzleDataCanvas->OnValidate();
 }
 
@@ -55,14 +58,14 @@ ExportParams PicrossFrame::GetExportParams() const
 
 }
 
-void PicrossFrame::OnExportImage(wxCommandEvent& event)
+void PicrossFrame::OnExportProtobuf(wxCommandEvent& event)
 {
     wxString path = wxSaveFileSelector("Picross Puzzle", "picross", "", this);
     if (path.IsEmpty()) return;
     puzzleDataCanvas->OnExport(path, GetExportParams());
 }
 
-void PicrossFrame::OnQRCode(wxCommandEvent& event)
+/*void PicrossFrame::OnExportQRCode(wxCommandEvent& event)
 {
     Picross* picross = puzzleDataCanvas->GetPuzzle();
     if (!picross) return;
@@ -84,7 +87,7 @@ void PicrossFrame::OnQRCode(wxCommandEvent& event)
     dialog->ShowModal();
     delete dialog;
     QRcode_free(qr);
-}
+}*/
 
 void PicrossFrame::OnChangePuzzleType(wxCommandEvent& event)
 {
@@ -180,20 +183,28 @@ void PicrossFrame::OnChangeBackgroundType(wxCommandEvent& event)
 
 void PicrossFrame::OnLayerChange(wxCommandEvent& event)
 {
+    Picross* picross = puzzleDataCanvas->GetPuzzle();
+    if (!picross) return;
     puzzleDataCanvas->OnChangeLayer(event.GetSelection());
 }
 
 void PicrossFrame::OnChangeBpc(wxCommandEvent& event)
 {
+    Picross* picross = puzzleDataCanvas->GetPuzzle();
+    if (!picross) return;
     puzzleDataCanvas->OnChangeBpc(event.GetSelection() + 1);
 }
 
 void PicrossFrame::OnShowLayer(wxCommandEvent& event)
 {
+    Picross* picross = puzzleDataCanvas->GetPuzzle();
+    if (!picross) return;
     puzzleDataCanvas->OnShowLayer(event.IsChecked());
 }
 
 void PicrossFrame::OnToggleGrid(wxCommandEvent& event)
 {
+    Picross* picross = puzzleDataCanvas->GetPuzzle();
+    if (!picross) return;
     puzzleDataCanvas->OnShowGrid(event.IsChecked());
 }
