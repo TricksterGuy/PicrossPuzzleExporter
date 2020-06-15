@@ -221,27 +221,27 @@ PicrossGUI::PicrossGUI( wxWindow* parent, wxWindowID id, const wxString& title, 
 	exportMenu = new wxMenu();
 	wxMenuItem* exportMenuItem = new wxMenuItem( fileMenu, wxID_ANY, wxT("Export"), wxEmptyString, wxITEM_NORMAL, exportMenu );
 	wxMenuItem* protobufMenuItem;
-	protobufMenuItem = new wxMenuItem( exportMenu, ID_PROTOBUF, wxString( wxT("Protobuf") ) , wxEmptyString, wxITEM_NORMAL );
+	protobufMenuItem = new wxMenuItem( exportMenu, ID_PROTOBUF, wxString( wxT("Protobuf") ) , wxT("Export puzzle to a protobuf."), wxITEM_NORMAL );
 	exportMenu->Append( protobufMenuItem );
 
 	fileMenu->Append( exportMenuItem );
 
 	wxMenuItem* quitMenuItem;
-	quitMenuItem = new wxMenuItem( fileMenu, wxID_QUIT, wxString( wxT("Quit") ) , wxEmptyString, wxITEM_NORMAL );
+	quitMenuItem = new wxMenuItem( fileMenu, wxID_QUIT, wxString( wxT("Quit") ) + wxT('\t') + wxT("Alt+F4"), wxT("Quits the program"), wxITEM_NORMAL );
 	fileMenu->Append( quitMenuItem );
 
 	m_menubar1->Append( fileMenu, wxT("File") );
 
 	viewMenu = new wxMenu();
 	wxMenuItem* showGridMenuItem;
-	showGridMenuItem = new wxMenuItem( viewMenu, ID_SHOW_GRID, wxString( wxT("Show Grid") ) , wxEmptyString, wxITEM_CHECK );
+	showGridMenuItem = new wxMenuItem( viewMenu, ID_SHOW_GRID, wxString( wxT("Show Grid") ) + wxT('\t') + wxT("Ctrl+G"), wxT("Toggles showing a grid."), wxITEM_CHECK );
 	viewMenu->Append( showGridMenuItem );
 
 	m_menubar1->Append( viewMenu, wxT("View") );
 
 	validateMenu = new wxMenu();
 	wxMenuItem* validateMenuItem;
-	validateMenuItem = new wxMenuItem( validateMenu, ID_VALIDATE, wxString( wxT("Validate") ) , wxEmptyString, wxITEM_CHECK );
+	validateMenuItem = new wxMenuItem( validateMenu, ID_VALIDATE, wxString( wxT("Validate") ) + wxT('\t') + wxT("Ctrl+V"), wxT("Validates that the puzzle has a unique solution."), wxITEM_CHECK );
 	validateMenu->Append( validateMenuItem );
 
 	m_menubar1->Append( validateMenu, wxT("Validate") );
@@ -261,6 +261,7 @@ PicrossGUI::PicrossGUI( wxWindow* parent, wxWindowID id, const wxString& title, 
 	backgroundType->Connect( wxEVT_COMMAND_RADIOBOX_SELECTED, wxCommandEventHandler( PicrossGUI::OnChangeBackgroundType ), NULL, this );
 	fileMenu->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( PicrossGUI::OnLoadImage ), this, loadMenuItem->GetId());
 	exportMenu->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( PicrossGUI::OnExportProtobuf ), this, protobufMenuItem->GetId());
+	fileMenu->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( PicrossGUI::OnQuit ), this, quitMenuItem->GetId());
 	viewMenu->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( PicrossGUI::OnToggleGrid ), this, showGridMenuItem->GetId());
 	validateMenu->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( PicrossGUI::OnValidate ), this, validateMenuItem->GetId());
 }

@@ -1879,7 +1879,7 @@
                             <property name="bitmap"></property>
                             <property name="checked">0</property>
                             <property name="enabled">1</property>
-                            <property name="help"></property>
+                            <property name="help">Export puzzle to a protobuf.</property>
                             <property name="id">ID_PROTOBUF</property>
                             <property name="kind">wxITEM_NORMAL</property>
                             <property name="label">Protobuf</property>
@@ -1894,14 +1894,15 @@
                         <property name="bitmap"></property>
                         <property name="checked">0</property>
                         <property name="enabled">1</property>
-                        <property name="help"></property>
+                        <property name="help">Quits the program</property>
                         <property name="id">wxID_QUIT</property>
                         <property name="kind">wxITEM_NORMAL</property>
                         <property name="label">Quit</property>
                         <property name="name">quitMenuItem</property>
                         <property name="permission">none</property>
-                        <property name="shortcut"></property>
+                        <property name="shortcut">Alt+F4</property>
                         <property name="unchecked_bitmap"></property>
+                        <event name="OnMenuSelection">OnQuit</event>
                     </object>
                 </object>
                 <object class="wxMenu" expanded="1">
@@ -1912,13 +1913,13 @@
                         <property name="bitmap"></property>
                         <property name="checked">0</property>
                         <property name="enabled">1</property>
-                        <property name="help"></property>
+                        <property name="help">Toggles showing a grid.</property>
                         <property name="id">ID_SHOW_GRID</property>
                         <property name="kind">wxITEM_CHECK</property>
                         <property name="label">Show Grid</property>
                         <property name="name">showGridMenuItem</property>
                         <property name="permission">none</property>
-                        <property name="shortcut"></property>
+                        <property name="shortcut">Ctrl+G</property>
                         <property name="unchecked_bitmap"></property>
                         <event name="OnMenuSelection">OnToggleGrid</event>
                     </object>
@@ -1931,13 +1932,13 @@
                         <property name="bitmap"></property>
                         <property name="checked">0</property>
                         <property name="enabled">1</property>
-                        <property name="help"></property>
+                        <property name="help">Validates that the puzzle has a unique solution.</property>
                         <property name="id">ID_VALIDATE</property>
                         <property name="kind">wxITEM_CHECK</property>
                         <property name="label">Validate</property>
                         <property name="name">validateMenuItem</property>
                         <property name="permission">none</property>
-                        <property name="shortcut"></property>
+                        <property name="shortcut">Ctrl+V</property>
                         <property name="unchecked_bitmap"></property>
                         <event name="OnMenuSelection">OnValidate</event>
                     </object>

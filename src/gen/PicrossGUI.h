@@ -94,6 +94,7 @@ class PicrossGUI : public wxFrame
 		virtual void OnChangeBackgroundType( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnLoadImage( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnExportProtobuf( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnQuit( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnToggleGrid( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnValidate( wxCommandEvent& event ) { event.Skip(); }
 
