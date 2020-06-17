@@ -30,12 +30,17 @@ set(SRC_ppe
 	src/util/reductionhelper.cpp
 )
 
-set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 set(wxWidgets_USE_LIBS core base)
 find_package(wxWidgets REQUIRED)
 pkg_search_module(PROTOBUF REQUIRED protobuf)
 #pkg_search_module(QRENCODE REQUIRED libqrencode)
 
+add_custom_command(OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/src/gen/Picross.pb.cc ${CMAKE_CURRENT_SOURCE_DIR}/src/gen/Picross.pb.h
+                   COMMAND protoc --cpp_out=../src/gen Picross.proto
+                   MAIN_DEPENDENCY ${CMAKE_CURRENT_SOURCE_DIR}/gen/Picross.proto
+                   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/gen)
+
+# TODO update this to using standard CMake variables.
 IF(DEBUG_MODE)
     set(CMAKE_CXX_FLAGS "-g -Wall -std=c++0x -DwxUSE_GRAPHICS_CONTEXT=1")
 ELSE()
