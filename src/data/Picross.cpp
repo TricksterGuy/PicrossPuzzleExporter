@@ -116,8 +116,8 @@ unsigned int Picross::NumSet(int layer, int tx, int ty)
 void Picross::Draw(wxDC& dc)
 {
     wxSize size = dc.GetSize();
-    int cw = (size.GetWidth() - 132) / width;
-    int ch = (size.GetHeight() - 132) / height;
+    int cw = (size.GetWidth() - SOLUTIONS_WIDTH - EXTRA_SOLUTIONS_WIDTH) / width;
+    int ch = (size.GetHeight() - SOLUTIONS_HEIGHT - EXTRA_SOLUTIONS_HEIGHT) / height;
     solutions& row = rows[layer];
     solutions& col = cols[layer];
     for (int i = 0; i < height; i++)
@@ -127,7 +127,7 @@ void Picross::Draw(wxDC& dc)
         {
             row_text << row[i][j] << " ";
         }
-        dc.DrawText(row_text, 0, i * ch + 100 + ch / 2);
+        dc.DrawText(row_text, 0, i * ch + SOLUTIONS_HEIGHT + ch / 2);
     }
 
     for (int i = 0; i < width; i++)
@@ -137,23 +137,23 @@ void Picross::Draw(wxDC& dc)
         {
             col_text << col[i][j] << "\n";
         }
-        dc.DrawText(col_text, i * cw + 100 + cw / 2, 0);
+        dc.DrawText(col_text, i * cw + SOLUTIONS_WIDTH + cw / 2, 0);
     }
-    dc.SetClippingRegion(100, 100, size.GetWidth() - 100, size.GetHeight() - 100);
 
-    if (bpc > 1)
+    dc.SetClippingRegion(SOLUTIONS_WIDTH, SOLUTIONS_HEIGHT, size.GetWidth() - SOLUTIONS_WIDTH, size.GetHeight() - SOLUTIONS_HEIGHT);
+
+    if (bpc <= 1) return;
+
+    std::vector<int>& row_total = total_rows[layer];
+    std::vector<int>& col_total = total_cols[layer];
+
+    for (unsigned int i = 0; i < row_total.size(); i++)
     {
-        std::vector<int>& row_total = total_rows[layer];
-        std::vector<int>& col_total = total_cols[layer];
-
-        for (unsigned int i = 0; i < row_total.size(); i++)
-        {
-            dc.DrawText(wxString::Format("%d", row_total[i]), size.GetWidth() - 16, i * ch + 100 + ch / 2);
-        }
-        for (unsigned int i = 0; i < col_total.size(); i++)
-        {
-            dc.DrawText(wxString::Format("%d", col_total[i]), i * cw + 100 + cw / 2, size.GetHeight() - 16);
-        }
+        dc.DrawText(wxString::Format("%d", row_total[i]), size.GetWidth() - EXTRA_SOLUTIONS_WIDTH, i * ch + SOLUTIONS_HEIGHT + ch / 2);
+    }
+    for (unsigned int i = 0; i < col_total.size(); i++)
+    {
+        dc.DrawText(wxString::Format("%d", col_total[i]), i * cw + SOLUTIONS_WIDTH + cw / 2, size.GetHeight() - EXTRA_SOLUTIONS_HEIGHT);
     }
 }
 
@@ -162,13 +162,13 @@ void Picross::TranslateToCoords(int x, int y, int w, int h, int& tx, int& ty) co
     tx = -1;
     ty = -1;
 
-    x -= 100;
-    y -= 100;
+    x -= SOLUTIONS_WIDTH;
+    y -= SOLUTIONS_HEIGHT;
 
     if (x < 0 || y < 0) return;
 
-    tx = x / ((w - 132) / width);
-    ty = y / ((h - 132) / height);
+    tx = x / ((w - SOLUTIONS_WIDTH - EXTRA_SOLUTIONS_WIDTH) / width);
+    ty = y / ((h - SOLUTIONS_HEIGHT - EXTRA_SOLUTIONS_HEIGHT) / height);
 
     if (tx > width || ty > height)
     {

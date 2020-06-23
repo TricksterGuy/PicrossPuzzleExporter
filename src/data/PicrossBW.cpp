@@ -50,8 +50,8 @@ void PicrossBW::Draw(wxDC& dc)
     wxRect rect;
     dc.GetClippingBox(rect);
     wxSize size = rect.GetSize();
-    int cw = (size.GetWidth() - 32) / width ;
-    int ch = (size.GetHeight() - 32) / height;
+    int cw = (size.GetWidth() - EXTRA_SOLUTIONS_WIDTH) / width ;
+    int ch = (size.GetHeight() - EXTRA_SOLUTIONS_HEIGHT) / height;
 
     dc.SetPen(*wxTRANSPARENT_PEN);
     dc.SetBrush(*wxBLACK_BRUSH);

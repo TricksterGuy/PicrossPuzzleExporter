@@ -124,6 +124,7 @@ class ColorMatch
 
 PicrossRBY::PicrossRBY(wxImage image, int width, int height) : Picross(width, height, 1, 5)
 {
+    // TODO converting the image to 16 bit color isn't necessary.
     Image16Bpp image16(image, "");
     image8.Set(image16, palette);
 
@@ -191,8 +192,8 @@ void PicrossRBY::Draw(wxDC& dc)
     wxRect rect;
     dc.GetClippingBox(rect);
     wxSize size = rect.GetSize();
-    int cw = (size.GetWidth() - 32) / width ;
-    int ch = (size.GetHeight() - 32) / height;
+    int cw = (size.GetWidth() - EXTRA_SOLUTIONS_WIDTH) / width ;
+    int ch = (size.GetHeight() - EXTRA_SOLUTIONS_HEIGHT) / height;
     dc.SetPen(*wxTRANSPARENT_PEN);
     if (showLayer) dc.SetBrush(*wxBLACK_BRUSH);
     if (showGrid) dc.SetPen(*wxBLACK_PEN);

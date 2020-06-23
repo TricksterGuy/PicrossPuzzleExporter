@@ -45,6 +45,11 @@ struct ExportParams
     uint32_t bottom_color;
 };
 
+constexpr int SOLUTIONS_WIDTH = 100;
+constexpr int SOLUTIONS_HEIGHT = 100;
+constexpr int EXTRA_SOLUTIONS_WIDTH = 50;
+constexpr int EXTRA_SOLUTIONS_HEIGHT = 50;
+
 class Picross
 {
     public:

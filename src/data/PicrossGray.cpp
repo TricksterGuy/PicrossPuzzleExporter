@@ -54,8 +54,8 @@ void PicrossGray::Draw(wxDC& dc)
     dc.GetClippingBox(rect);
     wxSize size = rect.GetSize();
 
-    int cw = (size.GetWidth() - 32) / width ;
-    int ch = (size.GetHeight() - 32) / height;
+    int cw = (size.GetWidth() - EXTRA_SOLUTIONS_WIDTH) / width ;
+    int ch = (size.GetHeight() - EXTRA_SOLUTIONS_HEIGHT) / height;
     int max = (1 << bpc) - 1;
 
     dc.SetPen(*wxTRANSPARENT_PEN);
