@@ -19,11 +19,7 @@ set(SRC_ppe
 	src/gui/PicrossApp.cpp
 	src/gui/PicrossDataCanvas.cpp
 	src/gui/PicrossFrame.cpp
-	#src/gui/QRCodePanel.cpp
-	#src/gui/QRCodeDialog.cpp
 
-	src/util/cdecode.c
-	src/util/cencode.c
 	src/util/color.cpp
 	src/util/cpercep.cpp
 	src/util/dither.cpp
@@ -33,7 +29,6 @@ set(SRC_ppe
 set(wxWidgets_USE_LIBS core base)
 find_package(wxWidgets REQUIRED)
 pkg_search_module(PROTOBUF REQUIRED protobuf)
-#pkg_search_module(QRENCODE REQUIRED libqrencode)
 
 add_custom_command(OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/src/gen/Picross.pb.cc ${CMAKE_CURRENT_SOURCE_DIR}/src/gen/Picross.pb.h
                    COMMAND protoc --cpp_out=../src/gen Picross.proto
@@ -55,7 +50,6 @@ include_directories(${ppe_SOURCE_DIR}/src/gen)
 include_directories(${ppe_SOURCE_DIR}/src/gui)
 include_directories(${ppe_SOURCE_DIR}/src/util)
 include_directories(${PROTOBUF_INCLUDEDIR})
-#include_directories(${QRENCODE_INCLUDEDIR})
 
 add_executable(
 	ppe
@@ -67,7 +61,6 @@ target_link_libraries(
 	${wxWidgets_LIBRARIES}
 	${GTK2_LIBRARIES}
 	${PROTOBUF_LIBRARIES}
-	#${QRENCODE_LIBRARIES}
 )
 
 install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/ppe DESTINATION bin)

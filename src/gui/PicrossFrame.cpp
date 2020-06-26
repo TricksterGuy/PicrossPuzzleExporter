@@ -21,10 +21,7 @@
 
 #include "PicrossFrame.hpp"
 #include "PicrossDataCanvas.hpp"
-//#include "QRCodeDialog.h"
 #include <wx/filedlg.h>
-//#include <qrencode.h>
-#include <encode.h>
 #include <sstream>
 
 void PicrossFrame::OnLoadImage(wxCommandEvent& event)
@@ -64,30 +61,6 @@ void PicrossFrame::OnExportProtobuf(wxCommandEvent& event)
     if (path.IsEmpty()) return;
     puzzleDataCanvas->OnExport(path, GetExportParams());
 }
-
-/*void PicrossFrame::OnExportQRCode(wxCommandEvent& event)
-{
-    Picross* picross = puzzleDataCanvas->GetPuzzle();
-    if (!picross) return;
-
-    PicrossPuzzle puzzledata = picross->Export(GetExportParams());
-    std::string data;
-    puzzledata.SerializeToString(&data);
-
-    std::stringstream instream;
-    std::stringstream outstream;
-    instream.write(data.data(), data.size());
-    base64::encoder encoder(data.size());
-    encoder.encode(instream, outstream);
-
-    std::string encoded = outstream.str();
-    QRcode* qr = QRcode_encodeData(encoded.size(), (const unsigned char*)encoded.data(), 0, QR_ECLEVEL_H);
-    QRCodeDialog* dialog = new QRCodeDialog(qr);
-    dialog->SetSize(320, 320);
-    dialog->ShowModal();
-    delete dialog;
-    QRcode_free(qr);
-}*/
 
 void PicrossFrame::OnChangePuzzleType(wxCommandEvent& event)
 {
