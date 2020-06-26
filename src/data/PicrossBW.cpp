@@ -27,7 +27,7 @@ enum CellBW
     BLACK = 1,
 };
 
-PicrossBW::PicrossBW(wxImage image_in, int width, int height) : Picross(width, height, 1, 1)
+PicrossBW::PicrossBW(wxImage image_in, int width, int height) : Picross(PicrossPuzzle::TYPE_BW, width, height, 1, 1)
 {
     wxImage image = image_in.ConvertToGreyscale();
     for (int y = 0; y < image.GetHeight(); y++)

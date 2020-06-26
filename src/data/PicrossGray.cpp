@@ -21,7 +21,7 @@
 
 #include "PicrossGray.hpp"
 
-PicrossGray::PicrossGray(wxImage image_in, int width, int height, int bpc) : Picross(width, height, bpc, 1)
+PicrossGray::PicrossGray(wxImage image_in, int width, int height, int bpc) : Picross(PicrossPuzzle::TYPE_GRAY, width, height, bpc, 1)
 {
     wxImage image = image_in.ConvertToGreyscale();
     int colorbits = 256 / (1 << bpc);

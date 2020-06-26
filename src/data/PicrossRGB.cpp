@@ -22,7 +22,7 @@
 #include "PicrossRGB.hpp"
 
 
-PicrossRGB::PicrossRGB(wxImage image, int width, int height, int bpc) : Picross(width, height, bpc, 3)
+PicrossRGB::PicrossRGB(wxImage image, int width, int height, int bpc) : Picross(PicrossPuzzle::TYPE_RGB, width, height, bpc, 3)
 {
     int colorbits = 256 / (1 << bpc);
 

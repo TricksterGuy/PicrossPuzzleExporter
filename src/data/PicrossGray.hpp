@@ -30,9 +30,8 @@ class PicrossGray : public Picross
     public:
         PicrossGray(wxImage image, int width, int height, int bpc);
         ~PicrossGray() {}
-        PicrossPuzzle::Type GetType() const {return PicrossPuzzle::TYPE_GRAY;}
-        void Draw(wxDC& dc);
-        void Toggle(int layer, int tx, int ty);
+        void Draw(wxDC& dc) override;
+        void Toggle(int layer, int tx, int ty) override;
 };
 
 #endif

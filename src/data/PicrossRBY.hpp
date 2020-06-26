@@ -32,8 +32,8 @@ class PicrossRBY : public Picross
     public:
         PicrossRBY(wxImage image, int width, int height);
         ~PicrossRBY() {}
-        PicrossPuzzle::Type GetType() const {return PicrossPuzzle::TYPE_RBY;}
-        void Draw(wxDC& dc);
+        void Draw(wxDC& dc) override;
+    private:
         Image8Bpp image8;
 };
 

@@ -30,8 +30,7 @@ class PicrossBW : public Picross
     public:
         PicrossBW(wxImage image, int width, int height);
         ~PicrossBW() {}
-        PicrossPuzzle::Type GetType() const {return PicrossPuzzle::TYPE_BW;}
-        void Draw(wxDC& dc);
+        void Draw(wxDC& dc) override;
 };
 
 

@@ -53,10 +53,10 @@ constexpr int EXTRA_SOLUTIONS_HEIGHT = 50;
 class Picross
 {
     public:
-        Picross(int width_, int height_, int bpc_, int num_layers) : data(width_, height_), layer(0), showLayer(false), showGrid(true),
-                                                                     width(width_), height(height_), bpc(bpc_), max_layers(num_layers) {}
+        Picross(PicrossPuzzle::Type type_, int width_, int height_, int bpc_, int num_layers) : type(type_), data(width_, height_), layer(0), showLayer(false), showGrid(true),
+                                                                                                width(width_), height(height_), bpc(bpc_), max_layers(num_layers) {}
         virtual ~Picross() {}
-        virtual PicrossPuzzle::Type GetType() const = 0;
+        PicrossPuzzle::Type GetType() const {return type;}
         virtual void Draw(wxDC& dc);
         virtual void Toggle(int layer, int tx, int ty) {data.Toggle(layer, tx, ty);}
         void Build();
@@ -76,6 +76,7 @@ class Picross
         void Export(const wxString& file, const ExportParams& params) const;
         PicrossPuzzle Export(const ExportParams& params) const;
     protected:
+        PicrossPuzzle::Type type;
         PicrossLayer data;
         int layer;
         bool showLayer;
