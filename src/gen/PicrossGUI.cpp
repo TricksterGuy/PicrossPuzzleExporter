@@ -194,6 +194,13 @@ PicrossGUI::PicrossGUI( wxWindow* parent, wxWindowID id, const wxString& title, 
 
 	fgSizer3->Add( bottomColor, 0, wxALL|wxEXPAND, 5 );
 
+	m_staticText12 = new wxStaticText( m_staticBoxSizer->GetStaticBox(), wxID_ANY, wxT("Music:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText12->Wrap( -1 );
+	fgSizer3->Add( m_staticText12, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+
+	music = new wxFilePickerCtrl( m_staticBoxSizer->GetStaticBox(), wxID_ANY, wxEmptyString, wxT("Select a file"), wxT("*.*"), wxDefaultPosition, wxDefaultSize, wxFLP_DEFAULT_STYLE|wxFLP_SMALL );
+	fgSizer3->Add( music, 0, wxALL, 5 );
+
 
 	m_staticBoxSizer->Add( fgSizer3, 1, wxEXPAND, 5 );
 

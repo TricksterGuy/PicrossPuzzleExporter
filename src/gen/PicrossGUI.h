@@ -78,6 +78,8 @@ class PicrossGUI : public wxFrame
 		wxColourPickerCtrl* topColor;
 		wxStaticText* bottomColorLabel;
 		wxColourPickerCtrl* bottomColor;
+		wxStaticText* m_staticText12;
+		wxFilePickerCtrl* music;
 		wxMenuBar* m_menubar1;
 		wxMenu* fileMenu;
 		wxMenu* exportMenu;
