@@ -2060,7 +2060,7 @@
                         <property name="enabled">1</property>
                         <property name="help">Validates that the puzzle has a unique solution.</property>
                         <property name="id">ID_VALIDATE</property>
-                        <property name="kind">wxITEM_CHECK</property>
+                        <property name="kind">wxITEM_NORMAL</property>
                         <property name="label">Validate</property>
                         <property name="name">validateMenuItem</property>
                         <property name="permission">none</property>

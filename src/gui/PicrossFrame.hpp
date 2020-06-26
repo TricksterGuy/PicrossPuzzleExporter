@@ -44,7 +44,6 @@ class PicrossFrame : public PicrossGUI
 		void OnExportProtobuf(wxCommandEvent& event) override;
 		void OnShowLayer(wxCommandEvent& event) override;
 		void OnToggleGrid(wxCommandEvent& event) override;
-		//void OnExportQRCode(wxCommandEvent& event) override;
 		void OnQuit(wxCommandEvent& event) override {Destroy();}
 		void OnResize(wxSizeEvent& event) {Refresh(); event.Skip();}
     private:

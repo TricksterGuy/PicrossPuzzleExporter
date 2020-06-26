@@ -27,6 +27,7 @@ void Picross::Build()
 {
     for (int k = 0; k < max_layers; k++)
     {
+        // Build row solution info.
         rows[k] = solutions(height);
         for (int y = 0; y < height; y++)
         {
@@ -50,9 +51,8 @@ void Picross::Build()
                 row.push_back(marks);
             }
         }
-    }
-    for (int k = 0; k < max_layers; k++)
-    {
+
+        // Build column solution info.
         cols[k] = solutions(width);
         for (int x = 0; x < width; x++)
         {
@@ -71,28 +71,59 @@ void Picross::Build()
                     marks = 0;
                 }
             }
-            if (col.empty() or marks > 0)
+            if (col.empty() || marks > 0)
                 col.push_back(marks);
         }
-    }
 
-    if (bpc > 1)
-    {
-        for (int k = 0; k < max_layers; k++)
+        if (bpc <= 1) continue;
+
+        // Build row color solution info.
+        total_rows[k] = solutions(height);
+        for (int y = 0; y < height; y++)
         {
-            std::vector<int> rows(height);
-            std::vector<int> cols(width);
-            for (int y = 0; y < height; y++)
+            std::vector<int>& row = total_rows[k][y];
+            row.resize((1 << bpc) - 1);
+            int shadings = 1;
+            int last_shade = -1;
+
+            for (int x = 0; x < width; x++)
             {
-                for (int x = 0; x < width; x++)
+                int num = NumSet(k, x, y);
+                if (num == 0) continue;
+                row[num - 1]++;
+                if (last_shade == -1)
+                    last_shade = num;
+                if (last_shade != num)
                 {
-                    int num = NumSet(k, x, y);
-                    rows[y] += num;
-                    cols[x] += num;
+                    shadings++;
+                    last_shade = num;
                 }
             }
-            total_rows[k] = rows;
-            total_cols[k] = cols;
+            shading_rows[k].push_back(shadings);
+        }
+
+        total_cols[k] = solutions(width);
+        for (int x = 0; x < width; x++)
+        {
+            std::vector<int>& col = total_cols[k][x];
+            col.resize((1 << bpc) - 1);
+            int shadings = 1;
+            int last_shade = -1;
+
+            for (int y = 0; y < height; y++)
+            {
+                int num = NumSet(k, x, y);
+                if (num == 0) continue;
+                col[num - 1]++;
+                if (last_shade == -1)
+                    last_shade = num;
+                if (last_shade != num)
+                {
+                    shadings++;
+                    last_shade = num;
+                }
+            }
+            shading_cols[k].push_back(shadings);
         }
     }
 }
@@ -144,16 +175,33 @@ void Picross::Draw(wxDC& dc)
 
     if (bpc <= 1) return;
 
-    std::vector<int>& row_total = total_rows[layer];
-    std::vector<int>& col_total = total_cols[layer];
+    solutions& row_total = total_rows[layer];
+    solutions& col_total = total_cols[layer];
 
-    for (unsigned int i = 0; i < row_total.size(); i++)
+    for (int i = 0; i < height; i++)
     {
-        dc.DrawText(wxString::Format("%d", row_total[i]), size.GetWidth() - EXTRA_SOLUTIONS_WIDTH, i * ch + SOLUTIONS_HEIGHT + ch / 2);
+        wxString row_text;
+        for (unsigned int j = 0; j < row_total[i].size(); j++)
+        {
+            int num = row_total[i][j];
+            if (num == 0) continue;
+            row_text << wxString::Format("%d:%d ", j+1, num);
+        }
+        row_text << wxString::Format("%d", shading_rows[layer][i]);
+        dc.DrawText(row_text, size.GetWidth() - EXTRA_SOLUTIONS_WIDTH, i * ch + SOLUTIONS_HEIGHT + ch / 2);
     }
-    for (unsigned int i = 0; i < col_total.size(); i++)
+
+    for (int i = 0; i < width; i++)
     {
-        dc.DrawText(wxString::Format("%d", col_total[i]), i * cw + SOLUTIONS_WIDTH + cw / 2, size.GetHeight() - EXTRA_SOLUTIONS_HEIGHT);
+        wxString col_text;
+        for (unsigned int j = 0; j < col_total[i].size(); j++)
+        {
+            int num = col_total[i][j];
+            if (num == 0) continue;
+            col_text << wxString::Format("%d:%d\n", j+1, num);
+        }
+        col_text << wxString::Format("%d\n", shading_cols[layer][i]);
+        dc.DrawText(col_text, i * cw + SOLUTIONS_WIDTH + cw / 2, size.GetHeight() - EXTRA_SOLUTIONS_HEIGHT);
     }
 }
 
@@ -201,12 +249,13 @@ PicrossPuzzle Picross::Export(const ExportParams& params) const
     auto* background = meta->mutable_background();
     background->set_type(static_cast<BackgroundInfo::Type>(params.background_type + 1));
     if (params.background_type != 3)
-        background->set_filename(params.bg_image);
+        background->set_image(params.bg_image);
     else
     {
         background->set_color1(params.top_color);
         background->set_color2(params.bottom_color);
     }
+    background->set_music(params.bg_music);
     auto* solution_meta = meta->mutable_solution();
     solution_meta->set_image(params.image);
     solution_meta->set_frames(params.frames);
@@ -224,7 +273,12 @@ PicrossPuzzle Picross::Export(const ExportParams& params) const
             for (const auto& elem : row_data)
                 rows->add_data(elem);
             if (bpc > 1)
-                rows->set_total(total_rows.at(k)[i]);
+            {
+                const auto& total_solutions = total_rows.at(k)[i];
+                for (const auto& elem : total_solutions)
+                    rows->add_totals(elem);
+                rows->set_shading(shading_rows.at(k)[i]);
+            }
         }
 
         for (int j = 0; j < width; j++)
@@ -234,15 +288,18 @@ PicrossPuzzle Picross::Export(const ExportParams& params) const
             for (const auto& elem : col_data)
                 cols->add_data(elem);
             if (bpc > 1)
-                cols->set_total(total_cols.at(k)[j]);
+            {
+                const auto& total_solutions = total_cols.at(k)[j];
+                for (const auto& elem : total_solutions)
+                    cols->add_totals(elem);
+                cols->set_shading(shading_cols.at(k)[j]);
+            }
         }
 
         for (int y = 0; y < height; y++)
         {
             for (int x = 0; x < width; x++)
-            {
-                out.add_data(data.Get(x, y));
-            }
+                layer->add_data(data.Get(x, y));
         }
     }
 

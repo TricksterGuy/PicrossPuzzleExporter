@@ -24,6 +24,14 @@
 #include <wx/filedlg.h>
 #include <sstream>
 
+enum PicrossTypes
+{
+    CLASSIC = 0,
+    GRAYSCALE = 1,
+    LIGHT = 2,
+    PAINTING = 3,
+};
+
 void PicrossFrame::OnLoadImage(wxCommandEvent& event)
 {
     wxString image_path = wxLoadFileSelector("Image", "*", "", this);
@@ -51,6 +59,7 @@ ExportParams PicrossFrame::GetExportParams() const
     params.bg_image = backgroundImage->GetFileName().GetFullName().ToStdString();
     params.top_color = topColor->GetColour().GetRGBA();
     params.bottom_color = bottomColor->GetColour().GetRGBA();
+    params.bg_music = music->GetFileName().GetFullName().ToStdString();
     return params;
 
 }
@@ -65,12 +74,12 @@ void PicrossFrame::OnExportProtobuf(wxCommandEvent& event)
 void PicrossFrame::OnChangePuzzleType(wxCommandEvent& event)
 {
     int type = event.GetSelection();
-    puzzleDataCanvas->OnChangeBpc(1);
+    puzzleDataCanvas->OnChangeBpc(type == GRAYSCALE ? 2 : 1);
     puzzleDataCanvas->OnChangeType(type);
     puzzleDataCanvas->OnChangeLayer(0);
     bitsPerCell->SetSelection(0);
 
-    if (type == 0)
+    if (type == CLASSIC)
     {
         layerLabel->Hide();
         layersChoice->Hide();
@@ -79,16 +88,17 @@ void PicrossFrame::OnChangePuzzleType(wxCommandEvent& event)
         bitsPerCellLabel->Hide();
         bitsPerCell->Hide();
     }
-    else if (type == 1)
+    else if (type == GRAYSCALE)
     {
         layerLabel->Hide();
         layersChoice->Hide();
         showCurrentLayerLabel->Hide();
         showOnlyLayer->Hide();
         bitsPerCellLabel->Show();
+        bitsPerCell->SetSelection(1);
         bitsPerCell->Show();
     }
-    else if (type == 2)
+    else if (type == LIGHT)
     {
         layerLabel->Show();
         layersChoice->Show();
@@ -97,7 +107,7 @@ void PicrossFrame::OnChangePuzzleType(wxCommandEvent& event)
         bitsPerCellLabel->Show();
         bitsPerCell->Show();
     }
-    else if (type == 3)
+    else if (type == PAINTING)
     {
         layerLabel->Show();
         layersChoice->Show();
@@ -110,13 +120,13 @@ void PicrossFrame::OnChangePuzzleType(wxCommandEvent& event)
     if (layersChoice->IsShown())
     {
         layersChoice->Clear();
-        if (type == 2)
+        if (type == LIGHT)
         {
             layersChoice->Append("Red");
             layersChoice->Append("Green");
             layersChoice->Append("Blue");
         }
-        else if (type == 3)
+        else if (type == PAINTING)
         {
             layersChoice->Append("Black");
             layersChoice->Append("White");

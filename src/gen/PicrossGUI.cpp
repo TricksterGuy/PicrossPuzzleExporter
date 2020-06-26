@@ -248,7 +248,7 @@ PicrossGUI::PicrossGUI( wxWindow* parent, wxWindowID id, const wxString& title, 
 
 	validateMenu = new wxMenu();
 	wxMenuItem* validateMenuItem;
-	validateMenuItem = new wxMenuItem( validateMenu, ID_VALIDATE, wxString( wxT("Validate") ) + wxT('\t') + wxT("Ctrl+V"), wxT("Validates that the puzzle has a unique solution."), wxITEM_CHECK );
+	validateMenuItem = new wxMenuItem( validateMenu, ID_VALIDATE, wxString( wxT("Validate") ) + wxT('\t') + wxT("Ctrl+V"), wxT("Validates that the puzzle has a unique solution."), wxITEM_NORMAL );
 	validateMenu->Append( validateMenuItem );
 
 	m_menubar1->Append( validateMenu, wxT("Validate") );

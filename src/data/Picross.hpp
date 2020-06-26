@@ -31,6 +31,7 @@
 struct Problem;
 
 typedef std::vector<std::vector<int>> solutions;
+typedef std::map<int, solutions> layer_solutions;
 
 struct ExportParams
 {
@@ -41,6 +42,7 @@ struct ExportParams
     int time;
     int background_type;
     std::string bg_image;
+    std::string bg_music;
     uint32_t top_color;
     uint32_t bottom_color;
 };
@@ -54,7 +56,8 @@ class Picross
 {
     public:
         Picross(PicrossPuzzle::Type type_, int width_, int height_, int bpc_, int num_layers) : type(type_), data(width_, height_), layer(0), showLayer(false), showGrid(true),
-                                                                                                width(width_), height(height_), bpc(bpc_), max_layers(num_layers) {}
+                                                                                                width(width_), height(height_), bpc(bpc_), max_layers(num_layers), shading_rows(max_layers),
+                                                                                                shading_cols(max_layers) {}
         virtual ~Picross() {}
         PicrossPuzzle::Type GetType() const {return type;}
         virtual void Draw(wxDC& dc);
@@ -84,10 +87,18 @@ class Picross
         int width, height;
         int bpc;
         int max_layers;
-        std::map<int, solutions> rows;
-        std::map<int, solutions> cols;
-        std::map<int, std::vector<int>> total_rows;
-        std::map<int, std::vector<int>> total_cols;
+        // Numbers at the top and left of picross puzzle per layer.
+        // Map layer_id -> Array of hints.
+        layer_solutions rows;
+        layer_solutions cols;
+        // Numbers at the bottom and right for bpc puzzle puzzles per layer.
+        // Map layer_id -> Array sized 2 ** bpc with totals for each bit combination.
+        layer_solutions total_rows;
+        layer_solutions total_cols;
+        // Shading hints for bpc > 1
+        // Map layer_id -> Array sized width/height with number of changes in shading.
+        solutions shading_rows;
+        solutions shading_cols;
         friend bool Validate(const Picross* picross, Problem& problem);
 };
 

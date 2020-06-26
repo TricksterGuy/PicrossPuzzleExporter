@@ -1,48 +1,79 @@
 syntax = "proto3";
 
+// Solution info for a row column.
+// This message represents the numbers along the top/left of the picross.
+// Additionally fields for special picross that involve multiple bits per cell.
 message Solution
 {
+    // Hints along this particular row/column.
 	repeated int32 data = 1 [packed=true];
-	int32 total = 2;
+	// Frequency of each possible number in row/column for bpc > 1.
+	repeated int32 totals = 2  [packed=true];
+	// Number of shade changes for this particular row/column.
+	int32 shading = 3;
 }
 
+// Solution Info for a picross puzzle (or an individual layer for colored picross).
 message SolutionLayer
 {
 	repeated Solution rows = 1;
 	repeated Solution cols = 2;
+	// The cell data for the layer including markings per cell.
+	repeated int32 data = 3 [packed=true];
 }
 
+// Background info for picross games.
+// Includes a background image or gradient and theme music.
 message BackgroundInfo
 {
 	enum Type
 	{
 		TYPE_INVALID = 0;
+		// Stationary image.
 		TYPE_STATIONARY = 1;
+		// Image stretched to fit viewport.
 		TYPE_STRETCHED = 2;
+		// Tile image across viewport.
 		TYPE_TILED = 3;
+		// Gradient background.
 		TYPE_GRADIENT = 4;
 	}
-	string filename = 1;
+	// Image filename.
+	string image = 1;
+	// Type of background.
 	Type type = 2;
+	// For TYPE_GRADIENT the top and bottom colors for gradient.
 	uint32 color1 = 3;
 	uint32 color2 = 4;
+	// Music filename.
+	string music = 5;
 }
 
+// Metadata for solution
 message SolutionMeta
 {
+    // Resulting image filename.
 	string image = 1;
+	// Number of frames in animation if image is animated.
 	int32 frames = 2;
 }
 
+// Metadata for Picross Puzzle.
 message PicrossPuzzleMeta
 {
+    // Name of the puzzle.
 	string name = 1;
+	// Author of the puzzle.
 	string author = 2;
+	// Amount of time to solve puzzle.
 	int32 time = 3;
+	// Background image/music info.
 	BackgroundInfo background = 4;
+	// Metadata for solution.
 	SolutionMeta solution = 5;
 }
 
+// Message for Picross Puzzle.
 message PicrossPuzzle
 {
 	enum Type
@@ -53,11 +84,15 @@ message PicrossPuzzle
 		TYPE_RGB = 3;
 		TYPE_RBY = 4;
 	}
+	// Dimensions of the puzzle in cells.
 	int32 width = 1;
 	int32 height = 2;
+	// Type of Picross Puzzle.
 	Type type = 3;
+	// Bits per cell for picross puzzle. Valid only for TYPE_GRAY and TYPE_RGB.
 	int32 bpc = 4;
-	repeated int32 data = 5 [packed=true];
-	repeated SolutionLayer layers = 6;
-	PicrossPuzzleMeta meta = 7;
+	// Row/Column hints (and solution data) for each layer of the picross puzzle.
+	repeated SolutionLayer layers = 5;
+	// Metadata.
+	PicrossPuzzleMeta meta = 6;
 }
