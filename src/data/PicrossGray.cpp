@@ -57,8 +57,8 @@ void PicrossGray::Draw(wxDC& dc)
 
     auto [unused1, extra_solutions_height, unused2, extra_solutions_width] = CalculateSolutionBounds();
 
-    int cw = (size.GetWidth() - extra_solutions_width) / width ;
-    int ch = (size.GetHeight() - extra_solutions_height) / height;
+    int w = std::min((size.GetWidth() - extra_solutions_width) / width,
+                     (size.GetHeight() - extra_solutions_height) / height);
     int max = (1 << bpc) - 1;
 
     dc.SetPen(*wxTRANSPARENT_PEN);
@@ -71,7 +71,7 @@ void PicrossGray::Draw(wxDC& dc)
         {
             unsigned int cval = 255 * (max - data.Get(x, y)) / max;
             dc.SetBrush(wxBrush(wxColour(cval, cval, cval)));
-            dc.DrawRectangle(x * cw + rect.GetX(), y * ch + rect.GetY(), cw, ch);
+            dc.DrawRectangle(x * w + rect.GetX(), y * w + rect.GetY(), w, w);
         }
     }
 }

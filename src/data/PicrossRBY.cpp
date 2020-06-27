@@ -194,8 +194,9 @@ void PicrossRBY::Draw(wxDC& dc)
     wxSize size = rect.GetSize();
     auto [unused1, extra_solutions_height, unused2, extra_solutions_width] = CalculateSolutionBounds();
 
-    int cw = (size.GetWidth() - extra_solutions_width) / width ;
-    int ch = (size.GetHeight() - extra_solutions_height) / height;
+    int w = std::min((size.GetWidth() - extra_solutions_width) / width,
+                     (size.GetHeight() - extra_solutions_height) / height);
+
     dc.SetPen(*wxTRANSPARENT_PEN);
     if (showLayer) dc.SetBrush(*wxBLACK_BRUSH);
     if (showGrid) dc.SetPen(*wxBLACK_PEN);
@@ -209,10 +210,10 @@ void PicrossRBY::Draw(wxDC& dc)
             if (!showLayer)
             {
                 dc.SetBrush(wxBrush(ColorMatch::GetColor(value)));
-                dc.DrawRectangle(x * cw + rect.GetX(), y * ch + rect.GetY(), cw, ch);
+                dc.DrawRectangle(x * w + rect.GetX(), y * w + rect.GetY(), w, w);
             }
             else if (IsSet(layer, x, y))
-                dc.DrawRectangle(x * cw + rect.GetX(), y * ch + rect.GetY(), cw, ch);
+                dc.DrawRectangle(x * w + rect.GetX(), y * w + rect.GetY(), w, w);
         }
     }
 }

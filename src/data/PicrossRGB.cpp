@@ -66,8 +66,8 @@ void PicrossRGB::Draw(wxDC& dc)
     wxSize size = rect.GetSize();
     auto [unused1, extra_solutions_height, unused2, extra_solutions_width] = CalculateSolutionBounds();
 
-    int cw = (size.GetWidth() - extra_solutions_width) / width ;
-    int ch = (size.GetHeight() - extra_solutions_height) / height;
+    int w = std::min((size.GetWidth() - extra_solutions_width) / width,
+                     (size.GetHeight() - extra_solutions_height) / height);
 
     dc.SetPen(*wxTRANSPARENT_PEN);
     if (showLayer) dc.SetBrush(*wxBLACK_BRUSH);
@@ -85,7 +85,7 @@ void PicrossRGB::Draw(wxDC& dc)
                 {
                     unsigned int c = 255 * NumSet(layer, x, y) / max;
                     dc.SetBrush(wxBrush(wxColour(c, c, c)));
-                    dc.DrawRectangle(x * cw + rect.GetX(), y * ch + rect.GetY(), cw, ch);
+                    dc.DrawRectangle(x * w + rect.GetX(), y * w + rect.GetY(), w, w);
                 }
             }
             else
@@ -94,7 +94,7 @@ void PicrossRGB::Draw(wxDC& dc)
                 unsigned int g = 255 * NumSet(1, x, y) / max;
                 unsigned int b = 255 * NumSet(2, x, y) / max;
                 dc.SetBrush(wxBrush(wxColour(r, g, b)));
-                dc.DrawRectangle(x * cw + rect.GetX(), y * ch + rect.GetY(), cw, ch);
+                dc.DrawRectangle(x * w + rect.GetX(), y * w + rect.GetY(), w, w);
             }
         }
     }

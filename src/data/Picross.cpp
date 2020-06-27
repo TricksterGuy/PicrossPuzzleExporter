@@ -152,19 +152,19 @@ void Picross::Draw(wxDC& dc)
     dc.SetFont(wxSystemSettings::GetFont(wxSYS_ANSI_FIXED_FONT));
     auto [solutions_height, extra_solutions_height, solutions_width, extra_solutions_width] = CalculateSolutionBounds();
 
-    int cw = (size.GetWidth() - solutions_width - extra_solutions_width) / width;
-    int ch = (size.GetHeight() - solutions_height - extra_solutions_height) / height;
+    int w = std::min((size.GetWidth() - solutions_width - extra_solutions_width) / width,
+                     (size.GetHeight() - solutions_height - extra_solutions_height) / height);
 
     for (int i = 0; i < height; i++)
     {
         auto [hints, extra_hints] = getRowHints(i);
         auto text_size = dc.GetMultiLineTextExtent(hints);
-        dc.DrawText(hints, 0, i * ch + solutions_height + (ch - text_size.GetHeight()) / 2);
+        dc.DrawText(hints, 0, i * w + solutions_height + (w - text_size.GetHeight()) / 2);
 
         if (bpc > 1)
         {
             text_size = dc.GetMultiLineTextExtent(extra_hints);
-            dc.DrawText(extra_hints, size.GetWidth() - extra_solutions_width, i * ch + solutions_height + (ch - text_size.GetHeight()) / 2);
+            dc.DrawText(extra_hints, solutions_width + w * width, i * w + solutions_height + (w - text_size.GetHeight()) / 2);
         }
     }
 
@@ -172,11 +172,11 @@ void Picross::Draw(wxDC& dc)
     {
         auto [hints, extra_hints] = getColHints(i);
         auto text_size = dc.GetMultiLineTextExtent(hints);
-        dc.DrawText(hints, i * cw + solutions_width + (cw - text_size.GetWidth()) / 2, 0);
+        dc.DrawText(hints, i * w + solutions_width + (w - text_size.GetWidth()) / 2, 0);
         if (bpc > 1)
         {
             text_size = dc.GetMultiLineTextExtent(extra_hints);
-            dc.DrawText(extra_hints, i * cw + solutions_width + (cw - text_size.GetWidth()) / 2, size.GetHeight() - extra_solutions_height);
+            dc.DrawText(extra_hints, i * w + solutions_width + (w - text_size.GetWidth()) / 2, solutions_height + w * height);
         }
     }
 
@@ -195,8 +195,11 @@ void Picross::TranslateToCoords(int x, int y, int w, int h, int& tx, int& ty) co
 
     if (x < 0 || y < 0) return;
 
-    tx = x / ((w - solutions_width - extra_solutions_width) / width);
-    ty = y / ((h - solutions_height - extra_solutions_height) / height);
+    int cw = std::min((w - solutions_width - extra_solutions_width) / width,
+                      (h - solutions_height - extra_solutions_height) / height);
+
+    tx = x / cw;
+    ty = y / cw;
 
     if (tx > width || ty > height)
     {

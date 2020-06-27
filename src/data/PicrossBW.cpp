@@ -52,9 +52,8 @@ void PicrossBW::Draw(wxDC& dc)
     wxSize size = rect.GetSize();
 
     auto [unused1, extra_solutions_height, unused2, extra_solutions_width] = CalculateSolutionBounds();
-
-    int cw = (size.GetWidth() - extra_solutions_width) / width ;
-    int ch = (size.GetHeight() - extra_solutions_height) / height;
+    int w = std::min((size.GetWidth() - extra_solutions_width) / width,
+                     (size.GetHeight() - extra_solutions_height) / height);
 
     dc.SetPen(*wxTRANSPARENT_PEN);
     dc.SetBrush(*wxBLACK_BRUSH);
@@ -68,7 +67,7 @@ void PicrossBW::Draw(wxDC& dc)
                 dc.SetBrush(*wxBLACK_BRUSH);
             else
                 dc.SetBrush(*wxWHITE_BRUSH);
-            dc.DrawRectangle(x * cw + rect.GetX(), y * ch + rect.GetY(), cw, ch);
+            dc.DrawRectangle(x * w + rect.GetX(), y * w + rect.GetY(), w, w);
         }
     }
 }
