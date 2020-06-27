@@ -23,6 +23,7 @@
 #define PICROSS_HPP
 
 #include <map>
+#include <tuple>
 #include <vector>
 #include <wx/dc.h>
 #include "PicrossLayer.hpp"
@@ -47,11 +48,6 @@ struct ExportParams
     uint32_t bottom_color;
 };
 
-constexpr int SOLUTIONS_WIDTH = 100;
-constexpr int SOLUTIONS_HEIGHT = 100;
-constexpr int EXTRA_SOLUTIONS_WIDTH = 50;
-constexpr int EXTRA_SOLUTIONS_HEIGHT = 50;
-
 class Picross
 {
     public:
@@ -61,7 +57,11 @@ class Picross
         virtual ~Picross() {}
         PicrossPuzzle::Type GetType() const {return type;}
         virtual void Draw(wxDC& dc);
-        virtual void Toggle(int layer, int tx, int ty) {data.Toggle(layer, tx, ty);}
+        virtual void Toggle(int layer, int tx, int ty)
+        {
+            data.Toggle(layer, tx, ty);
+            FlushCache(tx, ty);
+        }
         void Build();
 
         int GetWidth() const {return width;}
@@ -69,7 +69,11 @@ class Picross
         virtual bool IsSet(int layer, int tx, int ty);
         virtual unsigned int NumSet(int layer, int tx, int ty);
         const PicrossLayer& GetData() const {return data;}
-        void SetLayer(int layer) {this->layer = layer;}
+        void SetLayer(int layer_id)
+        {
+            layer = layer_id;
+            FlushCache();
+        }
         void SetShowLayer(bool showLayer) {this->showLayer = showLayer;}
         void SetShowGrid(bool grid) {showGrid = grid;}
 
@@ -79,6 +83,31 @@ class Picross
         void Export(const wxString& file, const ExportParams& params) const;
         PicrossPuzzle Export(const ExportParams& params) const;
     protected:
+        std::tuple<int, int, int, int> CalculateSolutionBounds() const;
+
+        void FlushCache()
+        {
+            row_solutions_cache.clear();
+            col_solutions_cache.clear();
+            row_extra_solutions_cache.clear();
+            col_extra_solutions_cache.clear();
+            calculated_sizes = {0, 0, 0, 0};
+        }
+        void FlushCache(int row, int col)
+        {
+            if (row != -1)
+            {
+                row_solutions_cache.erase(row);
+                row_extra_solutions_cache.erase(row);
+            }
+            if (col != -1)
+            {
+                col_solutions_cache.erase(col);
+                col_extra_solutions_cache.erase(col);
+            }
+            calculated_sizes = {0, 0, 0, 0};
+        }
+
         PicrossPuzzle::Type type;
         PicrossLayer data;
         int layer;
@@ -99,7 +128,17 @@ class Picross
         // Map layer_id -> Array sized width/height with number of changes in shading.
         solutions shading_rows;
         solutions shading_cols;
+
         friend bool Validate(const Picross* picross, Problem& problem);
+    private:
+        std::pair<wxString, wxString> getRowHints(int row) const;
+        std::pair<wxString, wxString> getColHints(int col) const;
+
+        mutable std::unordered_map<int, wxString> row_solutions_cache;
+        mutable std::unordered_map<int, wxString> col_solutions_cache;
+        mutable std::unordered_map<int, wxString> row_extra_solutions_cache;
+        mutable std::unordered_map<int, wxString> col_extra_solutions_cache;
+        mutable std::tuple<int, int, int, int> calculated_sizes;
 };
 
 #endif

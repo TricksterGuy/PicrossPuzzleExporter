@@ -50,8 +50,11 @@ void PicrossBW::Draw(wxDC& dc)
     wxRect rect;
     dc.GetClippingBox(rect);
     wxSize size = rect.GetSize();
-    int cw = (size.GetWidth() - EXTRA_SOLUTIONS_WIDTH) / width ;
-    int ch = (size.GetHeight() - EXTRA_SOLUTIONS_HEIGHT) / height;
+
+    auto [unused1, extra_solutions_height, unused2, extra_solutions_width] = CalculateSolutionBounds();
+
+    int cw = (size.GetWidth() - extra_solutions_width) / width ;
+    int ch = (size.GetHeight() - extra_solutions_height) / height;
 
     dc.SetPen(*wxTRANSPARENT_PEN);
     dc.SetBrush(*wxBLACK_BRUSH);

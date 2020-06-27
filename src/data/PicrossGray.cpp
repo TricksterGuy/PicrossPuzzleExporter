@@ -44,6 +44,7 @@ void PicrossGray::Toggle(int layer, int tx, int ty)
     unsigned int dmask = (1 << bpc) - 1;
     unsigned int value = data.Get(tx, ty);
     data.Set(tx, ty, (value - 1) & dmask);
+    FlushCache(tx, ty);
 }
 
 void PicrossGray::Draw(wxDC& dc)
@@ -54,8 +55,10 @@ void PicrossGray::Draw(wxDC& dc)
     dc.GetClippingBox(rect);
     wxSize size = rect.GetSize();
 
-    int cw = (size.GetWidth() - EXTRA_SOLUTIONS_WIDTH) / width ;
-    int ch = (size.GetHeight() - EXTRA_SOLUTIONS_HEIGHT) / height;
+    auto [unused1, extra_solutions_height, unused2, extra_solutions_width] = CalculateSolutionBounds();
+
+    int cw = (size.GetWidth() - extra_solutions_width) / width ;
+    int ch = (size.GetHeight() - extra_solutions_height) / height;
     int max = (1 << bpc) - 1;
 
     dc.SetPen(*wxTRANSPARENT_PEN);

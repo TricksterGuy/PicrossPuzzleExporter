@@ -37,9 +37,9 @@ add_custom_command(OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/src/gen/Picross.pb.cc ${CM
 
 # TODO update this to using standard CMake variables.
 IF(DEBUG_MODE)
-    set(CMAKE_CXX_FLAGS "-g -Wall -std=c++0x -DwxUSE_GRAPHICS_CONTEXT=1")
+    set(CMAKE_CXX_FLAGS "-g -Wall -std=c++17 -DwxUSE_GRAPHICS_CONTEXT=1")
 ELSE()
-    set(CMAKE_CXX_FLAGS "-O3 -s -Wall -std=c++0x -DwxUSE_GRAPHICS_CONTEXT=1")
+    set(CMAKE_CXX_FLAGS "-O3 -s -Wall -std=c++17 -DwxUSE_GRAPHICS_CONTEXT=1")
 ENDIF(DEBUG_MODE)
 
 set(CMAKE_SKIP_RPATH TRUE)
