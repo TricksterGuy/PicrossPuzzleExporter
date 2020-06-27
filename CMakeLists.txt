@@ -1,8 +1,34 @@
-cmake_minimum_required (VERSION 2.6)
+cmake_minimum_required(VERSION 3.5)
+# Ignore warnings about rpath behavior on OS X
+cmake_policy(SET CMP0042 NEW)
 project (ppe)
 include(FindPkgConfig)
 
-option(DEBUG_MODE "Build for debugging" ON)
+# Require C++17 build
+if(NOT CMAKE_CXX_FLAGS MATCHES "-std=(c|gnu)\\+\\+17")
+    message(STATUS "This project requires C++17. Adding -std=c++17 to CXXFLAGS.")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17" CACHE STRING "Flags used by the compiler during all build types." FORCE)
+endif()
+
+# Additional debug flags
+set(CMAKE_CXX_FLAGS_DEBUG "-g -pg")
+
+# Set default warning flags
+set(PROJECT_WARNING_FLAGS "-Wall -Wno-deprecated -Wno-deprecated-declarations" CACHE STRING "Compiler warning flags to include")
+mark_as_advanced(PROJECT_WARNING_FLAGS)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${PROJECT_WARNING_FLAGS}")
+
+# Default to release build if not specified
+if(NOT CMAKE_BUILD_TYPE)
+    message(STATUS "Setting build type to 'Release' as none was specified.")
+    set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build." FORCE)
+    set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release"
+    "MinSizeRel" "RelWithDebInfo")
+endif(NOT CMAKE_BUILD_TYPE)
+
+if(CMAKE_BUILD_TYPE MATCHES "Debug")
+    set(CMAKE_EXE_LINKER_FLAGS "-fprofile-arcs -ftest-coverage")
+endif(CMAKE_BUILD_TYPE MATCHES "Debug")
 
 # Source files definition
 set(SRC_ppe
@@ -34,13 +60,6 @@ add_custom_command(OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/src/gen/Picross.pb.cc ${CM
                    COMMAND protoc --cpp_out=../src/gen Picross.proto
                    MAIN_DEPENDENCY ${CMAKE_CURRENT_SOURCE_DIR}/gen/Picross.proto
                    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/gen)
-
-# TODO update this to using standard CMake variables.
-IF(DEBUG_MODE)
-    set(CMAKE_CXX_FLAGS "-g -Wall -std=c++17 -DwxUSE_GRAPHICS_CONTEXT=1")
-ELSE()
-    set(CMAKE_CXX_FLAGS "-O3 -s -Wall -std=c++17 -DwxUSE_GRAPHICS_CONTEXT=1")
-ENDIF(DEBUG_MODE)
 
 set(CMAKE_SKIP_RPATH TRUE)
 include(${wxWidgets_USE_FILE})
