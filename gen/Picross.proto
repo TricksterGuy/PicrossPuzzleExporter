@@ -3,7 +3,7 @@ syntax = "proto3";
 // Solution info for a row column.
 // This message represents the numbers along the top/left of the picross.
 // Additionally fields for special picross that involve multiple bits per cell.
-message Solution
+message Hint
 {
     // Hints along this particular row/column.
 	repeated int32 data = 1 [packed=true];
@@ -14,12 +14,10 @@ message Solution
 }
 
 // Solution Info for a picross puzzle (or an individual layer for colored picross).
-message SolutionLayer
+message HintLayer
 {
-	repeated Solution rows = 1;
-	repeated Solution cols = 2;
-	// The cell data for the layer including markings per cell.
-	repeated int32 data = 3 [packed=true];
+	repeated Hint rows = 1;
+	repeated Hint cols = 2;
 }
 
 // Background info for picross games.
@@ -79,9 +77,13 @@ message PicrossPuzzle
 	enum Type
 	{
 		TYPE_INVALID = 0;
+		// Classic Picross. One layer black.
 		TYPE_BW = 1;
+		// Grayscale Picross. One layer.
 		TYPE_GRAY = 2;
+		// Light Picross. Three layers Red, Green, and Blue.
 		TYPE_RGB = 3;
+		// Painting Picross. Five layers Black, White, Red, Blue, and Yellow.
 		TYPE_RBY = 4;
 	}
 	// Dimensions of the puzzle in cells.
@@ -91,8 +93,10 @@ message PicrossPuzzle
 	Type type = 3;
 	// Bits per cell for picross puzzle. Valid only for TYPE_GRAY and TYPE_RGB.
 	int32 bpc = 4;
-	// Row/Column hints (and solution data) for each layer of the picross puzzle.
-	repeated SolutionLayer layers = 5;
+	// The state of the board for the puzzle, it is packed data based on the content of each layer.
+	repeated int32 solution = 5 [packed=true];
+	// Row/Column hints for each layer of the picross puzzle.
+	repeated HintLayer layers = 6;
 	// Metadata.
-	PicrossPuzzleMeta meta = 6;
+	PicrossPuzzleMeta meta = 7;
 }

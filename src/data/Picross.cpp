@@ -186,6 +186,7 @@ void Picross::Draw(wxDC& dc)
     }
 
     dc.SetClippingRegion(solutions_width, solutions_height, size.GetWidth() - solutions_width, size.GetHeight() - solutions_height);
+
     DrawBoard(dc);
 
     if (showGrid)
@@ -232,6 +233,7 @@ void Picross::Export(const wxString& file, const ExportParams& params) const
     puzzle.SerializeToOstream(&out);
 }
 
+// TODO move into its own file like the xlsx exporter.
 PicrossPuzzle Picross::Export(const ExportParams& params) const
 {
     PicrossPuzzle out;
@@ -260,14 +262,14 @@ PicrossPuzzle Picross::Export(const ExportParams& params) const
 
     for (int k = 0; k < max_layers; k++)
     {
-        SolutionLayer* layer = out.add_layers();
+        auto* layer = out.add_layers();
         const solutions& row_solutions = rows.at(k);
         const solutions& col_solutions = cols.at(k);
 
         for (int i = 0; i < height; i++)
         {
             const std::vector<int>& row_data = row_solutions[i];
-            Solution* rows = layer->add_rows();
+            auto* rows = layer->add_rows();
             for (const auto& elem : row_data)
                 rows->add_data(elem);
             if (bpc > 1)
@@ -282,7 +284,7 @@ PicrossPuzzle Picross::Export(const ExportParams& params) const
         for (int j = 0; j < width; j++)
         {
             const std::vector<int>& col_data = col_solutions[j];
-            Solution* cols = layer->add_cols();
+            auto* cols = layer->add_cols();
             for (const auto& elem : col_data)
                 cols->add_data(elem);
             if (bpc > 1)
@@ -293,12 +295,12 @@ PicrossPuzzle Picross::Export(const ExportParams& params) const
                 cols->set_shading(shading_cols.at(k)[j]);
             }
         }
+    }
 
-        for (int y = 0; y < height; y++)
-        {
-            for (int x = 0; x < width; x++)
-                layer->add_data(data.Get(x, y));
-        }
+    for (int y = 0; y < height; y++)
+    {
+        for (int x = 0; x < width; x++)
+            out.add_solution(data.Get(x, y));
     }
 
     return out;
