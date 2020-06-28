@@ -21,7 +21,7 @@ Converts an image into a Picross (Nonogram) Puzzle. Supports various Picross Puz
 
 ## Screenshots
 
-|![Black/White](https://github.com/TricksterGuy/PicrossPuzzleExporter/blob/master/screenshots/bwpika.png)   |![Grayscale](https://github.com/TricksterGuy/PicrossPuzzleExporter/blob/master/screenshots/graypika.png)|
+|![Classic](https://github.com/TricksterGuy/PicrossPuzzleExporter/blob/master/screenshots/classic.png)   |![Grayscale](https://github.com/TricksterGuy/PicrossPuzzleExporter/blob/master/screenshots/grayscale.png)|
 |---|--------------------------------------------------------------------------------------------------------|
-|![RGB](https://github.com/TricksterGuy/PicrossPuzzleExporter/blob/master/screenshots/rgbpika.png)|![RBY](https://github.com/TricksterGuy/PicrossPuzzleExporter/blob/master/screenshots/rbypika.png)       |
+|![RGB](https://github.com/TricksterGuy/PicrossPuzzleExporter/blob/master/screenshots/light.png)|![RBY](https://github.com/TricksterGuy/PicrossPuzzleExporter/blob/master/screenshots/painting.png)       |
 
