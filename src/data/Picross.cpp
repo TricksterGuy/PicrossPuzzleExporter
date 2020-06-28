@@ -206,7 +206,7 @@ void Picross::TranslateToCoords(int x, int y, int w, int h, int& tx, int& ty) co
     tx = x / cw;
     ty = y / cw;
 
-    if (tx > width || ty > height)
+    if (tx >= width || ty >= height)
     {
         tx = -1;
         ty = -1;
