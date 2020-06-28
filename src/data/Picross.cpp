@@ -27,8 +27,12 @@
 
 void Picross::Build()
 {
+    // TODO write Picross::Clear which erases all hints from puzzle.
     for (int k = 0; k < max_layers; k++)
     {
+        shading_rows[k].clear();
+        shading_cols[k].clear();
+
         // Build row solution info.
         rows[k] = solutions(height);
         for (int y = 0; y < height; y++)
