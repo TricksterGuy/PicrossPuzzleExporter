@@ -56,7 +56,8 @@ class Picross
                                                                                                 shading_cols(max_layers) {}
         virtual ~Picross() {}
         PicrossPuzzle::Type GetType() const {return type;}
-        virtual void Draw(wxDC& dc);
+        void Draw(wxDC& dc);
+        virtual void DrawBoard(wxDC& dc) {}
         virtual void Toggle(int layer, int tx, int ty) {data.Toggle(layer, tx, ty);}
         void Build();
 

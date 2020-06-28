@@ -186,9 +186,8 @@ PicrossRBY::PicrossRBY(wxImage image, int width, int height) : Picross(PicrossPu
     }
 }
 
-void PicrossRBY::Draw(wxDC& dc)
+void PicrossRBY::DrawBoard(wxDC& dc)
 {
-    Picross::Draw(dc);
     wxRect rect;
     dc.GetClippingBox(rect);
     wxSize size = rect.GetSize();
@@ -199,7 +198,6 @@ void PicrossRBY::Draw(wxDC& dc)
 
     dc.SetPen(*wxTRANSPARENT_PEN);
     if (showLayer) dc.SetBrush(*wxBLACK_BRUSH);
-    if (showGrid) dc.SetPen(*wxBLACK_PEN);
 
     for (int y = 0; y < height; y++)
     {

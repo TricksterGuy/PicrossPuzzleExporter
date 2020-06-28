@@ -186,6 +186,16 @@ void Picross::Draw(wxDC& dc)
     }
 
     dc.SetClippingRegion(solutions_width, solutions_height, size.GetWidth() - solutions_width, size.GetHeight() - solutions_height);
+    DrawBoard(dc);
+
+    if (showGrid)
+    {
+        dc.SetPen(*wxGREY_PEN);
+        for (int i = 0; i <= width; i++)
+            dc.DrawLine(i * w + solutions_width, solutions_height, i * w + solutions_width, height * w + solutions_height);
+        for (int i = 0; i <= height; i++)
+            dc.DrawLine(solutions_width, i * w + solutions_height, width * w + solutions_width, i * w + solutions_height);
+    }
 }
 
 void Picross::TranslateToCoords(int x, int y, int w, int h, int& tx, int& ty) const

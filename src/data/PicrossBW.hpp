@@ -30,7 +30,7 @@ class PicrossBW : public Picross
     public:
         PicrossBW(wxImage image, int width, int height);
         ~PicrossBW() {}
-        void Draw(wxDC& dc) override;
+        void DrawBoard(wxDC& dc) override;
 };
 
 

@@ -44,9 +44,8 @@ PicrossBW::PicrossBW(wxImage image_in, int width, int height) : Picross(PicrossP
     }
 }
 
-void PicrossBW::Draw(wxDC& dc)
+void PicrossBW::DrawBoard(wxDC& dc)
 {
-    Picross::Draw(dc);
     wxRect rect;
     dc.GetClippingBox(rect);
     wxSize size = rect.GetSize();
@@ -57,7 +56,6 @@ void PicrossBW::Draw(wxDC& dc)
 
     dc.SetPen(*wxTRANSPARENT_PEN);
     dc.SetBrush(*wxBLACK_BRUSH);
-    if (showGrid) dc.SetPen(*wxBLACK_PEN);
 
     for (int y = 0; y < height; y++)
     {

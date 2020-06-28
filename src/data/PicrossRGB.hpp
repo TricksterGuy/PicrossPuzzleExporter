@@ -30,7 +30,7 @@ class PicrossRGB : public Picross
     public:
         PicrossRGB(wxImage image, int width, int height, int bpc);
         ~PicrossRGB() {}
-        void Draw(wxDC& dc) override;
+        void DrawBoard(wxDC& dc) override;
         void Toggle(int layer, int tx, int ty) override;
 };
 

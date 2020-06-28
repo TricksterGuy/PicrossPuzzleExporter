@@ -47,9 +47,8 @@ void PicrossGray::Toggle(int layer, int tx, int ty)
     FlushCache(tx, ty);
 }
 
-void PicrossGray::Draw(wxDC& dc)
+void PicrossGray::DrawBoard(wxDC& dc)
 {
-    Picross::Draw(dc);
 
     wxRect rect;
     dc.GetClippingBox(rect);
@@ -63,7 +62,6 @@ void PicrossGray::Draw(wxDC& dc)
 
     dc.SetPen(*wxTRANSPARENT_PEN);
     dc.SetBrush(*wxBLACK_BRUSH);
-    if (showGrid) dc.SetPen(*wxBLACK_PEN);
 
     for (int y = 0; y < height; y++)
     {

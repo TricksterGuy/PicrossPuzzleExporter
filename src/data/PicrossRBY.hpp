@@ -32,7 +32,7 @@ class PicrossRBY : public Picross
     public:
         PicrossRBY(wxImage image, int width, int height);
         ~PicrossRBY() {}
-        void Draw(wxDC& dc) override;
+        void DrawBoard(wxDC& dc) override;
     private:
         Image8Bpp image8;
 };

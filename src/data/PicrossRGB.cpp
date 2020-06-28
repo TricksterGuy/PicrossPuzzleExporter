@@ -57,10 +57,8 @@ void PicrossRGB::Toggle(int layer, int tx, int ty)
     FlushCache(tx, ty);
 }
 
-void PicrossRGB::Draw(wxDC& dc)
+void PicrossRGB::DrawBoard(wxDC& dc)
 {
-    Picross::Draw(dc);
-
     wxRect rect;
     dc.GetClippingBox(rect);
     wxSize size = rect.GetSize();
@@ -71,7 +69,6 @@ void PicrossRGB::Draw(wxDC& dc)
 
     dc.SetPen(*wxTRANSPARENT_PEN);
     if (showLayer) dc.SetBrush(*wxBLACK_BRUSH);
-    if (showGrid) dc.SetPen(*wxBLACK_PEN);
 
     int max = (1 << bpc) - 1;
 
