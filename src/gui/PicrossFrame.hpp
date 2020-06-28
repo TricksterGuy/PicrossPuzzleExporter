@@ -33,19 +33,29 @@
 class PicrossFrame : public PicrossGUI
 {
     public:
-        PicrossFrame(wxFrame* window) : PicrossGUI(window) {}
+        PicrossFrame(wxFrame* window);
         ~PicrossFrame() {}
-		void OnChangePuzzleType(wxCommandEvent& event) override;
-		void OnChangeBackgroundType(wxCommandEvent& event) override;
-		void OnLayerChange(wxCommandEvent& event) override;
-		void OnChangeBpc(wxCommandEvent& event) override;
-		void OnLoadImage(wxCommandEvent& event) override;
-		void OnValidate(wxCommandEvent& event) override;
-		void OnExportProtobuf(wxCommandEvent& event) override;
-		void OnShowLayer(wxCommandEvent& event) override;
-		void OnToggleGrid(wxCommandEvent& event) override;
-		void OnQuit(wxCommandEvent& event) override {Destroy();}
-		void OnResize(wxSizeEvent& event) {Refresh(); event.Skip();}
+
+        void OnLoadImage(wxCommandEvent& event) override;
+
+        void OnValidate(wxCommandEvent& event) override;
+
+        void OnExportProtobuf(wxCommandEvent& event) override;
+
+        // Optional Exporters.
+        void OnExportXlsx(wxCommandEvent& event);
+
+        void OnChangePuzzleType(wxCommandEvent& event) override;
+        void OnChangeBackgroundType(wxCommandEvent& event) override;
+        void OnLayerChange(wxCommandEvent& event) override;
+        void OnChangeBpc(wxCommandEvent& event) override;
+
+        void OnShowLayer(wxCommandEvent& event) override;
+        void OnToggleGrid(wxCommandEvent& event) override;
+
+        void OnQuit(wxCommandEvent& event) override {Destroy();}
+
+        void OnResize(wxSizeEvent& event) {Refresh(); event.Skip();}
     private:
         ExportParams GetExportParams() const;
 };

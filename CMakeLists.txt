@@ -4,6 +4,8 @@ cmake_policy(SET CMP0042 NEW)
 project (ppe)
 include(FindPkgConfig)
 
+option(ENABLE_XLSX "Enable xlsx export option. (Requires libxlsxwriter)" OFF)
+
 # Require C++17 build
 if(NOT CMAKE_CXX_FLAGS MATCHES "-std=(c|gnu)\\+\\+17")
     message(STATUS "This project requires C++17. Adding -std=c++17 to CXXFLAGS.")
@@ -54,6 +56,17 @@ set(SRC_ppe
 set(wxWidgets_USE_LIBS core base)
 find_package(wxWidgets REQUIRED)
 pkg_search_module(PROTOBUF REQUIRED protobuf)
+if(ENABLE_XLSX)
+    # libxlsxwriter doesn't have a pkg-config definition or FindCMake module.
+    set(XLSX_INCLUDEDIR "")
+    set(XLSX_LIBRARIES "xlsxwriter")
+
+    set(SRC_ppe
+        ${SRC_ppe}
+        src/exporters/XlsxExporter.cpp
+    )
+    add_definitions(-DENABLE_XLSX=1)
+endif(ENABLE_XLSX)
 
 add_custom_command(OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/src/gen/Picross.pb.cc ${CMAKE_CURRENT_SOURCE_DIR}/src/gen/Picross.pb.h
                    COMMAND protoc --cpp_out=../src/gen Picross.proto
@@ -67,7 +80,9 @@ include_directories(${ppe_SOURCE_DIR}/src/data)
 include_directories(${ppe_SOURCE_DIR}/src/gen)
 include_directories(${ppe_SOURCE_DIR}/src/gui)
 include_directories(${ppe_SOURCE_DIR}/src/util)
+include_directories(${ppe_SOURCE_DIR}/src/exporters)
 include_directories(${PROTOBUF_INCLUDEDIR})
+include_directories(${XLSX_INCLUDEDIR})
 
 add_executable(
 	ppe
@@ -79,6 +94,7 @@ target_link_libraries(
 	${wxWidgets_LIBRARIES}
 	${GTK2_LIBRARIES}
 	${PROTOBUF_LIBRARIES}
+	${XLSX_LIBRARIES}
 )
 
 install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/ppe DESTINATION bin)

@@ -66,9 +66,17 @@ class Picross
 
         int GetWidth() const {return width;}
         int GetHeight() const {return height;}
+        int GetBpc() const {return bpc;}
+        int GetLayers() const {return max_layers;}
         virtual bool IsSet(int layer, int tx, int ty);
         virtual unsigned int NumSet(int layer, int tx, int ty);
         const PicrossLayer& GetData() const {return data;}
+        const layer_solutions& GetRowSolutionHints() const {return rows;}
+        const layer_solutions& GetRowExtraSolutionHints() const {return total_rows;}
+        const solutions& GetRowShadingHints() const {return shading_rows;}
+        const layer_solutions& GetColumnSolutionHints() const {return cols;}
+        const layer_solutions& GetColumnExtraSolutionHints() const {return total_cols;}
+        const solutions& GetColumnShadingHints() const {return shading_cols;}
         void SetLayer(int layer_id)
         {
             layer = layer_id;
@@ -131,6 +139,7 @@ class Picross
 
         friend bool Validate(const Picross* picross, Problem& problem);
     private:
+        // TODO rename to getRowHintsString
         std::pair<wxString, wxString> getRowHints(int row) const;
         std::pair<wxString, wxString> getColHints(int col) const;
 

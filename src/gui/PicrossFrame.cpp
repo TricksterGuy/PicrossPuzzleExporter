@@ -24,6 +24,10 @@
 #include <wx/filedlg.h>
 #include <sstream>
 
+#ifdef ENABLE_XLSX
+#include "XlsxExporter.hpp"
+#endif
+
 enum PicrossTypes
 {
     CLASSIC = 0,
@@ -31,6 +35,19 @@ enum PicrossTypes
     LIGHT = 2,
     PAINTING = 3,
 };
+
+PicrossFrame::PicrossFrame(wxFrame* window) : PicrossGUI(window)
+{
+
+#ifdef ENABLE_XLSX
+#define ID_XLSX 2000
+    auto* xlsxMenuItem= new wxMenuItem(exportMenu, ID_XLSX, wxString( wxT("Xlsx") ) , wxT("Export puzzle to an xlsx spreadsheet."), wxITEM_NORMAL);
+    exportMenu->Append( xlsxMenuItem );
+    exportMenu->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(PicrossFrame::OnExportXlsx), this, xlsxMenuItem->GetId());
+#endif
+
+}
+
 
 void PicrossFrame::OnLoadImage(wxCommandEvent& event)
 {
@@ -69,6 +86,19 @@ void PicrossFrame::OnExportProtobuf(wxCommandEvent& event)
     wxString path = wxSaveFileSelector("Picross Puzzle", "picross", "", this);
     if (path.IsEmpty()) return;
     puzzleDataCanvas->OnExport(path, GetExportParams());
+}
+
+void PicrossFrame::OnExportXlsx(wxCommandEvent& event)
+{
+#ifdef ENABLE_XLSX
+    Picross* picross = puzzleDataCanvas->GetPuzzle();
+    if (!picross) return;
+
+    wxString path = wxSaveFileSelector("Picross Puzzle", "xlsx", "", this);
+    if (path.IsEmpty()) return;
+
+    ExportXlsx(path.ToStdString(), *picross);
+#endif
 }
 
 void PicrossFrame::OnChangePuzzleType(wxCommandEvent& event)
