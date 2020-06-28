@@ -57,11 +57,7 @@ class Picross
         virtual ~Picross() {}
         PicrossPuzzle::Type GetType() const {return type;}
         virtual void Draw(wxDC& dc);
-        virtual void Toggle(int layer, int tx, int ty)
-        {
-            data.Toggle(layer, tx, ty);
-            FlushCache(tx, ty);
-        }
+        virtual void Toggle(int layer, int tx, int ty) {data.Toggle(layer, tx, ty);}
         void Build();
 
         int GetWidth() const {return width;}

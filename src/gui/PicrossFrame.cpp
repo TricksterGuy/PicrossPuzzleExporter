@@ -48,7 +48,6 @@ PicrossFrame::PicrossFrame(wxFrame* window) : PicrossGUI(window)
 
 }
 
-
 void PicrossFrame::OnLoadImage(wxCommandEvent& event)
 {
     wxString image_path = wxLoadFileSelector("Image", "*", "", this);

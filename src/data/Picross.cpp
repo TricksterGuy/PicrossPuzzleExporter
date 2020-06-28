@@ -128,6 +128,7 @@ void Picross::Build()
             shading_cols[k].push_back(shadings);
         }
     }
+    FlushCache();
 }
 
 bool Picross::IsSet(int layer, int tx, int ty)
