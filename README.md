@@ -10,7 +10,7 @@ Converts an image into a Picross (Nonogram) Puzzle. Supports various Picross Puz
 * 4 Puzzle Modes supported
   1. Classic Black and White Picross Puzzles.
   2. Grayscale Picross Puzzles.
-      * These puzzles have the traditional setup, but each cell is not your typical marked/unmarked state, Cells can be of one of 2<sub>bpc</sub> (where bpc = bits per cell) states indicating how dark the cell is. Numbers to the right and bottom indicate the number of cells with that value along with the final value indicating how many changes in shade there was for that row (ignoring unfilled cells).
+      * These puzzles have the traditional setup, but each cell is not your typical marked/unmarked state, Cells can be of one of 2<sup>bpc</sup> (where bpc = bits per cell) states indicating how dark the cell is. Numbers to the right and bottom indicate the number of cells with that value along with the final value indicating how many changes in shade there was for that row (ignoring unfilled cells).
   3. Colors of Light Picross Puzzles.
       * These puzzles are split up into 3 separate picross puzzles for each layer (Red, Green, and Blue).  Solving all three puzzles reveals a colored image.  If a cell is filled in multiple layers then the colors will combine in the final image (ex. red + blue = magenta, blue + green = cyan, etc.). Bits per cell can also be enabled for more colorful puzzles.
   4. Painting Picross Puzzles.
