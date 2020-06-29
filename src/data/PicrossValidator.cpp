@@ -104,8 +104,8 @@ std::map<int, std::vector<int>> BuildPartialSolution(PicrossLayer& data, std::se
 
 bool Validate(const Picross* picross, Problem& problem)
 {
-    std::map<int, solutions> rows = picross->rows;
-    std::map<int, solutions> columns = picross->cols;
+    LayerHints rows = picross->rows;
+    LayerHints columns = picross->columns;
     PicrossLayer data = picross->data;
     int max_layers = picross->max_layers;
     int width = picross->width;
@@ -113,8 +113,8 @@ bool Validate(const Picross* picross, Problem& problem)
 
     for (int layer = 0; layer < max_layers; layer++)
     {
-        solutions& row_solutions = rows[layer];
-        solutions& col_solutions = columns[layer];
+        Hints& row_solutions = rows[layer];
+        Hints& col_solutions = columns[layer];
         int current_id = 0;
         // Map from solution to unique id
         std::map<std::vector<int>, int> found_sets;

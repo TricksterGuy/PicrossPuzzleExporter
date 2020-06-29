@@ -22,7 +22,7 @@
 #ifndef PICROSS_HPP
 #define PICROSS_HPP
 
-#include <map>
+#include <unordered_map>
 #include <tuple>
 #include <vector>
 #include <wx/dc.h>
@@ -31,8 +31,9 @@
 
 struct Problem;
 
-typedef std::vector<std::vector<int>> solutions;
-typedef std::map<int, solutions> layer_solutions;
+typedef std::vector<std::vector<int>> Hints;
+typedef std::vector<std::vector<int>> ShadingHints;
+typedef std::unordered_map<int, Hints> LayerHints;
 
 struct ExportParams
 {
@@ -53,7 +54,7 @@ class Picross
     public:
         Picross(PicrossPuzzle::Type type_, int width_, int height_, int bpc_, int num_layers) : type(type_), data(width_, height_), layer(0), showLayer(false), showGrid(true),
                                                                                                 width(width_), height(height_), bpc(bpc_), max_layers(num_layers), shading_rows(max_layers),
-                                                                                                shading_cols(max_layers) {}
+                                                                                                shading_columns(max_layers) {}
         virtual ~Picross() {}
         PicrossPuzzle::Type GetType() const {return type;}
         void Draw(wxDC& dc);
@@ -68,12 +69,12 @@ class Picross
         virtual bool IsSet(int layer, int tx, int ty);
         virtual unsigned int NumSet(int layer, int tx, int ty);
         const PicrossLayer& GetData() const {return data;}
-        const layer_solutions& GetRowSolutionHints() const {return rows;}
-        const layer_solutions& GetRowExtraSolutionHints() const {return total_rows;}
-        const solutions& GetRowShadingHints() const {return shading_rows;}
-        const layer_solutions& GetColumnSolutionHints() const {return cols;}
-        const layer_solutions& GetColumnExtraSolutionHints() const {return total_cols;}
-        const solutions& GetColumnShadingHints() const {return shading_cols;}
+        const LayerHints& GetRowHints() const {return rows;}
+        const LayerHints& GetRowExtraHints() const {return total_rows;}
+        const ShadingHints& GetRowShadingHints() const {return shading_rows;}
+        const LayerHints& GetColumnHints() const {return columns;}
+        const LayerHints& GetColumnExtraHints() const {return total_columns;}
+        const ShadingHints& GetColumnShadingHints() const {return shading_columns;}
         void SetLayer(int layer_id)
         {
             layer = layer_id;
@@ -88,27 +89,27 @@ class Picross
         void Export(const wxString& file, const ExportParams& params) const;
         PicrossPuzzle Export(const ExportParams& params) const;
     protected:
-        std::tuple<int, int, int, int> CalculateSolutionBounds() const;
+        std::tuple<int, int, int, int> CalculateHintBounds() const;
 
         void FlushCache()
         {
-            row_solutions_cache.clear();
-            col_solutions_cache.clear();
-            row_extra_solutions_cache.clear();
-            col_extra_solutions_cache.clear();
+            row_hints_cache.clear();
+            column_hints_cache.clear();
+            row_extra_hints_cache.clear();
+            column_extra_hints_cache.clear();
             calculated_sizes = {0, 0, 0, 0};
         }
-        void FlushCache(int row, int col)
+        void FlushCache(int row, int column)
         {
             if (row != -1)
             {
-                row_solutions_cache.erase(row);
-                row_extra_solutions_cache.erase(row);
+                row_hints_cache.erase(row);
+                row_extra_hints_cache.erase(row);
             }
-            if (col != -1)
+            if (column != -1)
             {
-                col_solutions_cache.erase(col);
-                col_extra_solutions_cache.erase(col);
+                column_hints_cache.erase(column);
+                column_extra_hints_cache.erase(column);
             }
             calculated_sizes = {0, 0, 0, 0};
         }
@@ -123,27 +124,27 @@ class Picross
         int max_layers;
         // Numbers at the top and left of picross puzzle per layer.
         // Map layer_id -> Array of hints.
-        layer_solutions rows;
-        layer_solutions cols;
+        LayerHints rows;
+        LayerHints columns;
         // Numbers at the bottom and right for bpc puzzle puzzles per layer.
         // Map layer_id -> Array sized 2 ** bpc with totals for each bit combination.
-        layer_solutions total_rows;
-        layer_solutions total_cols;
+        LayerHints total_rows;
+        LayerHints total_columns;
         // Shading hints for bpc > 1
         // Map layer_id -> Array sized width/height with number of changes in shading.
-        solutions shading_rows;
-        solutions shading_cols;
+        ShadingHints shading_rows;
+        ShadingHints shading_columns;
 
         friend bool Validate(const Picross* picross, Problem& problem);
     private:
-        // TODO rename to getRowHintsString
-        std::pair<wxString, wxString> getRowHints(int row) const;
-        std::pair<wxString, wxString> getColHints(int col) const;
+        // Returns string form of both hints and extra hints.
+        std::pair<wxString, wxString> GetRowHintsString(int row) const;
+        std::pair<wxString, wxString> GetColumnHintsString(int column) const;
 
-        mutable std::unordered_map<int, wxString> row_solutions_cache;
-        mutable std::unordered_map<int, wxString> col_solutions_cache;
-        mutable std::unordered_map<int, wxString> row_extra_solutions_cache;
-        mutable std::unordered_map<int, wxString> col_extra_solutions_cache;
+        mutable std::unordered_map<int, wxString> row_hints_cache;
+        mutable std::unordered_map<int, wxString> column_hints_cache;
+        mutable std::unordered_map<int, wxString> row_extra_hints_cache;
+        mutable std::unordered_map<int, wxString> column_extra_hints_cache;
         mutable std::tuple<int, int, int, int> calculated_sizes;
 };
 

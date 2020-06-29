@@ -62,10 +62,11 @@ void PicrossRGB::DrawBoard(wxDC& dc)
     wxRect rect;
     dc.GetClippingBox(rect);
     wxSize size = rect.GetSize();
-    auto [unused1, extra_solutions_height, unused2, extra_solutions_width] = CalculateSolutionBounds();
 
-    int w = std::min((size.GetWidth() - extra_solutions_width) / width,
-                     (size.GetHeight() - extra_solutions_height) / height);
+    auto [unused1, extra_hints_height, unused2, extra_hints_width] = CalculateHintBounds();
+    // hints_width/height already removed via GetClippingBox.
+    int w = std::min((size.GetWidth() - extra_hints_width) / width,
+                     (size.GetHeight() - extra_hints_height) / height);
 
     dc.SetPen(*wxTRANSPARENT_PEN);
     if (showLayer) dc.SetBrush(*wxBLACK_BRUSH);

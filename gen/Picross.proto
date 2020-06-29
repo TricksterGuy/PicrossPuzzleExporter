@@ -17,7 +17,7 @@ message Hint
 message HintLayer
 {
 	repeated Hint rows = 1;
-	repeated Hint cols = 2;
+	repeated Hint columns = 2;
 }
 
 // Background info for picross games.

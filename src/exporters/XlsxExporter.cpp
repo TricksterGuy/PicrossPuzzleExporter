@@ -14,17 +14,17 @@ void WriteBoard(lxw_workbook* workbook, lxw_worksheet* worksheet, const Picross&
 void WriteExtraHints(lxw_workbook* workbook, lxw_worksheet* worksheet, const Picross& picross, int layer, int r, int c, int size);
 int GetMaxHintsSize(const Picross& picross);
 
-std::string GetRange(int col, int row, int width, int height)
+std::string GetRange(int column, int row, int width, int height)
 {
     std::stringstream ss;
-    if (col >= 26)
-        ss << static_cast<char>(col / 26 + 'A');
-    ss << static_cast<char>(col % 26 + 'A');
+    if (column >= 26)
+        ss << static_cast<char>(column / 26 + 'A');
+    ss << static_cast<char>(column % 26 + 'A');
     ss << (row + 1) << ":";
-    int endcol = col + width;
-    if (endcol >= 26)
-        ss << static_cast<char>(endcol / 26 + 'A');
-    ss << static_cast<char>(endcol % 26 + 'A');
+    int end_column = column + width;
+    if (end_column >= 26)
+        ss << static_cast<char>(end_column / 26 + 'A');
+    ss << static_cast<char>(end_column % 26 + 'A');
     ss << (row + 1 + height);
     return ss.str();
 }
@@ -154,10 +154,10 @@ int GetMaxHintsSize(const Picross& picross)
     unsigned int m = 1;
     for (int k = 0; k < picross.GetLayers(); k++)
     {
-        const auto& rows = picross.GetRowSolutionHints().at(k);
-        const auto& cols = picross.GetColumnSolutionHints().at(k);
+        const auto& rows = picross.GetRowHints().at(k);
+        const auto& columns = picross.GetColumnHints().at(k);
 
-        for (const auto& hints : cols)
+        for (const auto& hints : columns)
             m = std::max(m, static_cast<unsigned int>(hints.size()));
         for (const auto& hints : rows)
             m = std::max(m, static_cast<unsigned int>(hints.size()));
@@ -179,16 +179,16 @@ void WriteType(lxw_workbook* workbook, lxw_worksheet* worksheet, const std::stri
 
 void WriteHints(lxw_workbook* workbook, lxw_worksheet* worksheet, const Picross& picross, int layer, int r, int c, int size)
 {
-    const auto& rows = picross.GetRowSolutionHints().at(layer);
-    const auto& cols = picross.GetColumnSolutionHints().at(layer);
+    const auto& rows = picross.GetRowHints().at(layer);
+    const auto& columns = picross.GetColumnHints().at(layer);
 
     auto* center = workbook_add_format(workbook);
     format_set_align(center, LXW_ALIGN_CENTER);
-    for (unsigned int i = 0; i < cols.size(); i++)
+    for (unsigned int i = 0; i < columns.size(); i++)
     {
-        for (unsigned int j = 0; j < cols[i].size(); j++)
+        for (unsigned int j = 0; j < columns[i].size(); j++)
         {
-            worksheet_write_number(worksheet, r + size - cols[i].size() + j, c + size + i, cols[i][j], center);
+            worksheet_write_number(worksheet, r + size - columns[i].size() + j, c + size + i, columns[i][j], center);
         }
     }
 
@@ -268,26 +268,26 @@ void WriteBoard(lxw_workbook* workbook, lxw_worksheet* worksheet, const Picross&
 
 void WriteExtraHints(lxw_workbook* workbook, lxw_worksheet* worksheet, const Picross& picross, int layer, int r, int c, int size)
 {
-    const auto& rows = picross.GetRowExtraSolutionHints().at(layer);
+    const auto& rows = picross.GetRowExtraHints().at(layer);
     const auto& shading_rows = picross.GetRowShadingHints().at(layer);
-    const auto& cols = picross.GetColumnExtraSolutionHints().at(layer);
-    const auto& shading_cols = picross.GetColumnShadingHints().at(layer);
+    const auto& columns = picross.GetColumnExtraHints().at(layer);
+    const auto& shading_columns = picross.GetColumnShadingHints().at(layer);
 
     auto* center = workbook_add_format(workbook);
     format_set_align(center, LXW_ALIGN_CENTER);
 
     unsigned int shadings = (1 << picross.GetBpc()) - 1;
 
-    for (unsigned int i = 0; i < cols.size(); i++)
+    for (unsigned int i = 0; i < columns.size(); i++)
     {
         for (unsigned int j = 0; j < shadings; j++)
         {
             std::stringstream ss;
-            ss << "=" << cols[i][j] << "-COUNTIF(" << GetRange(c + i, r, 0, picross.GetHeight() - 1) << "," << (j + 1) << ")";
-            worksheet_write_formula_num(worksheet, r + picross.GetHeight() + j, c + i, ss.str().c_str(), center, cols[i][j]);
+            ss << "=" << columns[i][j] << "-COUNTIF(" << GetRange(c + i, r, 0, picross.GetHeight() - 1) << "," << (j + 1) << ")";
+            worksheet_write_formula_num(worksheet, r + picross.GetHeight() + j, c + i, ss.str().c_str(), center, columns[i][j]);
 
         }
-        worksheet_write_number(worksheet, r + picross.GetHeight() + shadings, c + i, shading_cols[i], center);
+        worksheet_write_number(worksheet, r + picross.GetHeight() + shadings, c + i, shading_columns[i], center);
     }
 
     for (unsigned int i = 0; i < rows.size(); i++)

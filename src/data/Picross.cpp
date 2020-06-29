@@ -31,10 +31,10 @@ void Picross::Build()
     for (int k = 0; k < max_layers; k++)
     {
         shading_rows[k].clear();
-        shading_cols[k].clear();
+        shading_columns[k].clear();
 
-        // Build row solution info.
-        rows[k] = solutions(height);
+        // Build row hints info.
+        rows[k] = Hints(height);
         for (int y = 0; y < height; y++)
         {
             std::vector<int>& row = rows[k][y];
@@ -58,12 +58,12 @@ void Picross::Build()
             }
         }
 
-        // Build column solution info.
-        cols[k] = solutions(width);
+        // Build column hints info.
+        columns[k] = Hints(width);
         for (int x = 0; x < width; x++)
         {
-            std::vector<int>& col = cols[k][x];
-            col.reserve(height / 2);
+            std::vector<int>& column = columns[k][x];
+            column.reserve(height / 2);
             int marks = 0;
             for (int y = 0; y < height; y++)
             {
@@ -73,18 +73,18 @@ void Picross::Build()
                 }
                 else if (marks)
                 {
-                    col.push_back(marks);
+                    column.push_back(marks);
                     marks = 0;
                 }
             }
-            if (col.empty() || marks > 0)
-                col.push_back(marks);
+            if (column.empty() || marks > 0)
+                column.push_back(marks);
         }
 
         if (bpc <= 1) continue;
 
-        // Build row color solution info.
-        total_rows[k] = solutions(height);
+        // Build row shading hints info.
+        total_rows[k] = Hints(height);
         for (int y = 0; y < height; y++)
         {
             std::vector<int>& row = total_rows[k][y];
@@ -108,11 +108,11 @@ void Picross::Build()
             shading_rows[k].push_back(shadings);
         }
 
-        total_cols[k] = solutions(width);
+        total_columns[k] = Hints(width);
         for (int x = 0; x < width; x++)
         {
-            std::vector<int>& col = total_cols[k][x];
-            col.resize((1 << bpc) - 1);
+            std::vector<int>& column = total_columns[k][x];
+            column.resize((1 << bpc) - 1);
             int shadings = 1;
             int last_shade = -1;
 
@@ -120,7 +120,7 @@ void Picross::Build()
             {
                 int num = NumSet(k, x, y);
                 if (num == 0) continue;
-                col[num - 1]++;
+                column[num - 1]++;
                 if (last_shade == -1)
                     last_shade = num;
                 if (last_shade != num)
@@ -129,7 +129,7 @@ void Picross::Build()
                     last_shade = num;
                 }
             }
-            shading_cols[k].push_back(shadings);
+            shading_columns[k].push_back(shadings);
         }
     }
     FlushCache();
@@ -155,37 +155,37 @@ void Picross::Draw(wxDC& dc)
 {
     wxSize size = dc.GetSize();
     dc.SetFont(wxSystemSettings::GetFont(wxSYS_ANSI_FIXED_FONT));
-    auto [solutions_height, extra_solutions_height, solutions_width, extra_solutions_width] = CalculateSolutionBounds();
+    auto [hints_height, extra_hints_height, hints_width, extra_hints_width] = CalculateHintBounds();
 
-    int w = std::min((size.GetWidth() - solutions_width - extra_solutions_width) / width,
-                     (size.GetHeight() - solutions_height - extra_solutions_height) / height);
+    int w = std::min((size.GetWidth() - hints_width - extra_hints_width) / width,
+                     (size.GetHeight() - hints_height - extra_hints_height) / height);
 
     for (int i = 0; i < height; i++)
     {
-        auto [hints, extra_hints] = getRowHints(i);
+        auto [hints, extra_hints] = GetRowHintsString(i);
         auto text_size = dc.GetMultiLineTextExtent(hints);
-        dc.DrawText(hints, 0, i * w + solutions_height + (w - text_size.GetHeight()) / 2);
+        dc.DrawText(hints, 0, i * w + hints_height + (w - text_size.GetHeight()) / 2);
 
         if (bpc > 1)
         {
             text_size = dc.GetMultiLineTextExtent(extra_hints);
-            dc.DrawText(extra_hints, solutions_width + w * width, i * w + solutions_height + (w - text_size.GetHeight()) / 2);
+            dc.DrawText(extra_hints, hints_width + w * width, i * w + hints_height + (w - text_size.GetHeight()) / 2);
         }
     }
 
     for (int i = 0; i < width; i++)
     {
-        auto [hints, extra_hints] = getColHints(i);
+        auto [hints, extra_hints] = GetColumnHintsString(i);
         auto text_size = dc.GetMultiLineTextExtent(hints);
-        dc.DrawText(hints, i * w + solutions_width + (w - text_size.GetWidth()) / 2, 0);
+        dc.DrawText(hints, i * w + hints_width + (w - text_size.GetWidth()) / 2, 0);
         if (bpc > 1)
         {
             text_size = dc.GetMultiLineTextExtent(extra_hints);
-            dc.DrawText(extra_hints, i * w + solutions_width + (w - text_size.GetWidth()) / 2, solutions_height + w * height);
+            dc.DrawText(extra_hints, i * w + hints_width + (w - text_size.GetWidth()) / 2, hints_height + w * height);
         }
     }
 
-    dc.SetClippingRegion(solutions_width, solutions_height, size.GetWidth() - solutions_width, size.GetHeight() - solutions_height);
+    dc.SetClippingRegion(hints_width, hints_height, size.GetWidth() - hints_width, size.GetHeight() - hints_height);
 
     DrawBoard(dc);
 
@@ -193,9 +193,9 @@ void Picross::Draw(wxDC& dc)
     {
         dc.SetPen(*wxGREY_PEN);
         for (int i = 0; i <= width; i++)
-            dc.DrawLine(i * w + solutions_width, solutions_height, i * w + solutions_width, height * w + solutions_height);
+            dc.DrawLine(i * w + hints_width, hints_height, i * w + hints_width, height * w + hints_height);
         for (int i = 0; i <= height; i++)
-            dc.DrawLine(solutions_width, i * w + solutions_height, width * w + solutions_width, i * w + solutions_height);
+            dc.DrawLine(hints_width, i * w + hints_height, width * w + hints_width, i * w + hints_height);
     }
 }
 
@@ -204,15 +204,15 @@ void Picross::TranslateToCoords(int x, int y, int w, int h, int& tx, int& ty) co
     tx = -1;
     ty = -1;
 
-    auto [solutions_height, extra_solutions_height, solutions_width, extra_solutions_width] = CalculateSolutionBounds();
+    auto [hints_height, extra_hints_height, hints_width, extra_hints_width] = CalculateHintBounds();
 
-    x -= solutions_width;
-    y -= solutions_height;
+    x -= hints_width;
+    y -= hints_height;
 
     if (x < 0 || y < 0) return;
 
-    int cw = std::min((w - solutions_width - extra_solutions_width) / width,
-                      (h - solutions_height - extra_solutions_height) / height);
+    int cw = std::min((w - hints_width - extra_hints_width) / width,
+                      (h - hints_height - extra_hints_height) / height);
 
     tx = x / cw;
     ty = y / cw;
@@ -242,6 +242,7 @@ PicrossPuzzle Picross::Export(const ExportParams& params) const
     out.set_height(height);
     out.set_type(GetType());
     out.set_bpc(bpc);
+
     auto* meta = out.mutable_meta();
     meta->set_name(params.name);
     meta->set_author(params.author);
@@ -263,19 +264,19 @@ PicrossPuzzle Picross::Export(const ExportParams& params) const
     for (int k = 0; k < max_layers; k++)
     {
         auto* layer = out.add_layers();
-        const solutions& row_solutions = rows.at(k);
-        const solutions& col_solutions = cols.at(k);
+        const auto& row_hints = rows.at(k);
+        const auto& column_hints = columns.at(k);
 
         for (int i = 0; i < height; i++)
         {
-            const std::vector<int>& row_data = row_solutions[i];
+            const auto& row_data = row_hints[i];
             auto* rows = layer->add_rows();
             for (const auto& elem : row_data)
                 rows->add_data(elem);
             if (bpc > 1)
             {
-                const auto& total_solutions = total_rows.at(k)[i];
-                for (const auto& elem : total_solutions)
+                const auto& total_hints = total_rows.at(k)[i];
+                for (const auto& elem : total_hints)
                     rows->add_totals(elem);
                 rows->set_shading(shading_rows.at(k)[i]);
             }
@@ -283,16 +284,16 @@ PicrossPuzzle Picross::Export(const ExportParams& params) const
 
         for (int j = 0; j < width; j++)
         {
-            const std::vector<int>& col_data = col_solutions[j];
-            auto* cols = layer->add_cols();
-            for (const auto& elem : col_data)
-                cols->add_data(elem);
+            const auto& column_data = column_hints[j];
+            auto* columns = layer->add_columns();
+            for (const auto& elem : column_data)
+                columns->add_data(elem);
             if (bpc > 1)
             {
-                const auto& total_solutions = total_cols.at(k)[j];
-                for (const auto& elem : total_solutions)
-                    cols->add_totals(elem);
-                cols->set_shading(shading_cols.at(k)[j]);
+                const auto& total_hints = total_columns.at(k)[j];
+                for (const auto& elem : total_hints)
+                    columns->add_totals(elem);
+                columns->set_shading(shading_columns.at(k)[j]);
             }
         }
     }
@@ -306,13 +307,13 @@ PicrossPuzzle Picross::Export(const ExportParams& params) const
     return out;
 }
 
-std::pair<wxString, wxString> Picross::getRowHints(int row) const
+std::pair<wxString, wxString> Picross::GetRowHintsString(int row) const
 {
-    if (row_solutions_cache.find(row) == row_solutions_cache.end())
+    if (row_hints_cache.find(row) == row_hints_cache.end())
     {
         wxString row_text;
-        const auto& row_solutions = rows.at(layer);
-        for (const auto& elem : row_solutions[row])
+        const auto& row_hints = rows.at(layer);
+        for (const auto& elem : row_hints[row])
             row_text << elem << " ";
 
         wxString row_text_extra;
@@ -328,41 +329,41 @@ std::pair<wxString, wxString> Picross::getRowHints(int row) const
             row_text_extra << wxString::Format("%d", shading_rows.at(layer)[row]);
         }
 
-        row_solutions_cache[row] = row_text;
-        row_extra_solutions_cache[row] = row_text_extra;
+        row_hints_cache[row] = row_text;
+        row_extra_hints_cache[row] = row_text_extra;
     }
-    return {row_solutions_cache[row], row_extra_solutions_cache[row]};
+    return {row_hints_cache[row], row_extra_hints_cache[row]};
 }
 
-std::pair<wxString, wxString> Picross::getColHints(int col) const
+std::pair<wxString, wxString> Picross::GetColumnHintsString(int c) const
 {
-    if (col_solutions_cache.find(col) == col_solutions_cache.end())
+    if (column_hints_cache.find(c) == column_hints_cache.end())
     {
-        wxString col_text;
-        const auto& col_solutions = cols.at(layer);
-        for (const auto& elem : col_solutions[col])
-            col_text << elem << "\n";
+        wxString column_text;
+        const auto& column_hints = columns.at(layer);
+        for (const auto& elem : column_hints[c])
+            column_text << elem << "\n";
 
-        wxString col_text_extra;
+        wxString column_text_extra;
         if (bpc > 1)
         {
-            const auto& col_total = total_cols.at(layer)[col];
-            for (unsigned int j = 0; j < col_total.size(); j++)
+            const auto& column_total = total_columns.at(layer)[c];
+            for (unsigned int j = 0; j < column_total.size(); j++)
             {
-                int num = col_total[j];
+                int num = column_total[j];
                 if (num == 0) continue;
-                col_text_extra << wxString::Format("%d:%d\n", j+1, num);
+                column_text_extra << wxString::Format("%d:%d\n", j+1, num);
             }
-            col_text_extra << wxString::Format(" %d ", shading_cols.at(layer)[col]);
+            column_text_extra << wxString::Format(" %d ", shading_columns.at(layer)[c]);
         }
 
-        col_solutions_cache[col] = col_text;
-        col_extra_solutions_cache[col] = col_text_extra;
+        column_hints_cache[c] = column_text;
+        column_extra_hints_cache[c] = column_text_extra;
     }
-    return {col_solutions_cache[col], col_extra_solutions_cache[col]};
+    return {column_hints_cache[c], column_extra_hints_cache[c]};
 }
 
-std::tuple<int, int, int, int> Picross::CalculateSolutionBounds() const
+std::tuple<int, int, int, int> Picross::CalculateHintBounds() const
 {
     if (std::get<0>(calculated_sizes) != 0)
         return calculated_sizes;
@@ -373,7 +374,7 @@ std::tuple<int, int, int, int> Picross::CalculateSolutionBounds() const
     std::array<wxSize, 4> arr;
     for (int i = 0; i < width; i++)
     {
-        auto [hints, extra] = getColHints(i);
+        auto [hints, extra] = GetColumnHintsString(i);
         auto size = dc.GetMultiLineTextExtent(hints);
         if (arr[0].GetHeight() < size.GetHeight())
             arr[0] = size;
@@ -383,7 +384,7 @@ std::tuple<int, int, int, int> Picross::CalculateSolutionBounds() const
     }
     for (int i = 0; i < height; i++)
     {
-        auto [hints, extra] = getRowHints(i);
+        auto [hints, extra] = GetRowHintsString(i);
         auto size = dc.GetMultiLineTextExtent(hints);
         if (arr[2].GetWidth() < size.GetWidth())
             arr[2] = size;
