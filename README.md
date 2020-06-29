@@ -25,3 +25,14 @@ Converts an image into a Picross (Nonogram) Puzzle. Supports various Picross Puz
 |---|--------------------------------------------------------------------------------------------------------|
 |![RGB](https://github.com/TricksterGuy/PicrossPuzzleExporter/blob/master/screenshots/light.png)|![RBY](https://github.com/TricksterGuy/PicrossPuzzleExporter/blob/master/screenshots/painting.png)       |
 
+
+## Building
+
+### Linux (Debian Based Systems)
+ 1. Install dependencies `sudo apt install cmake libprotobuf-dev libwxgtk3.0-gtk3-dev pkg-config libgtk2.0-dev protobuf-compiler`
+ 2. Create a build directory `mkdir build && cd build`
+ 3. Generate a Makefile via cmake `cmake ..`
+ 4. Build the program `make`
+ 5. Install the program `sudo make install`
+
+Optionally for xlsx export support [libxlsxwriter](https://libxlsxwriter.github.io/getting_started.html) can be installed and the option ENABLE_XLSX can be passed when running cmake.
