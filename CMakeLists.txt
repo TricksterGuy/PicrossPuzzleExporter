@@ -55,7 +55,7 @@ set(SRC_ppe
 
 set(wxWidgets_USE_LIBS core base)
 find_package(wxWidgets REQUIRED)
-pkg_search_module(PROTOBUF REQUIRED protobuf)
+pkg_search_module(PROTOBUF REQUIRED protobuf-lite)
 if(ENABLE_XLSX)
     # libxlsxwriter doesn't have a pkg-config definition or FindCMake module.
     set(XLSX_INCLUDEDIR "")

@@ -1,5 +1,9 @@
 syntax = "proto3";
 
+// Depend on protobuf-lite as it is much smaller in space.
+// Don't need descriptors or reflection.
+option optimize_for = LITE_RUNTIME;
+
 // Solution info for a row column.
 // This message represents the numbers along the top/left of the picross.
 // Additionally fields for special picross that involve multiple bits per cell.
