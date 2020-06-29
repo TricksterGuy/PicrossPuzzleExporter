@@ -18,12 +18,12 @@ std::string GetRange(int column, int row, int width, int height)
 {
     std::stringstream ss;
     if (column >= 26)
-        ss << static_cast<char>(column / 26 + 'A');
+        ss << static_cast<char>(column / 26 - 1 + 'A');
     ss << static_cast<char>(column % 26 + 'A');
     ss << (row + 1) << ":";
     int end_column = column + width;
     if (end_column >= 26)
-        ss << static_cast<char>(end_column / 26 + 'A');
+        ss << static_cast<char>(end_column / 26 - 1 + 'A');
     ss << static_cast<char>(end_column % 26 + 'A');
     ss << (row + 1 + height);
     return ss.str();
