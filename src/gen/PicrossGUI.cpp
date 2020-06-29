@@ -23,7 +23,7 @@ PicrossGUI::PicrossGUI( wxWindow* parent, wxWindowID id, const wxString& title, 
 
 	puzzleDataCanvas = new PicrossDataCanvas( m_panel4, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxHSCROLL|wxVSCROLL );
 	puzzleDataCanvas->SetScrollRate( 5, 5 );
-	contents->Add( puzzleDataCanvas, 1, wxEXPAND | wxALL, 0 );
+	contents->Add( puzzleDataCanvas, 1, wxALL|wxEXPAND, 0 );
 
 	wxBoxSizer* bSizer8;
 	bSizer8 = new wxBoxSizer( wxVERTICAL );
@@ -51,13 +51,14 @@ PicrossGUI::PicrossGUI( wxWindow* parent, wxWindowID id, const wxString& title, 
 	fgSizer1->Add( author, 0, wxALL|wxALIGN_RIGHT|wxEXPAND, 5 );
 
 
-	sbSizer2->Add( fgSizer1, 1, wxEXPAND, 5 );
+	sbSizer2->Add( fgSizer1, 0, wxEXPAND, 5 );
 
 	wxStaticBoxSizer* sbSizer5;
 	sbSizer5 = new wxStaticBoxSizer( new wxStaticBox( sbSizer2->GetStaticBox(), wxID_ANY, wxT("Solution Info") ), wxVERTICAL );
 
 	wxFlexGridSizer* fgSizer4;
 	fgSizer4 = new wxFlexGridSizer( 0, 2, 0, 0 );
+	fgSizer4->AddGrowableCol( 1 );
 	fgSizer4->SetFlexibleDirection( wxBOTH );
 	fgSizer4->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 
@@ -79,10 +80,10 @@ PicrossGUI::PicrossGUI( wxWindow* parent, wxWindowID id, const wxString& title, 
 	sbSizer5->Add( fgSizer4, 1, wxEXPAND, 5 );
 
 
-	sbSizer2->Add( sbSizer5, 0, 0, 5 );
+	sbSizer2->Add( sbSizer5, 1, wxEXPAND, 5 );
 
 
-	bSizer8->Add( sbSizer2, 1, wxEXPAND, 5 );
+	bSizer8->Add( sbSizer2, 0, wxEXPAND, 5 );
 
 	wxStaticBoxSizer* sbSizer3;
 	sbSizer3 = new wxStaticBoxSizer( new wxStaticBox( m_panel4, wxID_ANY, wxT("Puzzle Properties") ), wxHORIZONTAL );
@@ -91,7 +92,7 @@ PicrossGUI::PicrossGUI( wxWindow* parent, wxWindowID id, const wxString& title, 
 	int puzzleTypeNChoices = sizeof( puzzleTypeChoices ) / sizeof( wxString );
 	puzzleType = new wxRadioBox( sbSizer3->GetStaticBox(), wxID_ANY, wxT("Type"), wxDefaultPosition, wxDefaultSize, puzzleTypeNChoices, puzzleTypeChoices, 1, wxRA_SPECIFY_COLS );
 	puzzleType->SetSelection( 0 );
-	sbSizer3->Add( puzzleType, 0, wxALL|wxEXPAND, 5 );
+	sbSizer3->Add( puzzleType, 0, wxALL, 5 );
 
 	wxFlexGridSizer* fgSizer2;
 	fgSizer2 = new wxFlexGridSizer( 0, 2, 0, 0 );
@@ -149,7 +150,7 @@ PicrossGUI::PicrossGUI( wxWindow* parent, wxWindowID id, const wxString& title, 
 	sbSizer3->Add( fgSizer2, 1, wxEXPAND, 5 );
 
 
-	bSizer8->Add( sbSizer3, 1, wxEXPAND, 5 );
+	bSizer8->Add( sbSizer3, 0, wxEXPAND, 5 );
 
 	wxStaticBoxSizer* m_staticBoxSizer;
 	m_staticBoxSizer = new wxStaticBoxSizer( new wxStaticBox( m_panel4, wxID_ANY, wxT("Background") ), wxHORIZONTAL );
@@ -158,7 +159,7 @@ PicrossGUI::PicrossGUI( wxWindow* parent, wxWindowID id, const wxString& title, 
 	int backgroundTypeNChoices = sizeof( backgroundTypeChoices ) / sizeof( wxString );
 	backgroundType = new wxRadioBox( m_staticBoxSizer->GetStaticBox(), wxID_ANY, wxT("Type"), wxDefaultPosition, wxDefaultSize, backgroundTypeNChoices, backgroundTypeChoices, 1, wxRA_SPECIFY_COLS );
 	backgroundType->SetSelection( 0 );
-	m_staticBoxSizer->Add( backgroundType, 0, wxALL, 5 );
+	m_staticBoxSizer->Add( backgroundType, 0, wxALL|wxEXPAND, 5 );
 
 	wxFlexGridSizer* fgSizer3;
 	fgSizer3 = new wxFlexGridSizer( 0, 2, 0, 0 );
@@ -205,7 +206,7 @@ PicrossGUI::PicrossGUI( wxWindow* parent, wxWindowID id, const wxString& title, 
 	m_staticBoxSizer->Add( fgSizer3, 1, wxEXPAND, 5 );
 
 
-	bSizer8->Add( m_staticBoxSizer, 1, wxEXPAND, 5 );
+	bSizer8->Add( m_staticBoxSizer, 0, wxEXPAND, 5 );
 
 
 	contents->Add( bSizer8, 0, wxEXPAND, 5 );

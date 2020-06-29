@@ -103,7 +103,7 @@ class PicrossGUI : public wxFrame
 
 	public:
 
-		PicrossGUI( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Picross Puzzle Exporter"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 960,600 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		PicrossGUI( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Picross Puzzle Exporter"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 960,720 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 
 		~PicrossGUI();
 
