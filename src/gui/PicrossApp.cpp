@@ -26,6 +26,8 @@
 
 #include "cpercep.hpp"
 
+constexpr const char* FULL_VERSION_STRING = "0.2";
+
 void init_palette();
 
 IMPLEMENT_APP(PicrossApp);
@@ -38,6 +40,7 @@ bool PicrossApp::OnInit()
     wxInitAllImageHandlers();
 
     frame = new PicrossFrame(NULL);
+    frame->SetTitle(wxString::Format("Picross Puzzle Exporter v%s", FULL_VERSION_STRING));
     SetTopWindow(frame);
     frame->Centre();
     frame->Show();

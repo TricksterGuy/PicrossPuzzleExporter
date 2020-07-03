@@ -5,6 +5,7 @@ project (ppe)
 include(FindPkgConfig)
 
 option(ENABLE_XLSX "Enable xlsx export option. (Requires libxlsxwriter)" OFF)
+option(ENABLE_EXPERIMENTAL_LIBXLSXWRITER "Enable experimentatal libxlsxwriter functions (conditional formatting)" OFF)
 
 # Require C++17 build
 if(NOT CMAKE_CXX_FLAGS MATCHES "-std=(c|gnu)\\+\\+17")
@@ -55,11 +56,14 @@ set(SRC_ppe
 
 set(wxWidgets_USE_LIBS core base)
 find_package(wxWidgets REQUIRED)
+
+# Use protobuf-lite because its smaller and we don't require the whole library.
 pkg_search_module(PROTOBUF REQUIRED protobuf-lite)
+
 if(ENABLE_XLSX)
     # libxlsxwriter doesn't have a pkg-config definition or FindCMake module.
     set(XLSX_INCLUDEDIR "")
-    set(XLSX_LIBRARIES "xlsxwriter")
+    set(XLSX_LIBRARIES "xlsxwriter" "z")
 
     set(SRC_ppe
         ${SRC_ppe}
@@ -67,6 +71,10 @@ if(ENABLE_XLSX)
     )
     add_definitions(-DENABLE_XLSX=1)
 endif(ENABLE_XLSX)
+
+if(ENABLE_EXPERIMENTAL_LIBXLSXWRITER)
+    add_definitions(-DENABLE_EXPERIMENTAL_LIBXLSXWRITER=1)
+endif(ENABLE_EXPERIMENTAL_LIBXLSXWRITER)
 
 add_custom_command(OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/src/gen/Picross.pb.cc ${CMAKE_CURRENT_SOURCE_DIR}/src/gen/Picross.pb.h
                    COMMAND protoc --cpp_out=../src/gen Picross.proto
