@@ -57,7 +57,7 @@ void PicrossRGB::Toggle(int layer, int tx, int ty)
     FlushCache(tx, ty);
 }
 
-void PicrossRGB::DrawBoard(wxDC& dc)
+void PicrossRGB::DrawBoard(wxDC& dc) const
 {
     wxRect rect;
     dc.GetClippingBox(rect);

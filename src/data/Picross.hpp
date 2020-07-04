@@ -57,8 +57,8 @@ class Picross
                                                                                                 shading_columns(max_layers) {}
         virtual ~Picross() {}
         PicrossPuzzle::Type GetType() const {return type;}
-        void Draw(wxDC& dc);
-        virtual void DrawBoard(wxDC& dc) {}
+        void Draw(wxDC& dc) const;
+        virtual void DrawBoard(wxDC& dc) const {}
         virtual void Toggle(int layer, int tx, int ty) {data.Toggle(layer, tx, ty);}
         void Build();
 
@@ -66,8 +66,8 @@ class Picross
         int GetHeight() const {return height;}
         int GetBpc() const {return bpc;}
         int GetLayers() const {return max_layers;}
-        virtual bool IsSet(int layer, int tx, int ty);
-        virtual unsigned int NumSet(int layer, int tx, int ty);
+        virtual bool IsSet(int layer, int tx, int ty) const;
+        virtual unsigned int NumSet(int layer, int tx, int ty) const;
         const PicrossLayer& GetData() const {return data;}
         const LayerHints& GetRowHints() const {return rows;}
         const LayerHints& GetRowExtraHints() const {return total_rows;}

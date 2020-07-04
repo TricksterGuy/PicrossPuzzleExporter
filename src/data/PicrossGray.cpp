@@ -55,7 +55,7 @@ void PicrossGray::Toggle(int layer, int tx, int ty)
     FlushCache(tx, ty);
 }
 
-void PicrossGray::DrawBoard(wxDC& dc)
+void PicrossGray::DrawBoard(wxDC& dc) const
 {
 
     wxRect rect;

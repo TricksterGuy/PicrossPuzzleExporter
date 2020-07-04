@@ -52,7 +52,7 @@ PicrossBW::PicrossBW(const wxImage& image) : Picross(PicrossPuzzle::TYPE_BW, ima
     }
 }
 
-void PicrossBW::DrawBoard(wxDC& dc)
+void PicrossBW::DrawBoard(wxDC& dc) const
 {
     wxRect rect;
     dc.GetClippingBox(rect);

@@ -186,7 +186,7 @@ PicrossRBY::PicrossRBY(const wxImage& image) : Picross(PicrossPuzzle::TYPE_RBY, 
     }
 }
 
-void PicrossRBY::DrawBoard(wxDC& dc)
+void PicrossRBY::DrawBoard(wxDC& dc) const
 {
     wxRect rect;
     dc.GetClippingBox(rect);

@@ -135,23 +135,23 @@ void Picross::Build()
     FlushCache();
 }
 
-bool Picross::IsSet(int layer, int tx, int ty)
+bool Picross::IsSet(int layer, int tx, int ty) const
 {
     unsigned short dmask = (1 << bpc) - 1;
     unsigned short mask = dmask << (layer * bpc);
     unsigned short value = data.Get(tx, ty);
-    return (value & mask) != 0 && (value != (unsigned short)-1);
+    return (value & mask) != 0 && (value != static_cast<unsigned short>(-1));
 }
 
-unsigned int Picross::NumSet(int layer, int tx, int ty)
+unsigned int Picross::NumSet(int layer, int tx, int ty) const
 {
     unsigned short dmask = (1 << bpc) - 1;
     unsigned short value = data.Get(tx, ty);
-    if (value == (unsigned short) -1) return 0;
+    if (value == static_cast<unsigned short>(-1)) return 0;
     return (value >> (layer * bpc)) & dmask;
 }
 
-void Picross::Draw(wxDC& dc)
+void Picross::Draw(wxDC& dc) const
 {
     wxSize size = dc.GetSize();
     dc.SetFont(wxSystemSettings::GetFont(wxSYS_ANSI_FIXED_FONT));
