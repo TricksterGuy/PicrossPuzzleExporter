@@ -34,5 +34,4 @@ class PicrossRGB : public Picross
         void Toggle(int layer, int tx, int ty) override;
 };
 
-
 #endif

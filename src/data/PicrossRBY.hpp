@@ -37,5 +37,4 @@ class PicrossRBY : public Picross
         Image8Bpp image8;
 };
 
-
 #endif
