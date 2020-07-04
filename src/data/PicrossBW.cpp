@@ -27,18 +27,26 @@ enum CellBW
     BLACK = 1,
 };
 
-PicrossBW::PicrossBW(wxImage image_in, int width, int height) : Picross(PicrossPuzzle::TYPE_BW, width, height, 1, 1)
+PicrossBW::PicrossBW(const wxImage& image) : Picross(PicrossPuzzle::TYPE_BW, image.GetWidth(), image.GetHeight(), 1, 1)
 {
-    wxImage image = image_in.ConvertToGreyscale();
-    for (int y = 0; y < image.GetHeight(); y++)
+    int value = 0;
+    for (int y = 0; y < height; y++)
     {
-        for (int x = 0; x < image.GetWidth(); x++)
+        for (int x = 0; x < width; x++)
         {
-            int value;
             if (image.HasAlpha() && image.IsTransparent(x, y))
+            {
                 value = CLEAR;
+            }
             else
-                value = image.GetRed(x, y) < 128 ? BLACK : CLEAR;
+            {
+                unsigned char r, g, b;
+                r = image.GetRed(x, y);
+                g = image.GetGreen(x, y);
+                b = image.GetBlue(x, y);
+                wxColour::MakeGrey(&r, &g, &b);
+                value = r < 128 ? BLACK : CLEAR;
+            }
             data.Set(x, y, value);
         }
     }

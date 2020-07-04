@@ -122,7 +122,7 @@ class ColorMatch
         }
 };
 
-PicrossRBY::PicrossRBY(wxImage image, int width, int height) : Picross(PicrossPuzzle::TYPE_RBY, width, height, 1, 5)
+PicrossRBY::PicrossRBY(const wxImage& image) : Picross(PicrossPuzzle::TYPE_RBY, image.GetWidth(), image.GetHeight(), 1, 5)
 {
     // TODO converting the image to 16 bit color isn't necessary.
     Image16Bpp image16(image, "");

@@ -34,16 +34,16 @@ Picross* CreatePicross(wxImage& image, int type, int bpc)
     switch(type)
     {
         case 0:
-            picross = new PicrossBW(image, image.GetWidth(), image.GetHeight());
+            picross = new PicrossBW(image);
             break;
         case 1:
-            picross = new PicrossGray(image, image.GetWidth(), image.GetHeight(), bpc);
+            picross = new PicrossGray(image, bpc);
             break;
         case 2:
-            picross = new PicrossRGB(image, image.GetWidth(), image.GetHeight(), bpc);
+            picross = new PicrossRGB(image, bpc);
             break;
         case 3:
-            picross = new PicrossRBY(image, image.GetWidth(), image.GetHeight());
+            picross = new PicrossRBY(image);
             break;
     }
     if (picross)

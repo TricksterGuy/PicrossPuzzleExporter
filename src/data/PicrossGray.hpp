@@ -28,7 +28,7 @@
 class PicrossGray : public Picross
 {
     public:
-        PicrossGray(wxImage image, int width, int height, int bpc);
+        PicrossGray(const wxImage& image, int bpc);
         ~PicrossGray() {}
         void DrawBoard(wxDC& dc) override;
         void Toggle(int layer, int tx, int ty) override;

@@ -21,19 +21,27 @@
 
 #include "PicrossGray.hpp"
 
-PicrossGray::PicrossGray(wxImage image_in, int width, int height, int bpc) : Picross(PicrossPuzzle::TYPE_GRAY, width, height, bpc, 1)
+PicrossGray::PicrossGray(const wxImage& image, int bpc) : Picross(PicrossPuzzle::TYPE_GRAY, image.GetWidth(), image.GetHeight(), bpc, 1)
 {
-    wxImage image = image_in.ConvertToGreyscale();
-    int colorbits = 256 / (1 << bpc);
-    for (int y = 0; y < image.GetHeight(); y++)
+    const int colorbits = 256 / (1 << bpc);
+    int value = 0;
+    for (int y = 0; y < height; y++)
     {
-        for (int x = 0; x < image.GetWidth(); x++)
+        for (int x = 0; x < width; x++)
         {
-            int value;
             if (image.HasAlpha() && image.IsTransparent(x, y))
+            {
                 value = 0;
+            }
             else
-                value = (255 - image.GetRed(x, y)) / colorbits;
+            {
+                unsigned char r, g, b;
+                r = image.GetRed(x, y);
+                g = image.GetGreen(x, y);
+                b = image.GetBlue(x, y);
+                wxColour::MakeGrey(&r, &g, &b);
+                value = (255 - r) / colorbits;
+            }
             data.Set(x, y, value);
         }
     }

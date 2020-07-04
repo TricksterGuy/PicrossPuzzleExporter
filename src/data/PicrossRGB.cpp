@@ -22,17 +22,18 @@
 #include "PicrossRGB.hpp"
 
 
-PicrossRGB::PicrossRGB(wxImage image, int width, int height, int bpc) : Picross(PicrossPuzzle::TYPE_RGB, width, height, bpc, 3)
+PicrossRGB::PicrossRGB(const wxImage& image, int bpc) : Picross(PicrossPuzzle::TYPE_RGB, image.GetWidth(), image.GetHeight(), bpc, 3)
 {
-    int colorbits = 256 / (1 << bpc);
-
-    for (int y = 0; y < image.GetHeight(); y++)
+    const int colorbits = 256 / (1 << bpc);
+    int value = 0;
+    for (int y = 0; y < height; y++)
     {
-        for (int x = 0; x < image.GetWidth(); x++)
+        for (int x = 0; x < width; x++)
         {
-            int value = 0;
             if (image.HasAlpha() && image.IsTransparent(x, y))
+            {
                 value = 0;
+            }
             else
             {
                 int r, g, b;
@@ -41,7 +42,6 @@ PicrossRGB::PicrossRGB(wxImage image, int width, int height, int bpc) : Picross(
                 b = image.GetBlue(x, y) / colorbits;
                 value = r | (g << bpc) | (b << bpc * 2);
             }
-
             data.Set(x, y, value);
         }
     }

@@ -30,7 +30,7 @@
 class PicrossRBY : public Picross
 {
     public:
-        PicrossRBY(wxImage image, int width, int height);
+        PicrossRBY(const wxImage& image);
         ~PicrossRBY() {}
         void DrawBoard(wxDC& dc) override;
     private:
