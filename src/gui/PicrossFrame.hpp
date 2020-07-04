@@ -24,6 +24,7 @@
 
 #include <wx/docview.h>
 
+#include "ExportParams.hpp"
 #include "Picross.hpp"
 #include "PicrossGUI.h"
 

@@ -35,20 +35,6 @@ typedef std::vector<std::vector<int>> Hints;
 typedef std::vector<std::vector<int>> ShadingHints;
 typedef std::unordered_map<int, Hints> LayerHints;
 
-struct ExportParams
-{
-    std::string name;
-    std::string author;
-    std::string image;
-    int frames;
-    int time;
-    int background_type;
-    std::string bg_image;
-    std::string bg_music;
-    uint32_t top_color;
-    uint32_t bottom_color;
-};
-
 class Picross
 {
     public:
@@ -86,8 +72,6 @@ class Picross
         void TranslateToCoords(int x, int y, int w, int h, int& tx, int& ty) const;
 
         bool Validate() const;
-        void Export(const wxString& file, const ExportParams& params) const;
-        PicrossPuzzle Export(const ExportParams& params) const;
     protected:
         std::tuple<int, int, int, int> CalculateHintBounds() const;
 

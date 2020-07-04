@@ -41,6 +41,9 @@ set(SRC_ppe
 	src/data/PicrossRGB.cpp
 	src/data/PicrossRBY.cpp
 	src/data/PicrossValidator.cpp
+
+	src/exporters/ProtoExporter.cpp
+
 	src/gen/Picross.pb.cc
 	src/gen/PicrossGUI.cpp
 

@@ -37,7 +37,6 @@ class PicrossDataCanvas : public wxScrolledWindow
         void OnChangeLayer(int new_layer);
         void OnChangeBpc(int new_bpc);
         void OnClick(wxMouseEvent& event);
-        void OnExport(wxString& path, const ExportParams& params);
         void OnValidate();
         void OnShowLayer(bool show_layer);
         void OnShowGrid(bool show_grid);

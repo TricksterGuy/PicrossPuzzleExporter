@@ -23,7 +23,9 @@
 #include "PicrossDataCanvas.hpp"
 #include <wx/filedlg.h>
 #include <sstream>
+#include <wx/msgdlg.h>
 
+#include "ProtoExporter.hpp"
 #ifdef ENABLE_XLSX
 #include "XlsxExporter.hpp"
 #endif
@@ -82,19 +84,40 @@ ExportParams PicrossFrame::GetExportParams() const
 
 void PicrossFrame::OnExportProtobuf(wxCommandEvent& event)
 {
+    Picross* picross = puzzleDataCanvas->GetPuzzle();
+    if (!picross)
+    {
+        wxMessageBox("No puzzle loaded", "Error");
+        return;
+    };
+
     wxString path = wxSaveFileSelector("Picross Puzzle", "picross", "", this);
-    if (path.IsEmpty()) return;
-    puzzleDataCanvas->OnExport(path, GetExportParams());
+    if (path.IsEmpty())
+    {
+        wxMessageBox("No file given", "Error");
+        return;
+    }
+
+    if (!ExportProto(path.ToStdString(), *picross, GetExportParams()))
+        wxMessageBox("Saving failed", "Error");
 }
 
 void PicrossFrame::OnExportXlsx(wxCommandEvent& event)
 {
 #ifdef ENABLE_XLSX
     Picross* picross = puzzleDataCanvas->GetPuzzle();
-    if (!picross) return;
+    if (!picross)
+    {
+        wxMessageBox("No puzzle loaded", "Error");
+        return;
+    };
 
     wxString path = wxSaveFileSelector("Picross Puzzle", "xlsx", "", this);
-    if (path.IsEmpty()) return;
+    if (path.IsEmpty())
+    {
+        wxMessageBox("No file given", "Error");
+        return;
+    }
 
     ExportXlsx(path.ToStdString(), *picross);
 #endif

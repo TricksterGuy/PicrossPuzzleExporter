@@ -22,8 +22,6 @@
 #include "Picross.hpp"
 #include <wx/settings.h>
 #include <wx/dcmemory.h>
-#include <fstream>
-#include <iostream>
 
 void Picross::Build()
 {
@@ -222,89 +220,6 @@ void Picross::TranslateToCoords(int x, int y, int w, int h, int& tx, int& ty) co
         tx = -1;
         ty = -1;
     }
-}
-
-void Picross::Export(const wxString& file, const ExportParams& params) const
-{
-    std::ofstream out(file.ToStdString(), std::ios::binary);
-    if (!out.good()) return;
-
-    PicrossPuzzle puzzle = Export(params);
-    puzzle.SerializeToOstream(&out);
-}
-
-// TODO move into its own file like the xlsx exporter.
-PicrossPuzzle Picross::Export(const ExportParams& params) const
-{
-    PicrossPuzzle out;
-
-    out.set_width(width);
-    out.set_height(height);
-    out.set_type(GetType());
-    out.set_bpc(bpc);
-
-    auto* meta = out.mutable_meta();
-    meta->set_name(params.name);
-    meta->set_author(params.author);
-    meta->set_time(params.time);
-    auto* background = meta->mutable_background();
-    background->set_type(static_cast<BackgroundInfo::Type>(params.background_type + 1));
-    if (params.background_type != 3)
-        background->set_image(params.bg_image);
-    else
-    {
-        background->set_color1(params.top_color);
-        background->set_color2(params.bottom_color);
-    }
-    background->set_music(params.bg_music);
-    auto* solution_meta = meta->mutable_solution();
-    solution_meta->set_image(params.image);
-    solution_meta->set_frames(params.frames);
-
-    for (int k = 0; k < max_layers; k++)
-    {
-        auto* layer = out.add_layers();
-        const auto& row_hints = rows.at(k);
-        const auto& column_hints = columns.at(k);
-
-        for (int i = 0; i < height; i++)
-        {
-            const auto& row_data = row_hints[i];
-            auto* rows = layer->add_rows();
-            for (const auto& elem : row_data)
-                rows->add_data(elem);
-            if (bpc > 1)
-            {
-                const auto& total_hints = total_rows.at(k)[i];
-                for (const auto& elem : total_hints)
-                    rows->add_totals(elem);
-                rows->set_shading(shading_rows.at(k)[i]);
-            }
-        }
-
-        for (int j = 0; j < width; j++)
-        {
-            const auto& column_data = column_hints[j];
-            auto* columns = layer->add_columns();
-            for (const auto& elem : column_data)
-                columns->add_data(elem);
-            if (bpc > 1)
-            {
-                const auto& total_hints = total_columns.at(k)[j];
-                for (const auto& elem : total_hints)
-                    columns->add_totals(elem);
-                columns->set_shading(shading_columns.at(k)[j]);
-            }
-        }
-    }
-
-    for (int y = 0; y < height; y++)
-    {
-        for (int x = 0; x < width; x++)
-            out.add_solution(data.Get(x, y));
-    }
-
-    return out;
 }
 
 std::pair<wxString, wxString> Picross::GetRowHintsString(int row) const

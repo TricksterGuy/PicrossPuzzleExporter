@@ -137,14 +137,6 @@ void PicrossDataCanvas::OnChangeBpc(int new_bpc)
     Refresh();
 }
 
-void PicrossDataCanvas::OnExport(wxString& path, const ExportParams& params)
-{
-    if (picross)
-    {
-        picross->Export(path, params);
-    }
-}
-
 void PicrossDataCanvas::OnValidate()
 {
     if (picross)
