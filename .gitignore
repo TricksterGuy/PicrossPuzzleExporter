@@ -34,3 +34,5 @@
 # Protobuf generated files.
 *.pb.cc
 *.pb.h
+
+/build*
