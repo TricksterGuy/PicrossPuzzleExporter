@@ -312,7 +312,8 @@ std::tuple<int, int, int, int> Picross::CalculateHintBounds() const
         arr[0].GetHeight(),
         arr[1].GetHeight(),
         arr[2].GetWidth(),
-        arr[3].GetWidth()};
+        arr[3].GetWidth()
+    };
 
     return calculated_sizes;
 }

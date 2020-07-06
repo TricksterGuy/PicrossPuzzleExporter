@@ -24,6 +24,7 @@
 
 #include <vector>
 
+// TODO Rename this class.
 class PicrossLayer
 {
     public:

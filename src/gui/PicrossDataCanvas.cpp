@@ -20,36 +20,10 @@
  ******************************************************************************************************/
 
 #include "PicrossDataCanvas.hpp"
-#include "PicrossRBY.hpp"
-#include "PicrossRGB.hpp"
-#include "PicrossBW.hpp"
-#include "PicrossGray.hpp"
+#include "PicrossFactory.hpp"
 #include "PicrossValidator.hpp"
 
 #include <wx/msgdlg.h>
-
-Picross* CreatePicross(wxImage& image, int type, int bpc)
-{
-    Picross* picross = NULL;
-    switch(type)
-    {
-        case 0:
-            picross = new PicrossBW(image);
-            break;
-        case 1:
-            picross = new PicrossGray(image, bpc);
-            break;
-        case 2:
-            picross = new PicrossRGB(image, bpc);
-            break;
-        case 3:
-            picross = new PicrossRBY(image);
-            break;
-    }
-    if (picross)
-        picross->Build();
-    return picross;
-}
 
 PicrossDataCanvas::PicrossDataCanvas(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style) :
     wxScrolledWindow(parent, id, pos, size, style), image(20, 20), size(0), type(0), layer(0), bpc(1), showLayer(false)
@@ -92,7 +66,7 @@ void PicrossDataCanvas::OnDraw(wxDC& dc)
 void PicrossDataCanvas::OnChangeImage(wxString& image_path)
 {
     image.LoadFile(image_path);
-    picross.reset(CreatePicross(image, type, bpc));
+    picross.reset(PicrossFactory::Create(image, type, bpc));
     picross->SetLayer(layer);
     picross->SetShowLayer(showLayer);
     picross->SetShowGrid(showGrid);
@@ -104,7 +78,7 @@ void PicrossDataCanvas::OnChangeType(int new_type)
     type = new_type;
     if (picross)
     {
-        picross.reset(CreatePicross(image, type, bpc));
+        picross.reset(PicrossFactory::Create(image, type, bpc));
         picross->SetLayer(layer);
         picross->SetShowLayer(showLayer);
         picross->SetShowGrid(showGrid);
@@ -129,7 +103,7 @@ void PicrossDataCanvas::OnChangeBpc(int new_bpc)
     bpc = new_bpc;
     if (picross)
     {
-        picross.reset(CreatePicross(image, type, bpc));
+        picross.reset(PicrossFactory::Create(image, type, bpc));
         picross->SetLayer(layer);
         picross->SetShowLayer(showLayer);
         picross->SetShowGrid(showGrid);

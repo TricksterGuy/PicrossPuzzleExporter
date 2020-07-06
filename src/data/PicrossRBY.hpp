@@ -27,14 +27,29 @@
 #include "Picross.hpp"
 #include "reductionhelper.hpp"
 
+enum CellRBY
+{
+    CLEAR = 0,
+    BLACK = 1,
+    WHITE = 2,
+
+    RED = 4,
+    BLUE = 8,
+    YELLOW = 16,
+
+    PURPLE = 12,
+    ORANGE = 20,
+    GREEN = 24,
+
+    GRAY = 28,
+};
+
 class PicrossRBY : public Picross
 {
     public:
-        PicrossRBY(const wxImage& image);
+        PicrossRBY(const PicrossLayer& layer) :  Picross(PicrossPuzzle::TYPE_RBY, layer, /*bpc=*/1, /*layers=*/5) {}
         ~PicrossRBY() {}
         void DrawBoard(wxDC& dc) const override;
-    private:
-        Image8Bpp image8;
 };
 
 #endif

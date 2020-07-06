@@ -24,19 +24,12 @@
 #include <wx/config.h>
 #include <wx/dialog.h>
 
-#include "cpercep.hpp"
-
 constexpr const char* FULL_VERSION_STRING = "0.2";
-
-void init_palette();
 
 IMPLEMENT_APP(PicrossApp);
 
 bool PicrossApp::OnInit()
 {
-    cpercep_init();
-    init_palette();
-
     wxInitAllImageHandlers();
 
     frame = new PicrossFrame(NULL);

@@ -21,32 +21,6 @@
 
 #include "PicrossRGB.hpp"
 
-
-PicrossRGB::PicrossRGB(const wxImage& image, int bpc) : Picross(PicrossPuzzle::TYPE_RGB, image.GetWidth(), image.GetHeight(), bpc, 3)
-{
-    const int colorbits = 256 / (1 << bpc);
-    int value = 0;
-    for (int y = 0; y < height; y++)
-    {
-        for (int x = 0; x < width; x++)
-        {
-            if (image.HasAlpha() && image.IsTransparent(x, y))
-            {
-                value = 0;
-            }
-            else
-            {
-                int r, g, b;
-                r = image.GetRed(x, y) / colorbits;
-                g = image.GetGreen(x, y) / colorbits;
-                b = image.GetBlue(x, y) / colorbits;
-                value = r | (g << bpc) | (b << bpc * 2);
-            }
-            data.Set(x, y, value);
-        }
-    }
-}
-
 void PicrossRGB::Toggle(int layer, int tx, int ty)
 {
     unsigned int dmask = (1 << bpc) - 1;

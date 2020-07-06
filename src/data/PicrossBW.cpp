@@ -21,37 +21,6 @@
 
 #include "PicrossBW.hpp"
 
-enum CellBW
-{
-    CLEAR = 0,
-    BLACK = 1,
-};
-
-PicrossBW::PicrossBW(const wxImage& image) : Picross(PicrossPuzzle::TYPE_BW, image.GetWidth(), image.GetHeight(), 1, 1)
-{
-    int value = 0;
-    for (int y = 0; y < height; y++)
-    {
-        for (int x = 0; x < width; x++)
-        {
-            if (image.HasAlpha() && image.IsTransparent(x, y))
-            {
-                value = CLEAR;
-            }
-            else
-            {
-                unsigned char r, g, b;
-                r = image.GetRed(x, y);
-                g = image.GetGreen(x, y);
-                b = image.GetBlue(x, y);
-                wxColour::MakeGrey(&r, &g, &b);
-                value = r < 128 ? BLACK : CLEAR;
-            }
-            data.Set(x, y, value);
-        }
-    }
-}
-
 void PicrossBW::DrawBoard(wxDC& dc) const
 {
     wxRect rect;
@@ -70,7 +39,7 @@ void PicrossBW::DrawBoard(wxDC& dc) const
     {
         for (int x = 0; x < width; x++)
         {
-            if (data.Get(x, y) == BLACK)
+            if (data.Get(x, y))
                 dc.SetBrush(*wxBLACK_BRUSH);
             else
                 dc.SetBrush(*wxWHITE_BRUSH);

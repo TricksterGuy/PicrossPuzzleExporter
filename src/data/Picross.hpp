@@ -38,9 +38,9 @@ typedef std::unordered_map<int, Hints> LayerHints;
 class Picross
 {
     public:
-        Picross(PicrossPuzzle::Type type_, int width_, int height_, int bpc_, int num_layers) : type(type_), data(width_, height_), layer(0), showLayer(false), showGrid(true),
-                                                                                                width(width_), height(height_), bpc(bpc_), max_layers(num_layers), shading_rows(max_layers),
-                                                                                                shading_columns(max_layers) {}
+        Picross(PicrossPuzzle::Type type_, const PicrossLayer& layer, int bpc_, int num_layers) : type(type_), data(layer), layer(0), showLayer(false), showGrid(true),
+                                                                                                  width(layer.GetWidth()), height(layer.GetHeight()), bpc(bpc_),
+                                                                                                  max_layers(num_layers), shading_rows(max_layers), shading_columns(max_layers) {}
         virtual ~Picross() {}
         PicrossPuzzle::Type GetType() const {return type;}
         void Draw(wxDC& dc) const;

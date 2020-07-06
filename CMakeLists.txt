@@ -35,6 +35,7 @@ endif(CMAKE_BUILD_TYPE MATCHES "Debug")
 
 # Source files definition
 set(SRC_ppe
+	src/data/PicrossFactory.cpp
 	src/data/Picross.cpp
 	src/data/PicrossBW.cpp
 	src/data/PicrossGray.cpp

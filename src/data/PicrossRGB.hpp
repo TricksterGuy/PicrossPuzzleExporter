@@ -28,7 +28,7 @@
 class PicrossRGB : public Picross
 {
     public:
-        PicrossRGB(const wxImage& image, int bpc);
+        PicrossRGB(const PicrossLayer& layer, int bpc) : Picross(PicrossPuzzle::TYPE_RGB, layer, bpc, /*layers=*/3) {}
         ~PicrossRGB() {}
         void DrawBoard(wxDC& dc) const override;
         void Toggle(int layer, int tx, int ty) override;

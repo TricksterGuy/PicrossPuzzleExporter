@@ -28,7 +28,7 @@
 class PicrossBW : public Picross
 {
     public:
-        PicrossBW(const wxImage& image);
+        PicrossBW(const PicrossLayer& layer) : Picross(PicrossPuzzle::TYPE_BW, layer, /*bpc=*/1, /*layers=*/1) {}
         ~PicrossBW() {}
         void DrawBoard(wxDC& dc) const override;
 };

@@ -19,39 +19,33 @@
  * 3. This notice may not be removed or altered from any source distribution.
  ******************************************************************************************************/
 
-#include "PicrossGray.hpp"
+#ifndef PICROSS_FACTORY_HPP
+#define PICROSS_FACTORY_HPP
 
-void PicrossGray::Toggle(int layer, int tx, int ty)
+#include <unordered_map>
+#include <wx/bitmap.h>
+#include "Picross.hpp"
+#include "reductionhelper.hpp"
+
+class PicrossFactory
 {
-    unsigned int dmask = (1 << bpc) - 1;
-    unsigned int value = data.Get(tx, ty);
-    data.Set(tx, ty, (value - 1) & dmask);
-    FlushCache(tx, ty);
-}
+public:
+    static Picross* Create(const wxImage& image, int type, int bpc);
 
-void PicrossGray::DrawBoard(wxDC& dc) const
-{
-    wxRect rect;
-    dc.GetClippingBox(rect);
-    wxSize size = rect.GetSize();
+private:
+    PicrossFactory() = delete;
+    ~PicrossFactory() = delete;
 
-    auto [unused1, extra_hints_height, unused2, extra_hints_width] = CalculateHintBounds();
-    // hints_width/height already removed via GetClippingBox.
-    int w = std::min((size.GetWidth() - extra_hints_width) / width,
-                     (size.GetHeight() - extra_hints_height) / height);
+    static Picross* CreateBW(const wxImage& image);
+    static Picross* CreateGray(const wxImage& image, int bpc);
+    static Picross* CreateRGB(const wxImage& image, int bpc);
+    static Picross* CreateRBY(const wxImage& image);
 
-    int max = (1 << bpc) - 1;
+    static void InitPalette();
 
-    dc.SetPen(*wxTRANSPARENT_PEN);
-    dc.SetBrush(*wxBLACK_BRUSH);
+    static std::shared_ptr<Palette> palette;
+    static std::unordered_map<int, unsigned int> special_map;
+};
 
-    for (int y = 0; y < height; y++)
-    {
-        for (int x = 0; x < width; x++)
-        {
-            unsigned int cval = 255 * (max - data.Get(x, y)) / max;
-            dc.SetBrush(wxBrush(wxColour(cval, cval, cval)));
-            dc.DrawRectangle(x * w + rect.GetX(), y * w + rect.GetY(), w, w);
-        }
-    }
-}
+
+#endif
