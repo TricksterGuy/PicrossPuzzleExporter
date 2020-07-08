@@ -23,15 +23,47 @@
 #define PICROSSAPP_HPP
 
 #include <wx/app.h>
+#include <wx/cmdline.h>
+#include <wx/filename.h>
 #include "PicrossFrame.hpp"
+
+struct ProgramArgs
+{
+    bool silent;
+    bool validate;
+
+    int type;
+
+    wxString image;
+    long bits_per_cell = 1;
+    wxString export_type;
+    wxFileName filename;
+    wxString puzzle_name;
+    wxString puzzle_author;
+    long puzzle_time = 0;
+    wxString solution_image;
+    long solution_frames = 0;
+    int background_type = 0;
+    wxString background_image;
+    long top_color = 0;
+    long bottom_color = 0;
+    wxString background_music;
+};
 
 class PicrossApp : public wxApp
 {
     public:
-        bool OnInit();
+        bool OnInit() override;
+        void OnInitCmdLine(wxCmdLineParser& parser) override;
+        bool OnCmdLineParsed(wxCmdLineParser& parser) override;
         PicrossFrame* GetFrame() {return frame;}
     private:
         PicrossFrame* frame;
+        ProgramArgs args;
+
+        bool RunGui();
+        bool RunExport();
+
 };
 
 DECLARE_APP(PicrossApp);
