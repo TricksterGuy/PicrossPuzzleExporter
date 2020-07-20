@@ -71,6 +71,8 @@ class PicrossGUI : public wxFrame
 		wxCheckBox* showOnlyLayer;
 		wxStaticText* bitsPerCellLabel;
 		wxChoice* bitsPerCell;
+		wxStaticText* colorsLabel;
+		wxSpinCtrl* colors;
 		wxRadioBox* backgroundType;
 		wxStaticText* backgroundImageLabel;
 		wxFilePickerCtrl* backgroundImage;
@@ -89,10 +91,12 @@ class PicrossGUI : public wxFrame
 
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnResize( wxSizeEvent& event ) { event.Skip(); }
+		virtual void OnSolutionImageChanged( wxFileDirPickerEvent& event ) { event.Skip(); }
 		virtual void OnChangePuzzleType( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnLayerChange( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnShowLayer( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnChangeBpc( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnChangeNumColors( wxSpinEvent& event ) { event.Skip(); }
 		virtual void OnChangeBackgroundType( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnLoadImage( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnExportProtobuf( wxCommandEvent& event ) { event.Skip(); }

@@ -26,7 +26,7 @@
 #include <wx/msgdlg.h>
 
 PicrossDataCanvas::PicrossDataCanvas(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style) :
-    wxScrolledWindow(parent, id, pos, size, style), image(20, 20), size(0), type(0), layer(0), bpc(1), showLayer(false)
+    wxScrolledWindow(parent, id, pos, size, style), image(20, 20), size(0), type(0), layer(0), bpc(1), colors(32), showLayer(false)
 {
     picross.reset(NULL);
     Connect(wxEVT_LEFT_DOWN, wxMouseEventHandler(PicrossDataCanvas::OnClick), NULL, this);
@@ -66,7 +66,7 @@ void PicrossDataCanvas::OnDraw(wxDC& dc)
 void PicrossDataCanvas::OnChangeImage(wxString& image_path)
 {
     image.LoadFile(image_path);
-    picross.reset(PicrossFactory::Create(image, type, bpc));
+    picross.reset(PicrossFactory::Create(image, type, ConstructOptions()));
     picross->SetLayer(layer);
     picross->SetShowLayer(showLayer);
     picross->SetShowGrid(showGrid);
@@ -78,7 +78,7 @@ void PicrossDataCanvas::OnChangeType(int new_type)
     type = new_type;
     if (picross)
     {
-        picross.reset(PicrossFactory::Create(image, type, bpc));
+        picross.reset(PicrossFactory::Create(image, type, ConstructOptions()));
         picross->SetLayer(layer);
         picross->SetShowLayer(showLayer);
         picross->SetShowGrid(showGrid);
@@ -103,13 +103,27 @@ void PicrossDataCanvas::OnChangeBpc(int new_bpc)
     bpc = new_bpc;
     if (picross)
     {
-        picross.reset(PicrossFactory::Create(image, type, bpc));
+        picross.reset(PicrossFactory::Create(image, type, ConstructOptions()));
         picross->SetLayer(layer);
         picross->SetShowLayer(showLayer);
         picross->SetShowGrid(showGrid);
     }
     Refresh();
 }
+
+void PicrossDataCanvas::OnChangeNumColors(int new_colors)
+{
+    colors = new_colors;
+    if (picross)
+    {
+        picross.reset(PicrossFactory::Create(image, type, ConstructOptions()));
+        picross->SetLayer(layer);
+        picross->SetShowLayer(showLayer);
+        picross->SetShowGrid(showGrid);
+    }
+    Refresh();
+}
+
 
 void PicrossDataCanvas::OnValidate()
 {

@@ -36,6 +36,7 @@ struct ProgramArgs
 
     wxString image;
     long bits_per_cell = 1;
+    long colors = 0;
     wxString export_type;
     wxFileName filename;
     wxString puzzle_name;

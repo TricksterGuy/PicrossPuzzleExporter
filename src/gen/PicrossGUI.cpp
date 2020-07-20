@@ -74,6 +74,8 @@ PicrossGUI::PicrossGUI( wxWindow* parent, wxWindowID id, const wxString& title, 
 	fgSizer4->Add( m_staticText111, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 
 	solutionFrames = new wxSpinCtrl( sbSizer5->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 1, 50, 1 );
+	solutionFrames->Enable( false );
+
 	fgSizer4->Add( solutionFrames, 0, wxALL, 5 );
 
 
@@ -88,7 +90,7 @@ PicrossGUI::PicrossGUI( wxWindow* parent, wxWindowID id, const wxString& title, 
 	wxStaticBoxSizer* sbSizer3;
 	sbSizer3 = new wxStaticBoxSizer( new wxStaticBox( m_panel4, wxID_ANY, wxT("Puzzle Properties") ), wxHORIZONTAL );
 
-	wxString puzzleTypeChoices[] = { wxT("Classic"), wxT("Grayscale"), wxT("Colors of Light"), wxT("Painting") };
+	wxString puzzleTypeChoices[] = { wxT("Classic"), wxT("Grayscale"), wxT("Colors of Light"), wxT("Painting"), wxT("Color Hints") };
 	int puzzleTypeNChoices = sizeof( puzzleTypeChoices ) / sizeof( wxString );
 	puzzleType = new wxRadioBox( sbSizer3->GetStaticBox(), wxID_ANY, wxT("Type"), wxDefaultPosition, wxDefaultSize, puzzleTypeNChoices, puzzleTypeChoices, 1, wxRA_SPECIFY_COLS );
 	puzzleType->SetSelection( 0 );
@@ -145,6 +147,17 @@ PicrossGUI::PicrossGUI( wxWindow* parent, wxWindowID id, const wxString& title, 
 	bitsPerCell->Hide();
 
 	fgSizer2->Add( bitsPerCell, 0, wxALL|wxEXPAND, 5 );
+
+	colorsLabel = new wxStaticText( sbSizer3->GetStaticBox(), wxID_ANY, wxT("Colors:"), wxDefaultPosition, wxDefaultSize, 0 );
+	colorsLabel->Wrap( -1 );
+	colorsLabel->Hide();
+
+	fgSizer2->Add( colorsLabel, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+
+	colors = new wxSpinCtrl( sbSizer3->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 2, 32, 32 );
+	colors->Hide();
+
+	fgSizer2->Add( colors, 0, wxALL, 5 );
 
 
 	sbSizer3->Add( fgSizer2, 1, wxEXPAND, 5 );
@@ -262,10 +275,12 @@ PicrossGUI::PicrossGUI( wxWindow* parent, wxWindowID id, const wxString& title, 
 
 	// Connect Events
 	this->Connect( wxEVT_SIZE, wxSizeEventHandler( PicrossGUI::OnResize ) );
+	solutionImage->Connect( wxEVT_COMMAND_FILEPICKER_CHANGED, wxFileDirPickerEventHandler( PicrossGUI::OnSolutionImageChanged ), NULL, this );
 	puzzleType->Connect( wxEVT_COMMAND_RADIOBOX_SELECTED, wxCommandEventHandler( PicrossGUI::OnChangePuzzleType ), NULL, this );
 	layersChoice->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( PicrossGUI::OnLayerChange ), NULL, this );
 	showOnlyLayer->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( PicrossGUI::OnShowLayer ), NULL, this );
 	bitsPerCell->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( PicrossGUI::OnChangeBpc ), NULL, this );
+	colors->Connect( wxEVT_COMMAND_SPINCTRL_UPDATED, wxSpinEventHandler( PicrossGUI::OnChangeNumColors ), NULL, this );
 	backgroundType->Connect( wxEVT_COMMAND_RADIOBOX_SELECTED, wxCommandEventHandler( PicrossGUI::OnChangeBackgroundType ), NULL, this );
 	fileMenu->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( PicrossGUI::OnLoadImage ), this, loadMenuItem->GetId());
 	exportMenu->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( PicrossGUI::OnExportProtobuf ), this, protobufMenuItem->GetId());
@@ -278,10 +293,12 @@ PicrossGUI::~PicrossGUI()
 {
 	// Disconnect Events
 	this->Disconnect( wxEVT_SIZE, wxSizeEventHandler( PicrossGUI::OnResize ) );
+	solutionImage->Disconnect( wxEVT_COMMAND_FILEPICKER_CHANGED, wxFileDirPickerEventHandler( PicrossGUI::OnSolutionImageChanged ), NULL, this );
 	puzzleType->Disconnect( wxEVT_COMMAND_RADIOBOX_SELECTED, wxCommandEventHandler( PicrossGUI::OnChangePuzzleType ), NULL, this );
 	layersChoice->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( PicrossGUI::OnLayerChange ), NULL, this );
 	showOnlyLayer->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( PicrossGUI::OnShowLayer ), NULL, this );
 	bitsPerCell->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( PicrossGUI::OnChangeBpc ), NULL, this );
+	colors->Disconnect( wxEVT_COMMAND_SPINCTRL_UPDATED, wxSpinEventHandler( PicrossGUI::OnChangeNumColors ), NULL, this );
 	backgroundType->Disconnect( wxEVT_COMMAND_RADIOBOX_SELECTED, wxCommandEventHandler( PicrossGUI::OnChangeBackgroundType ), NULL, this );
 
 }

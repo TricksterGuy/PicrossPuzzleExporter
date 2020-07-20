@@ -12,9 +12,22 @@ message Hint
     // Hints along this particular row/column.
 	repeated int32 data = 1 [packed=true];
 	// Frequency of each possible number in row/column for bpc > 1.
-	repeated int32 totals = 2  [packed=true];
+	repeated int32 totals = 2 [packed=true];
 	// Number of shade changes for this particular row/column.
 	int32 shading = 3;
+	// In colored hint picross the associated palette entries for each hint.
+	repeated int32 data_palette_entry = 4 [packed=true];
+}
+
+message HintPalette
+{
+    message Color
+    {
+        int32 red = 1;
+        int32 green = 2;
+        int32 blue = 3;
+    }
+    repeated Color entries = 1;
 }
 
 // Solution Info for a picross puzzle (or an individual layer for colored picross).
@@ -89,6 +102,8 @@ message PicrossPuzzle
 		TYPE_RGB = 3;
 		// Painting Picross. Five layers Black, White, Red, Blue, and Yellow.
 		TYPE_RBY = 4;
+		// Colored hint Picross. Standard colored variant.
+		TYPE_COLORED_HINT = 5;
 	}
 	// Dimensions of the puzzle in cells.
 	int32 width = 1;
@@ -101,6 +116,8 @@ message PicrossPuzzle
 	repeated int32 solution = 5 [packed=true];
 	// Row/Column hints for each layer of the picross puzzle.
 	repeated HintLayer layers = 6;
+	// For Colored Hint Picross palette of colors used.
+	HintPalette palette = 8;
 	// Metadata.
 	PicrossPuzzleMeta meta = 7;
 }

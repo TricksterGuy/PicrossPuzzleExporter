@@ -25,6 +25,7 @@
 
 #include <memory>
 #include "Picross.hpp"
+#include "PicrossFactory.hpp"
 
 class PicrossDataCanvas : public wxScrolledWindow
 {
@@ -36,15 +37,22 @@ class PicrossDataCanvas : public wxScrolledWindow
         void OnChangeType(int new_type);
         void OnChangeLayer(int new_layer);
         void OnChangeBpc(int new_bpc);
+        void OnChangeNumColors(int new_colors);
         void OnClick(wxMouseEvent& event);
         void OnValidate();
         void OnShowLayer(bool show_layer);
         void OnShowGrid(bool show_grid);
         Picross* GetPuzzle() {return picross.get();}
     private:
+        PicrossFactory::Options ConstructOptions() const {
+            PicrossFactory::Options options;
+            options.bpc = bpc;
+            options.colors = colors;
+            return options;
+        }
         std::unique_ptr<Picross> picross;
         wxImage image;
-        int size, type, layer, bpc;
+        int size, type, layer, bpc, colors;
         bool showLayer;
         bool showGrid;
 };

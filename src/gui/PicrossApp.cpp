@@ -40,9 +40,10 @@ static const wxCmdLineEntryDesc command_line_desc [] =
      {wxCMD_LINE_SWITCH, "h", "help",          "Displays help on command line parameters",                      wxCMD_LINE_VAL_NONE, wxCMD_LINE_OPTION_HELP},
 
      // Required arguments for command line mode.
-     {wxCMD_LINE_OPTION, "t", "type",           "Type of picross to make (Classic|Grayscale|Light||Painting)",  wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL},
+     {wxCMD_LINE_OPTION, "t", "type",           "Type of picross to make (Classic|Grayscale|Light|Painting|ColorHints)",  wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL},
      {wxCMD_LINE_OPTION, "i", "image",          "Image filename",                                               wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL},
      {wxCMD_LINE_OPTION, "b", "bits_per_cell",  "Bits per cell (for type = Light|Grayscale)",                   wxCMD_LINE_VAL_NUMBER, wxCMD_LINE_PARAM_OPTIONAL},
+     {wxCMD_LINE_OPTION, "c", "colors",         "Number of colors (for type = ColorHints)",                     wxCMD_LINE_VAL_NUMBER, wxCMD_LINE_PARAM_OPTIONAL},
      {wxCMD_LINE_OPTION, "e", "export",         "Export type (proto|xlsx)",                                     wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL},
      {wxCMD_LINE_OPTION, "f", "filename",       "Export filename (minus extension)",                            wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL},
 
@@ -57,7 +58,6 @@ static const wxCmdLineEntryDesc command_line_desc [] =
      {wxCMD_LINE_OPTION, "", "background_type",     "Background type",                  wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL},
      {wxCMD_LINE_OPTION, "", "background_image",    "Background image",                 wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL},
      {wxCMD_LINE_OPTION, "", "background_music",    "Background music",                 wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL},
-
 
      {wxCMD_LINE_SWITCH, "v", "validate",       "Validate puzzle for unique solution" },
      {wxCMD_LINE_SWITCH, "s", "silent",         "Disables the GUI" },
@@ -93,10 +93,14 @@ bool PicrossApp::RunExport()
     wxImage image;
     image.LoadFile(args.image);
 
-    std::unique_ptr<Picross> picross(PicrossFactory::Create(image, args.type, args.bits_per_cell));
+    PicrossFactory::Options options;
+    options.bpc = args.bits_per_cell;
+    options.colors = args.colors;
+
+    std::unique_ptr<Picross> picross(PicrossFactory::Create(image, args.type, options));
     if (!picross)
     {
-        wxPrintf("Failed to create Picross Puzzle.\n");
+        printf("Failed to create Picross Puzzle.\n");
         return false;
     }
 
@@ -172,7 +176,7 @@ void PicrossApp::OnInitCmdLine(wxCmdLineParser& parser)
 
 bool PicrossApp::OnCmdLineParsed(wxCmdLineParser& parser)
 {
-    const std::unordered_map<std::string, int> valid_types = {{"classic", 0}, {"grayscale", 1}, {"light", 2}, {"painting", 3}};
+    const std::unordered_map<std::string, int> valid_types = {{"classic", 0}, {"grayscale", 1}, {"light", 2}, {"painting", 3}, {"colorhints", 4}};
     const std::unordered_set<std::string> valid_exports = {"proto", "xlsx"};
     const std::unordered_map<std::string, int> valid_background_types = {{"stationary", 0}, {"stretched", 1}, {"tiled", 2}, {"gradient", 3}};
     args.silent = parser.Found("s");
@@ -209,8 +213,22 @@ bool PicrossApp::OnCmdLineParsed(wxCmdLineParser& parser)
     if (args.silent && (args.bits_per_cell > 3 || args.bits_per_cell < 1))
     {
         printf(parser.GetUsageString().c_str());
-        printf("Invalid value given for bits per cell. Must be from 1-3. Got %ld\n", args.bits_per_cell);
+        printf("Invalid value given for --bits_per_cell. Must be from 1-3. Got %ld\n", args.bits_per_cell);
         return false;
+    }
+
+    if (args.type == 4)
+    {
+        if (!parser.Found("c", &args.colors))
+        {
+            printf("No value set for --colors it is required for --type=colorhints\n");
+            return false;
+        }
+        if (args.colors < 2 || args.colors > 32)
+        {
+            printf("Invalid value for --colors, it should be between [2, 32]\n");
+            return false;
+        }
     }
 
     args.export_type.MakeLower();

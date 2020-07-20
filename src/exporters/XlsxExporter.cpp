@@ -29,6 +29,7 @@ void ExportXlsxClassic(lxw_workbook* workbook, const Picross& picross);
 void ExportXlsxGrayscale(lxw_workbook* workbook, const Picross& picross);
 void ExportXlsxPainting(lxw_workbook* workbook, const Picross& picross);
 void ExportXlsxLight(lxw_workbook* workbook, const Picross& picross);
+void ExportXlsxColorHints(lxw_workbook* workbook, const Picross& picross);
 void WriteType(lxw_workbook* workbook, lxw_worksheet* worksheet, const std::string& type, int r, int c, int size);
 void WriteHints(lxw_workbook* workbook, lxw_worksheet* worksheet, const Picross& picross, int layer, int r, int c, int size);
 void WriteBoard(lxw_workbook* workbook, lxw_worksheet* worksheet, const Picross& picross, int r, int c);
@@ -39,6 +40,10 @@ void WriteClassicFormatting(lxw_workbook* workbook, lxw_worksheet* worksheet, co
 void WriteGrayscaleFormatting(lxw_workbook* workbook, lxw_worksheet* worksheet, const Picross& picross, int r, int c);
 void WriteLightFormatting(lxw_workbook* workbook, lxw_worksheet* worksheet, const Picross& picross, int r, int c);
 void WritePaintingFormatting(lxw_workbook* workbook, lxw_worksheet* worksheet, const Picross& picross, int r, int c);
+void WriteColorHintsFormatting(lxw_workbook* workbook, lxw_worksheet* worksheet, const Picross& picross, int r, int c);
+
+void WriteColorHintsPalette(lxw_workbook* workbook, lxw_worksheet* worksheet, const Picross& picross, int r, int c);
+
 int GetMaxHintsSize(const Picross& picross);
 
 std::string GetColumnName(int column)
@@ -121,6 +126,9 @@ bool ExportXlsx(const std::string& path, const Picross& picross)
             break;
         case PicrossPuzzle::TYPE_RBY:
             ExportXlsxPainting(workbook, picross);
+            break;
+        case PicrossPuzzle::TYPE_COLORED_HINT:
+            ExportXlsxColorHints(workbook, picross);
             break;
         default:
             workbook_close(workbook);
@@ -241,6 +249,39 @@ void ExportXlsxPainting(lxw_workbook* workbook, const Picross& picross)
     worksheet_set_column(worksheet, 0, 2 * offset + 2 * w + 2, 2, nullptr);
 }
 
+void ExportXlsxColorHints(lxw_workbook* workbook, const Picross& picross)
+{
+    lxw_worksheet* worksheet = workbook_add_worksheet(workbook, nullptr);
+
+    int offset = GetMaxHintsSize(picross);
+
+    WriteHints(workbook, worksheet, picross, 0, 0, 0, offset);
+    WriteColorHintsFormatting(workbook, worksheet, picross, offset, offset);
+    WriteBoard(workbook, worksheet, picross, offset, offset);
+    WriteColorHintsPalette(workbook, worksheet, picross, offset, offset + picross.GetWidth() + 1);
+
+    worksheet_set_column(worksheet, 0, offset + picross.GetWidth(), 2, nullptr);
+}
+
+void WriteColorHintsPalette(lxw_workbook* workbook, lxw_worksheet* worksheet, const Picross& picross, int r, int c)
+{
+    worksheet_write_string(worksheet, r, c, "Palette", nullptr);
+    worksheet_write_string(worksheet, r, c + 1, "Color", nullptr);
+
+    const auto& palette = picross.GetPalette();
+    for (unsigned int i = 0; i < palette.size(); i++)
+    {
+        const auto& color = palette[i];
+        auto* format = workbook_add_format(workbook);
+        format_set_pattern(format, LXW_PATTERN_SOLID);
+        format_set_bg_color(format, color.Red() << 16 | color.Green() << 8 | color.Blue());
+        format_set_fg_color(format, color.Red() << 16 | color.Green() << 8 | color.Blue());
+
+        worksheet_write_number(worksheet, r + i + 1, c, i + 1, nullptr);
+        worksheet_write_blank(worksheet, r + i + 1, c + 1, format);
+    }
+}
+
 int GetMaxHintsSize(const Picross& picross)
 {
     unsigned int m = 1;
@@ -274,13 +315,28 @@ void WriteHints(lxw_workbook* workbook, lxw_worksheet* worksheet, const Picross&
     const auto& rows = picross.GetRowHints().at(layer);
     const auto& columns = picross.GetColumnHints().at(layer);
 
-    auto* center = workbook_add_format(workbook);
-    format_set_align(center, LXW_ALIGN_CENTER);
+    const auto& color_rows = picross.GetRowColorHints().at(layer);
+    const auto& color_columns = picross.GetColumnColorHints().at(layer);
+    const auto& palette = picross.GetPalette();
+
+    auto* def = workbook_add_format(workbook);
+    format_set_align(def, LXW_ALIGN_CENTER);
+
+    std::vector<lxw_format*> format_palette;
+    for (const auto& color : palette)
+    {
+        auto* center = workbook_add_format(workbook);
+        format_set_align(center, LXW_ALIGN_CENTER);
+        format_set_font_color(center, color.Red() << 16 | color.Green() << 8 | color.Blue());
+        format_palette.push_back(center);
+    }
+
     for (unsigned int i = 0; i < columns.size(); i++)
     {
         for (unsigned int j = 0; j < columns[i].size(); j++)
         {
-            worksheet_write_number(worksheet, r + size - columns[i].size() + j, c + size + i, columns[i][j], center);
+            auto* format = picross.GetType() == PicrossPuzzle::TYPE_COLORED_HINT ? format_palette[color_columns[i][j] - 1] : def;
+            worksheet_write_number(worksheet, r + size - columns[i].size() + j, c + size + i, columns[i][j], format);
         }
     }
 
@@ -288,7 +344,8 @@ void WriteHints(lxw_workbook* workbook, lxw_worksheet* worksheet, const Picross&
     {
         for (unsigned int j = 0; j < rows[i].size(); j++)
         {
-            worksheet_write_number(worksheet, r + size + i, c + size - rows[i].size() + j, rows[i][j], center);
+            auto* format = picross.GetType() == PicrossPuzzle::TYPE_COLORED_HINT ? format_palette[color_rows[i][j] - 1] : def;
+            worksheet_write_number(worksheet, r + size + i, c + size - rows[i].size() + j, rows[i][j], format);
         }
     }
 }
@@ -586,3 +643,26 @@ void WritePaintingFormatting(lxw_workbook* workbook, lxw_worksheet* worksheet, c
     }
 #endif
 }
+
+void WriteColorHintsFormatting(lxw_workbook* workbook, lxw_worksheet* worksheet, const Picross& picross, int r, int c)
+{
+#ifdef ENABLE_EXPERIMENTAL_LIBXLSXWRITER
+    const auto& palette = picross.GetPalette();
+    std::vector<lxw_format*> format_palette;
+    for (const auto& color : palette)
+    {
+        auto* format = workbook_add_format(workbook);
+        format_set_pattern(format, LXW_PATTERN_SOLID);
+        format_set_bg_color(format, color.Red() << 16 | color.Green() << 8 | color.Blue());
+        format_set_fg_color(format, color.Red() << 16 | color.Green() << 8 | color.Blue());
+        format_palette.push_back(format);
+    }
+    for (unsigned int i = 0; i < format_palette.size(); i++)
+    {
+        auto* cf = lxw_conditional_format_new();
+        lxw_conditional_format_cell(cf, LXW_CRITERIA_EQUAL, i + 1, format_palette[i]);
+        worksheet_conditional_format(worksheet, r, c, r + picross.GetHeight() - 1, c + picross.GetWidth() - 1, cf);
+    }
+#endif
+}
+

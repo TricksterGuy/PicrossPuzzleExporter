@@ -109,6 +109,40 @@ bool ExportProto(const std::string& path, const Picross& picross, const ExportPa
             out.add_solution(picross_layer.Get(x, y));
     }
 
+    if (picross.GetType() == PicrossPuzzle::TYPE_COLORED_HINT)
+    {
+        HintLayer* layer = out.mutable_layers(0);
+
+        const auto& palette = picross.GetPalette();
+        const auto& color_rows = picross.GetRowColorHints();
+        const auto& color_columns = picross.GetColumnColorHints();
+
+        auto* out_palette = out.mutable_palette();
+        for (const auto& color : palette)
+        {
+            auto* out_color = out_palette->add_entries();
+            out_color->set_red(color.Red());
+            out_color->set_green(color.Green());
+            out_color->set_blue(color.Blue());
+        }
+
+        for (int i = 0; i < height; i++)
+        {
+            const auto& row_data = color_rows.at(0).at(i);
+            Hint* rows = layer->mutable_rows(i);
+            for (const auto& entry : row_data)
+                rows->add_data_palette_entry(entry);
+        }
+
+        for (int j = 0; j < width; j++)
+        {
+            const auto& column_data = color_columns.at(0).at(j);
+            Hint* columns = layer->mutable_columns(j);
+            for (const auto& entry : column_data)
+                columns->add_data_palette_entry(entry);
+        }
+    }
+
     out.SerializeToOstream(&file);
     return true;
 }

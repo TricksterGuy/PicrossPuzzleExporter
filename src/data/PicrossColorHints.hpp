@@ -19,39 +19,21 @@
  * 3. This notice may not be removed or altered from any source distribution.
  ******************************************************************************************************/
 
-#ifndef PICROSS_FACTORY_HPP
-#define PICROSS_FACTORY_HPP
+#ifndef PICROSS_COLOR_HINTS_HPP
+#define PICROSS_COLOR_HINTS_HPP
 
-#include <unordered_map>
-#include <wx/bitmap.h>
 #include "Picross.hpp"
-#include "reductionhelper.hpp"
+#include <vector>
+#include <wx/bitmap.h>
 
-class PicrossFactory
+class PicrossColorHints : public Picross
 {
 public:
-    struct Options
-    {
-        int bpc = 1;
-        int colors = 2;
-    };
-    static Picross* Create(const wxImage& image, int type, const Options& options);
-
-private:
-    PicrossFactory() = delete;
-    ~PicrossFactory() = delete;
-
-    static Picross* CreateBW(const wxImage& image);
-    static Picross* CreateGray(const wxImage& image, int bpc);
-    static Picross* CreateRGB(const wxImage& image, int bpc);
-    static Picross* CreateRBY(const wxImage& image);
-    static Picross* CreateColorHints(const wxImage& image, int colors);
-
-    static void InitPalette();
-
-    static std::shared_ptr<Palette> palette;
-    static std::unordered_map<int, unsigned int> special_map;
+    PicrossColorHints(const PicrossLayer& layer, const std::vector<wxColour>& colors) : Picross(PicrossPuzzle::TYPE_COLORED_HINT, layer, /*unused_bpc=*/1, /*layers=*/1) {palette = colors;}
+    ~PicrossColorHints() {}
+    void DrawBoard(wxDC& dc) const override;
+    void Toggle(int layer, int tx, int ty) override {}
+    unsigned int NumSet(int layer, int tx, int ty) const override {return data.Get(tx, ty);}
 };
-
 
 #endif

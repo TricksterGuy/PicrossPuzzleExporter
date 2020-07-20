@@ -41,6 +41,8 @@ set(SRC_ppe
 	src/data/PicrossGray.cpp
 	src/data/PicrossRGB.cpp
 	src/data/PicrossRBY.cpp
+	src/data/PicrossColorHints.cpp
+
 	src/data/PicrossValidator.cpp
 
 	src/exporters/ProtoExporter.cpp
@@ -54,7 +56,7 @@ set(SRC_ppe
 
 	src/util/color.cpp
 	src/util/cpercep.cpp
-	src/util/dither.cpp
+	src/util/mediancut.cpp
 	src/util/reductionhelper.cpp
 )
 

@@ -3,13 +3,14 @@
 #include "PicrossGray.hpp"
 #include "PicrossRGB.hpp"
 #include "PicrossRBY.hpp"
+#include "PicrossColorHints.hpp"
 
 #include "cpercep.hpp"
 
 std::shared_ptr<Palette> PicrossFactory::palette;
 std::unordered_map<int, unsigned int> PicrossFactory::special_map;
 
-Picross* PicrossFactory::Create(const wxImage& image, int type, int bpc)
+Picross* PicrossFactory::Create(const wxImage& image, int type, const PicrossFactory::Options& options)
 {
     Picross* picross = nullptr;
     switch(type)
@@ -18,14 +19,16 @@ Picross* PicrossFactory::Create(const wxImage& image, int type, int bpc)
             picross = CreateBW(image);
             break;
         case 1:
-            picross = CreateGray(image, bpc);
+            picross = CreateGray(image, options.bpc);
             break;
         case 2:
-            picross = CreateRGB(image, bpc);
+            picross = CreateRGB(image, options.bpc);
             break;
         case 3:
             picross = CreateRBY(image);
             break;
+        case 4:
+            picross = CreateColorHints(image, options.colors);
         default:
             break;
     }
@@ -52,7 +55,7 @@ Picross* PicrossFactory::CreateBW(const wxImage& image)
             g = image.GetGreen(x, y);
             b = image.GetBlue(x, y);
             wxColour::MakeGrey(&r, &g, &b);
-            data.Set(x, y, r < 128 ? 1 : 0);
+            data.Set(x, y, r <= 128);
         }
     }
     return new PicrossBW(std::move(data));
@@ -116,7 +119,7 @@ Picross* PicrossFactory::CreateRBY(const wxImage& image)
     PicrossLayer data(width, height);
 
     // TODO converting the image to 16 bit color isn't necessary.
-    Image8Bpp image8(Image16Bpp(image, ""), palette);
+    Image8Bpp image8(Image16Bpp(image), palette);
 
     for (int y = 0; y < height; y++)
     {
@@ -127,6 +130,7 @@ Picross* PicrossFactory::CreateRBY(const wxImage& image)
 
             int value = CLEAR;
             int pindex = image8.pixels[y * image8.width + x];
+
             if (pindex == 0)
                 value = BLACK;
             else if (pindex == 1)
@@ -179,7 +183,7 @@ void PicrossFactory::InitPalette()
 {
     cpercep_init();
     palette.reset(new Palette());
-    const int num_colors = 32;
+    constexpr int num_colors = 31;
 
     const unsigned short color_set[num_colors] = {
         0x0000,0x7fff,
@@ -188,8 +192,8 @@ void PicrossFactory::InitPalette()
         0x001f,0x7c00,0x03ff,0x021f,0x4010,0x0200,0x4210,
         0x421f,0x7e10,0x63ff,0x431f,0x6218,0x4310,0x6318,
         // special colormap
-        //green, magenta, cyanx2,           pink,   blue,  dblue,  lgray, dyellow
-         0x03e0,  0x7c1f, 0x7fe0, 0x7e82, 0x529f, 0x4000, 0x1000, 0x739c, 0x0672, //0x7e1c
+        //green, magenta, cyanx2,           pink,   blue,  dblue,  lgray,
+         0x03e0,  0x7c1f, 0x7fe0, 0x7e82, 0x529f, 0x4000, 0x1000, 0x739c,
     };
 
     special_map[23] = GREEN | WHITE;
@@ -200,11 +204,36 @@ void PicrossFactory::InitPalette()
     special_map[28] = BLUE;
     special_map[29] = BLACK | BLUE;
     special_map[30] = WHITE | GRAY;
-    special_map[31] = BLACK | YELLOW;
-    //special_map[32] = WHITE | GRAY;
 
-    std::vector<Color> colors;
     for (int i = 0; i < num_colors; i++)
-        colors.push_back(color_set[i]);
-    palette->Set(colors);
+        palette->Add(Color16(color_set[i]));
+}
+
+Picross* PicrossFactory::CreateColorHints(const wxImage& image, int colors)
+{
+    cpercep_init();
+    Image8Bpp image8(Image16Bpp(image), colors);
+    const auto& palette = image8.palette;
+    std::vector<wxColour> wxPalette;
+    wxPalette.reserve(palette->Size());
+    for (const auto& color : palette->GetColors())
+    {
+        auto color32 = color.ToColor();
+        wxPalette.push_back(wxColour(color32.r, color32.g, color32.b));
+    }
+
+    int width = image.GetWidth();
+    int height = image.GetHeight();
+    PicrossLayer data(width, height);
+    for (int y = 0; y < height; y++)
+    {
+        for (int x = 0; x < width; x++)
+        {
+            if (image.HasAlpha() && image.IsTransparent(x, y))
+                continue;
+            data.Set(x, y, image8.pixels[y * image8.width + x] + 1);
+        }
+    }
+
+    return new PicrossColorHints(data, wxPalette);
 }

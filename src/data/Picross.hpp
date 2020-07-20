@@ -40,7 +40,7 @@ class Picross
     public:
         Picross(PicrossPuzzle::Type type_, const PicrossLayer& layer, int bpc_, int num_layers) : type(type_), data(layer), layer(0), showLayer(false), showGrid(true),
                                                                                                   width(layer.GetWidth()), height(layer.GetHeight()), bpc(bpc_),
-                                                                                                  max_layers(num_layers), shading_rows(max_layers), shading_columns(max_layers) {}
+                                                                                                  max_layers(num_layers), shading_rows(max_layers), shading_columns(max_layers), palette(1, *wxBLACK) {}
         virtual ~Picross() {}
         PicrossPuzzle::Type GetType() const {return type;}
         void Draw(wxDC& dc) const;
@@ -56,11 +56,14 @@ class Picross
         virtual unsigned int NumSet(int layer, int tx, int ty) const;
         const PicrossLayer& GetData() const {return data;}
         const LayerHints& GetRowHints() const {return rows;}
+        const LayerHints& GetRowColorHints() const {return color_rows;}
         const LayerHints& GetRowExtraHints() const {return total_rows;}
         const ShadingHints& GetRowShadingHints() const {return shading_rows;}
         const LayerHints& GetColumnHints() const {return columns;}
+        const LayerHints& GetColumnColorHints() const {return color_columns;}
         const LayerHints& GetColumnExtraHints() const {return total_columns;}
         const ShadingHints& GetColumnShadingHints() const {return shading_columns;}
+        const std::vector<wxColour>& GetPalette() const {return palette;}
         void SetLayer(int layer_id)
         {
             layer = layer_id;
@@ -110,6 +113,9 @@ class Picross
         // Map layer_id -> Array of hints.
         LayerHints rows;
         LayerHints columns;
+        // Hint Colors for type = ColorHints
+        LayerHints color_rows;
+        LayerHints color_columns;
         // Numbers at the bottom and right for bpc puzzle puzzles per layer.
         // Map layer_id -> Array sized 2 ** bpc with totals for each bit combination.
         LayerHints total_rows;
@@ -118,6 +124,7 @@ class Picross
         // Map layer_id -> Array sized width/height with number of changes in shading.
         ShadingHints shading_rows;
         ShadingHints shading_columns;
+        std::vector<wxColour> palette;
 
         friend bool Validate(const Picross* picross, Problem& problem);
     private:
@@ -125,10 +132,13 @@ class Picross
         std::pair<wxString, wxString> GetRowHintsString(int row) const;
         std::pair<wxString, wxString> GetColumnHintsString(int column) const;
 
-        mutable std::unordered_map<int, wxString> row_hints_cache;
-        mutable std::unordered_map<int, wxString> column_hints_cache;
-        mutable std::unordered_map<int, wxString> row_extra_hints_cache;
-        mutable std::unordered_map<int, wxString> column_extra_hints_cache;
+        std::pair<wxBitmap, wxBitmap> GetRowHintsBitmap(int row) const;
+        std::pair<wxBitmap, wxBitmap> GetColumnHintsBitmap(int column) const;
+
+        mutable std::unordered_map<int, wxBitmap> row_hints_cache;
+        mutable std::unordered_map<int, wxBitmap> column_hints_cache;
+        mutable std::unordered_map<int, wxBitmap> row_extra_hints_cache;
+        mutable std::unordered_map<int, wxBitmap> column_extra_hints_cache;
         mutable std::tuple<int, int, int, int> calculated_sizes;
 };
 

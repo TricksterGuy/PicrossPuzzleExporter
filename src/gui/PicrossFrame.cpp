@@ -36,6 +36,7 @@ enum PicrossTypes
     GRAYSCALE = 1,
     LIGHT = 2,
     PAINTING = 3,
+    COLOR_HINTS = 4,
 };
 
 PicrossFrame::PicrossFrame(wxFrame* window) : PicrossGUI(window)
@@ -130,22 +131,19 @@ void PicrossFrame::OnChangePuzzleType(wxCommandEvent& event)
     puzzleDataCanvas->OnChangeType(type);
     puzzleDataCanvas->OnChangeLayer(0);
     bitsPerCell->SetSelection(0);
+    colors->SetValue(32);
 
-    if (type == CLASSIC)
+    layerLabel->Hide();
+    layersChoice->Hide();
+    showCurrentLayerLabel->Hide();
+    showOnlyLayer->Hide();
+    bitsPerCellLabel->Hide();
+    bitsPerCell->Hide();
+    colorsLabel->Hide();
+    colors->Hide();
+
+    if (type == GRAYSCALE)
     {
-        layerLabel->Hide();
-        layersChoice->Hide();
-        showCurrentLayerLabel->Hide();
-        showOnlyLayer->Hide();
-        bitsPerCellLabel->Hide();
-        bitsPerCell->Hide();
-    }
-    else if (type == GRAYSCALE)
-    {
-        layerLabel->Hide();
-        layersChoice->Hide();
-        showCurrentLayerLabel->Hide();
-        showOnlyLayer->Hide();
         bitsPerCellLabel->Show();
         bitsPerCell->SetSelection(1);
         bitsPerCell->Show();
@@ -165,8 +163,11 @@ void PicrossFrame::OnChangePuzzleType(wxCommandEvent& event)
         layersChoice->Show();
         showCurrentLayerLabel->Show();
         showOnlyLayer->Show();
-        bitsPerCellLabel->Hide();
-        bitsPerCell->Hide();
+    }
+    else if (type == COLOR_HINTS)
+    {
+        colorsLabel->Show();
+        colors->Show();
     }
 
     if (layersChoice->IsShown())
@@ -228,6 +229,13 @@ void PicrossFrame::OnChangeBpc(wxCommandEvent& event)
     Picross* picross = puzzleDataCanvas->GetPuzzle();
     if (!picross) return;
     puzzleDataCanvas->OnChangeBpc(event.GetSelection() + 1);
+}
+
+void PicrossFrame::OnChangeNumColors(wxSpinEvent& event)
+{
+    Picross* picross = puzzleDataCanvas->GetPuzzle();
+    if (!picross) return;
+    puzzleDataCanvas->OnChangeNumColors(event.GetPosition());
 }
 
 void PicrossFrame::OnShowLayer(wxCommandEvent& event)

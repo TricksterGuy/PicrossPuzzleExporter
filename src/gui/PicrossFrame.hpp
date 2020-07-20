@@ -50,6 +50,7 @@ class PicrossFrame : public PicrossGUI
         void OnChangeBackgroundType(wxCommandEvent& event) override;
         void OnLayerChange(wxCommandEvent& event) override;
         void OnChangeBpc(wxCommandEvent& event) override;
+        void OnChangeNumColors(wxSpinEvent& event) override;
 
         void OnShowLayer(wxCommandEvent& event) override;
         void OnToggleGrid(wxCommandEvent& event) override;
