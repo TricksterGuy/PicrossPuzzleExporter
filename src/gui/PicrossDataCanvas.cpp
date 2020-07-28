@@ -129,20 +129,18 @@ void PicrossDataCanvas::OnValidate()
 {
     if (picross)
     {
-        Problem problem;
-        bool validate = ::Validate(picross.get(), problem);
+        bool validate = ::Validate(picross.get());
         if (!validate)
         {
-            const char* rgblayers[] = {"RED", "GREEN", "BLUE"};
+            /*const char* rgblayers[] = {"RED", "GREEN", "BLUE"};
             const char* rbylayers[] = {"BLACK", "WHITE", "RED", "BLUE", "YELLOW"};
             wxString message;
             if (type == 2)
                 message = wxString::Format("Layer %s", rgblayers[problem.layer]);
             else if (type == 3)
-                message = wxString::Format("Layer %s", rbylayers[problem.layer]);
+                message = wxString::Format("Layer %s", rbylayers[problem.layer]);*/
 
-            wxMessageBox(wxString::Format("%s Rows %d and %d can be swapped and puzzle will still be solved.", message, problem.row1, problem.row2),
-                         "Validation Error, Solution not unique", wxICON_ERROR);
+            wxMessageBox("Validation Error, Solution not unique", "Error", wxICON_ERROR);
         }
         else
             wxMessageBox("Validated Successfully");

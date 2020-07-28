@@ -24,14 +24,7 @@
 
  #include "Picross.hpp"
 
- struct Problem
- {
-     int layer;
-     int row1;
-     int row2;
- };
-
- bool Validate(const Picross* picross, Problem& problem);
+ bool Validate(const Picross* picross);
 
 
  #endif

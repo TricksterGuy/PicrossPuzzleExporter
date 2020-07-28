@@ -119,20 +119,19 @@ bool PicrossApp::RunExport()
 
     if (args.validate)
     {
-        Problem problem;
-        if (!Validate(picross.get(), problem))
+        if (!Validate(picross.get()))
         {
-            const char* rgblayers[] = {"RED", "GREEN", "BLUE"};
+            /*const char* rgblayers[] = {"RED", "GREEN", "BLUE"};
             const char* rbylayers[] = {"BLACK", "WHITE", "RED", "BLUE", "YELLOW"};
             wxString message;
             if (args.type == 2)
                 message = wxString::Format("Layer %s ", rgblayers[problem.layer]);
             else if (args.type == 3)
-                message = wxString::Format("Layer %s ", rbylayers[problem.layer]);
+                message = wxString::Format("Layer %s ", rbylayers[problem.layer]);*/
 
             printf("Validation Error, Solution not unique\n");
-            printf("%sRows %d and %d can be swapped and puzzle will still be solved.", message.ToStdString().c_str(), problem.row1, problem.row2);
-            return false;;
+            //printf("%sRows %d and %d can be swapped and puzzle will still be solved.", message.ToStdString().c_str(), problem.row1, problem.row2);
+            return false;
         }
     }
 
@@ -152,7 +151,7 @@ bool PicrossApp::RunExport()
         success = ExportXlsx(filename, *picross);
 #else
 
-        printf("xlsx export not enabled in the program. Please compile with xlsx support enabled.\n")
+        printf("xlsx export not enabled in the program. Please compile with xlsx support enabled.\n");
         return false;
 #endif
     }

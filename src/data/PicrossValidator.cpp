@@ -20,163 +20,165 @@
  ******************************************************************************************************/
 
 #include "PicrossValidator.hpp"
-#include <map>
-#include <vector>
-#include <set>
+#include <gecode/driver.hh>
+#include <gecode/int.hh>
+#include <gecode/minimodel.hh>
 
-#define ContainsKey(map, val) (map.find(val) != map.end())
-#define IsEmptySolution(row_col) (row_col.size() == 1 && row_col[0] == 0)
-#define IsFilledSolution(row_col, width) (row_col.size() == 1 && row_col[0] == width)
+using namespace Gecode;
 
-std::set<int> GetMarkedColumns(const PicrossLayer& data, int r1, int r2, int layer)
+DFA line(const std::vector<int>& hints)
 {
-    int width = data.GetWidth();
-    int mask = 1 << layer;
-    std::set<int> marks;
-    for (int i = 0; i < width; i++)
+    REG r0(0), r1(1);
+    REG border = *r0;
+    REG between = +r0;
+    REG r = border;
+    if (!hints.empty())
     {
-        int val = data.Get(i, r1);
-        if ((val & mask) && val != -1)
-            marks.insert(i);
-        val = data.Get(i, r2);
-        if ((val & mask) && val != -1)
-            marks.insert(i);
+        r += r1(hints[0], hints[0]);
+        for (int i = 1; i < hints.size(); i++)
+            r += between + r1(hints[i], hints[i]);
     }
-    return marks;
+    return r + border;
 }
 
-PicrossLayer SwapRows(PicrossLayer& data, int r1, int r2)
+struct NonogramOptions : public Options
 {
-    PicrossLayer newLayer = data;
-    int width = data.GetWidth();
-    for (int i = 0; i < width; i++)
+    NonogramOptions(const Picross* p) : Options("Nonogram"), picross(p) {}
+    const Picross* picross;
+};
+
+enum
+{
+    BRANCH_NONE, ///< Branch on rows/columns in order
+    BRANCH_AFC,  ///< Use AFC for branching
+};
+
+class Nonogram : public Script
+{
+public:
+    Nonogram(const NonogramOptions& opt);
+    Nonogram(Nonogram& s) : Script(s), spec(s.spec)
     {
-        unsigned int tmp = newLayer.Get(i, r1);
-        newLayer.Set(i, r1, newLayer.Get(i, r2));
-        newLayer.Set(i, r2, tmp);
+        b.update(*this, s.b);
     }
-    return newLayer;
+    Space* copy(void) override {return new Nonogram(*this);}
+    bool IsSolution() const;
+protected:
+    int width(void) const {return spec->GetWidth();}
+    int height(void) const {return spec->GetHeight();}
+};
+
+Nonogram::Nonogram(const NonogramOptions& opt) : Script(opt), spec(opt.picross), b(*this,width() * height(), 0, 1)
+{
+    const auto& row_hints = spec->GetRowHints().at(0);
+    const auto& column_hints = spec->GetColumnHints().at(0);
+
+    Matrix<BoolVarArray> m(b, width(), height());
+
+    // Post constraints
+    for (int w = 0; w < width(); w++)
+        extensional(*this, m.col(w), line(column_hints[w]));
+    for (int h = 0; h < height(); h++)
+        extensional(*this, m.row(h), line(row_hints[h]));
+
+    switch (opt.branching())
+    {
+        case BRANCH_NONE:
+        {
+            /*
+             * The following branches either by columns or rows, depending on
+             * whether there are more hints relative to the height or width
+             * for columns or rows.
+             *
+             * This idea is due to Pascal Van Hentenryck and has been suggested
+             * to us by Hakan Kjellerstrand.
+             */
+
+            // Number of hints for columns
+            int cols = 0;
+            // Number of hints for rows
+            int rows = 0;
+
+            for (int w = 0; w < width(); w++)
+                cols += column_hints[w].size();
+            for (int h = 0; h < height(); h++)
+                rows += row_hints[h].size();
+
+            if (rows * width() > cols * height())
+            {
+                for (int w = 0; w < width(); w++)
+                    branch(*this, m.col(w), BOOL_VAR_NONE(), BOOL_VAL_MAX());
+            }
+            else
+            {
+                for (int h = 0; h < height(); h++)
+                    branch(*this, m.row(h), BOOL_VAR_NONE(), BOOL_VAL_MAX());
+            }
+        }
+        break;
+        case BRANCH_AFC:
+            /*
+             * The following just uses the AFC for branching. This is
+             * equivalent to SIZE/AFC in this case since the variables are
+             * binary.
+             */
+            branch(*this, b, BOOL_VAR_AFC_MAX(opt.decay()), BOOL_VAL_MAX());
+            break;
+    }
 }
 
-bool RowsEqual(PicrossLayer& data, int r1, int r2, int layer)
+bool Nonogram::IsSolution() const
 {
-    int width = data.GetWidth();
-    int mask = 1 << layer;
-    for (int i = 0; i < width; i++)
+    Matrix<BoolVarArray> m(b, width(), height());
+    for (int y = 0; y < height(); ++y)
     {
-        int val = data.Get(i, r1);
-        int val2 = data.Get(i, r2);
-        if (((val & mask) && val != -1) != ((val2 & mask) && val2 != -1))
-            return false;
+        for (int x = 0; x < width(); ++x)
+        {
+            if (m(x, y).val() != spec->IsSet(0, x, y))
+                return false;
+        }
     }
     return true;
 }
 
-std::map<int, std::vector<int>> BuildPartialSolution(PicrossLayer& data, std::set<int>& columns, int layer)
+bool Validate(const Picross* picross)
 {
-    std::map<int, std::vector<int>> partial_solution;
-    unsigned int mask = 1 << layer;
-    int height = data.GetHeight();
-    for (int col_id : columns)
+    NonogramOptions opt(picross);
+    opt.branching(BRANCH_AFC);
+    opt.branching(BRANCH_NONE, "none", "Branch on rows/columns in order");
+    opt.branching(BRANCH_AFC, "afc", "Use AFC for branching");
+
+    //Script::run<Nonogram,DFS,NonogramOptions>(opt);
+
+    DFS<Nonogram> e(new Nonogram(opt));
+
+    Nonogram* n = e.next();
+    if (!n->IsSolution())
     {
-        std::vector<int> col;
-        col.reserve(height / 2);
-        int marks = 0;
-        for (int y = 0; y < height; y++)
-        {
-            int val = data.Get(col_id, y);
-            if ((val & mask) && val != -1)
-            {
-                marks++;
-            }
-            else if (marks)
-            {
-                col.push_back(marks);
-                marks = 0;
-            }
-        }
-        if (col.empty() or marks > 0)
-            col.push_back(marks);
-        partial_solution[col_id] = col;
-    }
-    return partial_solution;
-}
-
-bool Validate(const Picross* picross, Problem& problem)
-{
-    LayerHints rows = picross->rows;
-    LayerHints columns = picross->columns;
-    PicrossLayer data = picross->data;
-    int max_layers = picross->max_layers;
-    int width = picross->width;
-    int height = picross->height;
-
-    for (int layer = 0; layer < max_layers; layer++)
-    {
-        Hints& row_solutions = rows[layer];
-        Hints& col_solutions = columns[layer];
-        int current_id = 0;
-        // Map from solution to unique id
-        std::map<std::vector<int>, int> found_sets;
-        // Map from unique id to rows containing solution.
-        std::map<int, std::set<int>> id_members;
-        for (int i = 0; i < height; i++)
-        {
-            std::vector<int>& row = row_solutions[i];
-            // Don't care about rows with 0's or filled rows with all marks.
-            if (IsEmptySolution(row) || IsFilledSolution(row, width))
-                continue;
-            if (!ContainsKey(found_sets, row))
-            {
-                found_sets[row] = current_id;
-                id_members[current_id] = std::set<int>();
-                current_id++;
-            }
-            int id = found_sets[row];
-            id_members[id].insert(i);
-        }
-        for (const auto& id_memberset : id_members)
-        {
-            // Only one row/column had this sequence
-            if (id_memberset.second.size() <= 1)
-                continue;
-
-            const std::set<int>& members = id_memberset.second;
-            for (int id1 : members)
-            {
-                for (int id2 : members)
-                {
-                    if (id1 == id2) continue;
-                    if (RowsEqual(data, id1, id2, layer)) continue;
-
-                    std::set<int> columns = GetMarkedColumns(data, id1, id2, layer);
-                    PicrossLayer swapped = SwapRows(data, id1, id2);
-                    std::map<int, std::vector<int>> partial_solution = BuildPartialSolution(swapped, columns, layer);
-                    bool notchanged = true;
-                    for (const auto& id_solution : partial_solution)
-                    {
-                        // if there is a difference we can break
-                        if (id_solution.second != col_solutions[id_solution.first])
-                        {
-                            notchanged = false;
-                            break;
-                        }
-                    }
-                    // Not unique!
-                    if (notchanged)
-                    {
-                        problem.layer = layer;
-                        problem.row1 = id1;
-                        problem.row2 = id2;
-                        return false;
-                    }
-                }
-            }
-        }
+        //FindDifferences(n);
+        delete n;
+        return false;
     }
 
-    problem.layer = -1;
-    problem.row1 = -1;
-    problem.row2 = -1;
+    Nonogram* n2 = e.next();
+    if (n2)
+    {
+        //FindDifferences(n, n2);
+        delete n;
+        delete n2;
+        return false;
+    }
+
+    delete n;
+    delete n2;
     return true;
+
+    /*int solutions = 0;
+    while (Nonogram* n = e.next())
+    {
+        solutions++;
+        printf("%d\n", solutions);
+        //n->print(std::cout);
+        delete n;
+    }*/
 }

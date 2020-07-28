@@ -4,6 +4,8 @@ cmake_policy(SET CMP0042 NEW)
 project (ppe)
 include(FindPkgConfig)
 
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
+
 option(ENABLE_XLSX "Enable xlsx export option. (Requires libxlsxwriter)" OFF)
 option(ENABLE_EXPERIMENTAL_LIBXLSXWRITER "Enable experimentatal libxlsxwriter functions (conditional formatting)" OFF)
 
@@ -62,6 +64,8 @@ set(SRC_ppe
 
 set(wxWidgets_USE_LIBS core base)
 find_package(wxWidgets REQUIRED)
+find_package(Gecode 6.0 COMPONENTS Driver Search MiniModel Int Kernel Support)
+
 
 # Use protobuf-lite because its smaller and we don't require the whole library.
 pkg_search_module(PROTOBUF REQUIRED protobuf-lite)
@@ -97,6 +101,7 @@ include_directories(${ppe_SOURCE_DIR}/src/util)
 include_directories(${ppe_SOURCE_DIR}/src/exporters)
 include_directories(${PROTOBUF_INCLUDEDIR})
 include_directories(${XLSX_INCLUDEDIR})
+include_directories(${GECODE_INCLUDE_DIRS})
 
 add_executable(
 	ppe
@@ -109,6 +114,7 @@ target_link_libraries(
 	${GTK2_LIBRARIES}
 	${PROTOBUF_LIBRARIES}
 	${XLSX_LIBRARIES}
+	${GECODE_LIBRARIES}
 )
 
 install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/ppe DESTINATION bin)
