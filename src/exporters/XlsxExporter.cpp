@@ -525,20 +525,22 @@ void WriteExtraHints(lxw_workbook* workbook, lxw_worksheet* worksheet, const Pic
 
 void WriteClassicFormatting(lxw_workbook* workbook, lxw_worksheet* worksheet, const Picross& picross, int r, int c)
 {
-#ifdef ENABLE_EXPERIMENTAL_LIBXLSXWRITER
     auto* black = workbook_add_format(workbook);
     format_set_pattern(black, LXW_PATTERN_SOLID);
     format_set_bg_color(black, LXW_COLOR_BLACK);
     format_set_fg_color(black, LXW_COLOR_BLACK);
-    auto* cf = lxw_conditional_format_new();
-    lxw_conditional_format_cell(cf, LXW_CRITERIA_EQUAL, 1, black);
-    worksheet_conditional_format(worksheet, r, c, r + picross.GetHeight() - 1, c + picross.GetWidth() - 1, cf);
-#endif
+
+    lxw_conditional_format cf = {0};
+    cf.type = LXW_CONDITIONAL_TYPE_CELL;
+    cf.criteria = LXW_CONDITIONAL_CRITERIA_EQUAL_TO;
+    cf.value = 1;
+    cf.format = black;
+
+    worksheet_conditional_format_range(worksheet, r, c, r + picross.GetHeight() - 1, c + picross.GetWidth() - 1, &cf);
 }
 
 void WriteGrayscaleFormatting(lxw_workbook* workbook, lxw_worksheet* worksheet, const Picross& picross, int r, int c)
 {
-#ifdef ENABLE_EXPERIMENTAL_LIBXLSXWRITER
     int shadings = 1 << picross.GetBpc();
     for (int i = 1; i < shadings; i++)
     {
@@ -549,16 +551,19 @@ void WriteGrayscaleFormatting(lxw_workbook* workbook, lxw_worksheet* worksheet, 
         format_set_pattern(format, LXW_PATTERN_SOLID);
         format_set_bg_color(format, color);
         format_set_fg_color(format, color);
-        auto* cf = lxw_conditional_format_new();
-        lxw_conditional_format_cell(cf, LXW_CRITERIA_EQUAL, i, format);
-        worksheet_conditional_format(worksheet, r, c, r + picross.GetHeight() - 1, c + picross.GetWidth() - 1, cf);
+
+        lxw_conditional_format cf = {0};
+        cf.type = LXW_CONDITIONAL_TYPE_CELL;
+        cf.criteria = LXW_CONDITIONAL_CRITERIA_EQUAL_TO;
+        cf.value = i;
+        cf.format = format;
+
+        worksheet_conditional_format_range(worksheet, r, c, r + picross.GetHeight() - 1, c + picross.GetWidth() - 1, &cf);
     }
-#endif
 }
 
 void WriteLightFormatting(lxw_workbook* workbook, lxw_worksheet* worksheet, const Picross& picross, int row, int column)
 {
-#ifdef ENABLE_EXPERIMENTAL_LIBXLSXWRITER
     int bpc = picross.GetBpc();
     int shadings = 1 << picross.GetBpc();
     int colorbits = 256 / (1 << bpc);
@@ -578,18 +583,20 @@ void WriteLightFormatting(lxw_workbook* workbook, lxw_worksheet* worksheet, cons
                 format_set_pattern(format, LXW_PATTERN_SOLID);
                 format_set_bg_color(format, color);
                 format_set_fg_color(format, color);
-                auto* cf = lxw_conditional_format_new();
-                lxw_conditional_format_cell(cf, LXW_CRITERIA_EQUAL, r | g << bpc | b << (bpc*2), format);
-                worksheet_conditional_format(worksheet, row, column, row + picross.GetHeight() - 1, column + picross.GetWidth() - 1, cf);
+
+                lxw_conditional_format cf = {0};
+                cf.type = LXW_CONDITIONAL_TYPE_CELL;
+                cf.criteria = LXW_CONDITIONAL_CRITERIA_EQUAL_TO;
+                cf.value = r | g << bpc | b << (bpc * 2);
+                cf.format = format;
+                worksheet_conditional_format_range(worksheet, row, column, row + picross.GetHeight() - 1, column + picross.GetWidth() - 1, &cf);
             }
         }
     }
-#endif
 }
 
 void WritePaintingFormatting(lxw_workbook* workbook, lxw_worksheet* worksheet, const Picross& picross, int r, int c)
 {
-#ifdef ENABLE_EXPERIMENTAL_LIBXLSXWRITER
     constexpr uint8_t BLACK = 1;
     constexpr uint8_t WHITE = 2;
     constexpr uint8_t RED = 4;
@@ -637,16 +644,18 @@ void WritePaintingFormatting(lxw_workbook* workbook, lxw_worksheet* worksheet, c
         format_set_pattern(format, LXW_PATTERN_SOLID);
         format_set_bg_color(format, cval);
         format_set_fg_color(format, cval);
-        auto* cf = lxw_conditional_format_new();
-        lxw_conditional_format_cell(cf, LXW_CRITERIA_EQUAL, i, format);
-        worksheet_conditional_format(worksheet, r, c, r + picross.GetHeight() - 1, c + picross.GetWidth() - 1, cf);
+
+        lxw_conditional_format cf = {0};
+        cf.type = LXW_CONDITIONAL_TYPE_CELL;
+        cf.criteria = LXW_CONDITIONAL_CRITERIA_EQUAL_TO;
+        cf.value = i;
+        cf.format = format;
+        worksheet_conditional_format_range(worksheet, r, c, r + picross.GetHeight() - 1, c + picross.GetWidth() - 1, &cf);
     }
-#endif
 }
 
 void WriteColorHintsFormatting(lxw_workbook* workbook, lxw_worksheet* worksheet, const Picross& picross, int r, int c)
 {
-#ifdef ENABLE_EXPERIMENTAL_LIBXLSXWRITER
     const auto& palette = picross.GetPalette();
     std::vector<lxw_format*> format_palette;
     for (const auto& color : palette)
@@ -659,10 +668,12 @@ void WriteColorHintsFormatting(lxw_workbook* workbook, lxw_worksheet* worksheet,
     }
     for (unsigned int i = 0; i < format_palette.size(); i++)
     {
-        auto* cf = lxw_conditional_format_new();
-        lxw_conditional_format_cell(cf, LXW_CRITERIA_EQUAL, i + 1, format_palette[i]);
-        worksheet_conditional_format(worksheet, r, c, r + picross.GetHeight() - 1, c + picross.GetWidth() - 1, cf);
+        lxw_conditional_format cf = {0};
+        cf.type = LXW_CONDITIONAL_TYPE_CELL;
+        cf.criteria = LXW_CONDITIONAL_CRITERIA_EQUAL_TO;
+        cf.value = i + 1;
+        cf.format = format_palette[i];
+        worksheet_conditional_format_range(worksheet, r, c, r + picross.GetHeight() - 1, c + picross.GetWidth() - 1, &cf);
     }
-#endif
 }
 
