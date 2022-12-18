@@ -31,7 +31,7 @@
 #endif
 #include "PicrossFactory.hpp"
 
-constexpr const char* FULL_VERSION_STRING = "0.2";
+constexpr const char* FULL_VERSION_STRING = "0.3";
 
 IMPLEMENT_APP(PicrossApp);
 
